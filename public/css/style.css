@@ -1,0 +1,9 @@
+body {
+    background: linear-gradient(to bottom right, rgb(37, 55, 66), rgb(71, 8, 47));
+    overflow: hidden;
+}
+
+#editor {
+    width: 100%;
+    height: 100%;
+}
