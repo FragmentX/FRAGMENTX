@@ -134,10 +134,14 @@ function loadp1(index){
     loader = new THREE.PLYLoader();
     loader.load( '../models/cake_part'+names[index]+'.ply', function ( geometry ) {
 
+                geometry.computeFaceNormals();
+        geometry.mergeVertices();
         geometry.computeVertexNormals();
+        var buffer_g = new THREE.BufferGeometry();
+        buffer_g.fromGeometry(geometry);
 
-        var material = new THREE.MeshStandardMaterial( { color: 0xffffff*Math.random() } );
-        var mesh = new THREE.Mesh( geometry, material );
+        var material = new THREE.MeshStandardMaterial( { color: 0xffffff*Math.random(), shading: THREE.SmoothShading } );
+        var mesh = new THREE.Mesh(buffer_g, material);
 
         mesh.scale.multiplyScalar( 0.01 );
         mesh.rotation.y += Math.PI;

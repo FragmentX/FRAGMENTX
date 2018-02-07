@@ -42,5 +42,4 @@ Rails.application.configure do
           s3_host_name: 'amazonaws.com'
         }
     }
-
 end
