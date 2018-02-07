@@ -44,7 +44,6 @@ scene.add(light);
 
 this.onWindowResize = function(event) {
   camera.aspect = window.innerWidth / window.innerHeight;
-  camera.fov = (360 / Math.PI) * Math.atan(tanFOV * (window.innerHeight / windowHeight));
   camera.updateProjectionMatrix();
   camera.lookAt(scene.position);
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -133,14 +132,17 @@ var names = ['01','02','03','04','05','06','07','08','09','10','11']
 function loadp1(index){
     loader = new THREE.PLYLoader();
     loader.load( '../models/cake_part'+names[index]+'.ply', function ( geometry ) {
+        var g = new THREE.Geometry();
+        g.fromBufferGeometry(geometry);
 
-                geometry.computeFaceNormals();
-        geometry.mergeVertices();
-        geometry.computeVertexNormals();
+        g.mergeVertices();
+        g.computeFaceNormals();
+        g.computeVertexNormals();
+
         var buffer_g = new THREE.BufferGeometry();
-        buffer_g.fromGeometry(geometry);
+        buffer_g.fromGeometry(g);
 
-        var material = new THREE.MeshStandardMaterial( { color: 0xffffff*Math.random(), shading: THREE.SmoothShading } );
+        var material = new THREE.MeshLambertMaterial( { color: 0xffffff*Math.random(), shading: THREE.SmoothShading } );
         var mesh = new THREE.Mesh(buffer_g, material);
 
         mesh.scale.multiplyScalar( 0.01 );
