@@ -16,7 +16,12 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'high_voltage', '~> 3.0.0'
 
+gem 'cocoon'
+gem 'bcrypt', git: 'https://github.com/codahale/bcrypt-ruby.git', :require => 'bcrypt'
 gem 'devise'
+gem 'jquery-rails'
+
+gem 'aws-sdk'
 gem 'paperclip'
 
 group :development, :test do

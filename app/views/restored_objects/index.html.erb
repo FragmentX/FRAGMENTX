@@ -1,2 +1,8 @@
-<h1>RestoredObjects#index</h1>
-<p>Find me in app/views/restored_objects/index.html.erb</p>
+<h1>Objetos restaurados</h1>
+
+<%= link_to "Añadir objeto", new_restored_object_path %>
+
+<% @objects.each do |obj| %>
+    <%= link_to obj.title, obj %>
+    <hr/>
+<% end %>

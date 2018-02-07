@@ -1,0 +1,16 @@
+<div class="nested-fields">
+    <%= f.label :name %><br/>
+    <%= f.text_field :name %>
+    <br/>
+    <%= f.label :description %><br/>
+    <%= f.text_area :description %>
+    <br/>
+    <%= f.label :missing %>
+    <%= f.check_box :missing %>
+    <br/>
+    <%= f.label :model %>
+    <%= f.file_field :model, :required => true, class:'form-control' %>
+    <%= f.hidden_field :restored_object_id, value: @object.id %>
+    <%= link_to_remove_association f, {class:'btn btn-danger', aria: {label:"Eliminar Pieza"}} do %>Eliminar Pieza<% end %>
+    <hr/>
+</div>
