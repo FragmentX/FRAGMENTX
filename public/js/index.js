@@ -1,4 +1,4 @@
-var object = []
+var object = new THREE.Object3D();
 
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -8,6 +8,7 @@ var renderer = new THREE.WebGLRenderer({
 });
 
 var scene = new THREE.Scene();
+scene.add(object);
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -26,7 +27,6 @@ var clock = new THREE.Clock();
 // orbit, pan, zoom controls
 controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableZoom = true;
-controls.autoRotate = true;
 controls.addEventListener('change', function() {
     return render;
 });
@@ -58,6 +58,7 @@ this.onMouseMove = function(event) {
 var render = function() {
     requestAnimationFrame(render);
     var delta = clock.getDelta();
+    object.rotation.y += delta/4;
     controls.update(delta);
     renderer.render(scene, camera);
 };
@@ -125,9 +126,8 @@ var matrixs_object = [
             ]
 ];
 
-render();
-
 var names = ['01','02','03','04','05','06','07','08','09','10','11']
+
 
 function loadp1(index){
     loader = new THREE.PLYLoader();
@@ -143,7 +143,7 @@ function loadp1(index){
         buffer_g.fromGeometry(g);
 
         var material = new THREE.MeshLambertMaterial( { color: 0xffffff*Math.random(), shading: THREE.SmoothShading } );
-        var mesh = new THREE.Mesh(buffer_g, material);
+        var mesh = new THREE.Mesh(geometry, material);
 
         mesh.scale.multiplyScalar( 0.01 );
         mesh.rotation.y += Math.PI;
@@ -155,10 +155,12 @@ function loadp1(index){
         scaleMatrix.multiplyMatrices ( rotate_m, scaleMatrix );
         mesh.geometry.applyMatrix(scaleMatrix);
         mesh.geometry.verticesNeedUpdate = true;
-        return mesh
+        object.add(mesh);
     } );
 }
 
 for (i = 0; i < 11; i++) {
   loadp1(i);
 }
+
+render();

@@ -1,6 +1,8 @@
 class RestoredObjectsController < ApplicationController
   before_action :set_restored_object, only: %i[show edit update destroy]
 
+  layout :resolve_layout
+
 
   # GET /restored_objects
   # GET /restored_objects.json
@@ -73,7 +75,18 @@ class RestoredObjectsController < ApplicationController
     #authorize @object
     @object.destroy
     redirect_to(restored_objects_path)
-end
+  end
+
+  private
+
+  def resolve_layout
+    case action_name
+    when "show"
+      "threejs"
+    else
+      "application"
+    end
+  end
 
   def set_restored_object
     @object = RestoredObject.find(params[:id])

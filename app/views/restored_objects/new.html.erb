@@ -1,17 +1,24 @@
 <h1>Añadiendo un nuevo objeto</h1>
 
 <%= form_for(@object, :html => { multipart: true }) do |f| %>
-    <%= f.label :title %><br/>
-    <%= f.text_field :title %>
-    <br/>
-    <%= f.label :description %><br/>
-    <%= f.text_area :description %>
-    <br/>
-    <div id="pieces field">
-        <h2>Piezas</h2>
-        <div class="links">
-          <%= link_to_add_association f, :pieces do %>Añadir Pieza<% end %>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <%= f.label :title %><br/>
+            <%= f.text_field :title, class: 'form-control' %>
+            <br/>
+            <%= f.label :description %><br/>
+            <%= f.text_area :description, class: 'form-control' %>
+        </div>
+        <div class="col-sm-12 col-md-6 card">
+            <div id="pieces field card-body">
+                <h2>Piezas</h2>
+                <div class="links">
+                    <%= link_to_add_association f, :pieces do %>Añadir Pieza<% end %>
+                </div>
+            </div>
         </div>
     </div>
-    <%= f.submit :Guardar %>
+    <br/>
+    <%= f.submit :Guardar, class:'btn btn-primary' %>
 <% end %>
