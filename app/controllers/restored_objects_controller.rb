@@ -14,6 +14,7 @@ class RestoredObjectsController < ApplicationController
   # GET /restored_objects/1.json
   def show
     #authorize @object
+    @pieces = @object.pieces
   end
 
   # GET /restored_objects/new
