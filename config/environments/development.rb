@@ -39,7 +39,8 @@ Rails.application.configure do
           access_key_id: ENV['EDUPROJECT_KEY'],
           secret_access_key: ENV['EDUPROJECT_SECRET'],
           s3_region: 'eu-west-1',
-          s3_host_name: 'amazonaws.com'
+          :s3_protocol => :https,
+          s3_host_name: 's3.eu-west-1.amazonaws.com'
         }
     }
 end

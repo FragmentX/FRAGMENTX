@@ -14,6 +14,13 @@ class RestoredObjectsController < ApplicationController
   # GET /restored_objects/1.json
   def show
     #authorize @object
+    #@pieces = @object.pieces
+    gon.pieces = []
+    gon.matrices = []
+    @object.pieces.each do |p|
+      gon.pieces << p.model.url
+      gon.matrices << p.matrix
+    end
   end
 
   # GET /restored_objects/new
