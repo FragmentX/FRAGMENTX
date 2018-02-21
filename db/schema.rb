@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180206192124) do
+ActiveRecord::Schema.define(version: 20180221101349) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "collections", force: :cascade do |t|
     t.string "title"
@@ -25,6 +31,18 @@ ActiveRecord::Schema.define(version: 20180206192124) do
   create_table "collections_restored_objects", force: :cascade do |t|
     t.integer "collection_id"
     t.integer "restored_object"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "deteriorations", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "materials", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -41,13 +59,47 @@ ActiveRecord::Schema.define(version: 20180206192124) do
     t.string "model_content_type"
     t.integer "model_file_size"
     t.datetime "model_updated_at"
+    t.decimal "width"
+    t.decimal "height"
+    t.decimal "depth"
+  end
+
+  create_table "protections", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "restored_objects", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.integer "category"
+    t.integer "category_id"
     t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "author"
+    t.text "classification"
+    t.integer "material_id"
+    t.string "technique"
+    t.string "decoration"
+    t.decimal "width"
+    t.decimal "height"
+    t.decimal "depth"
+    t.string "inventory_no"
+    t.string "owner"
+    t.string "deposit"
+    t.string "address"
+    t.string "location"
+    t.string "epoch"
+    t.integer "state_id"
+    t.integer "deterioration_id"
+    t.integer "priority"
+    t.integer "protection_id"
+    t.text "notes"
+  end
+
+  create_table "states", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

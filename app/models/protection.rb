@@ -1,0 +1,2 @@
+class Protection < ApplicationRecord
+end
