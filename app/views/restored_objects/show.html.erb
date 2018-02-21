@@ -80,20 +80,20 @@
                 0,  0, 0, 1
   );
 
-  var w = [null, null, null, null, null, null, null, null, null, null];
+  var w = new Array(gon.pieces.length);
 
   function startWorker() {
-      var index = 0;
-      while(index < <%= @pieces.count %>){
+      console.log(gon.pieces)
+      for(let index = 0; index < gon.pieces.length; index++){
+        console.log(index)
         set_worker(index);
-        index = index + 1;
       }
   }
 
   function set_worker(index){
       if(typeof(Worker) !== "undefined") {
           w[index] = new Worker('/js/parseModel.js');
-
+          console.log(index)
           w[index].addEventListener("message", function (event) {
             var abuffer = event.data.buffer;
             var vertices = new Float32Array(abuffer);
@@ -113,7 +113,8 @@
 
             var scaleMatrix = new THREE.Matrix4();
             var matrix = new THREE.Matrix4();
-            scaleMatrix.fromArray('<%= @pieces[' + index +'.to_i].matrix %>'.split(' ')).transpose();
+            console.log(gon.matrices[index].trim().split(' ').filter(function(val) { return val.length != 0; }));
+            scaleMatrix.fromArray(gon.matrices[index].trim().split(' ').filter(function(val) { return val.length != 0; })).transpose();
             scaleMatrix.multiplyMatrices ( rotate_m, scaleMatrix );
 
             child.geometry.applyMatrix(scaleMatrix);
@@ -121,8 +122,8 @@
 
             object.add(child);
           }, false);
-
-          w[index].postMessage('<%= @pieces[' + index + '.to_i].model.url %>');
+          console.log(gon.pieces[index]);
+          w[index].postMessage(gon.pieces[index]);
 
       } else {
           console.log("Sorry, your browser does not support Web Workers...");
