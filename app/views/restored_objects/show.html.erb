@@ -1,134 +1,388 @@
   <div id="editor"></div>
+  <div id="inform"></br>
+            <div id="bdaText">
+                PLY viewer
+            </div>
+            <div id="bdaText">
+                <ul>
+                    <li class="icons_column"><button type="button" onclick="allParts()" class="btn btn-primary max_size">All pieces</button></li>
+                    <li class="icons_column"><button type="button" onclick="goodParts()" class="btn btn-primary max_size">No missing</button></li>
+                    <li class="icons_column"><button type="button" onclick="faltantParts()" class="btn btn-primary max_size">Missing</button></li>
+                    <li class="icons_column"><button type="button" onclick="changeRotationMode()" class="btn btn-primary max_size">Pause</button></li>
+                </ul>
+            </div>
+        </div>
+        <div id="fixed-div-invisible">
+        </div>
+        <div id="fixed-div">
+            <ul>
+                <li class="icons_column" onclick="saveAsImage()"><i class="fas fa-camera-retro fa-5x"></i></li>
+                <li class="icons_column" onclick="rule()"><i class="fas fa-question-circle fa-5x"></i></li>
+                <li class="icons_column" onclick="wireframeSet()"><i class="fas fa-cube fa-5x"></i></i></li>
+                <li class="icons_column" onclick="addtorch()"><i class="far fa-lightbulb fa-5x"></i></li>
+                <li class="icons_column" onclick="mesure()"><i class="fas fa-arrows-alt-v fa-5x"></i></i></li>
+            </ul>
+        </div>
+        <div id="camera">
+          <div class="all_in_line">
+            <i class="far fa-caret-square-down fa-5x" onclick="down_camera()"></i>
+          </div>
+          <div onclick="up_camera()" class="all_in_line">
+            <i class="far fa-caret-square-up fa-5x"></i>
+          </div>
+          <div class="all_in_line">
+            <i class="far fa-caret-square-left fa-5x" onclick="left_camera()"></i>
+          </div>
+        </div>
+        <div id="camerainvisible">
+        </div>
+  </div>
   <script type="text/javascript" src="/js/three.min.js"></script>
   <script type="text/javascript" src="/js/PLYLoader.js"></script>
   <script type="text/javascript" src="/js/OrbitControls.js"></script>
+
   <script>
-  var object = new THREE.Object3D();
+    //var arrow     = null;
+    var selection     = null;
+    var wireframeMode = false;
+    var torchMode     = false;
+    var rotationMode  = true;
+    var spotLight     = null;
+    var strDownloadMime = "image/octet-stream";
+    var mouse         = new THREE.Vector2();
 
-  var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    var object = new THREE.Object3D();
+    var pieces = [];
 
-  var renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true
-  });
+    var object_f = new THREE.Object3D();
+    var faltants = [];
 
-  var scene = new THREE.Scene();
-  scene.add(object);
+    var camera    = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.autoClear = false;
-  renderer.setClearColor(0xffffff, 0.0);
+    var renderer = new THREE.WebGLRenderer({
+        preserveDrawingBuffer: true,
+        antialias: true,
+        alpha: true
+    });
 
-  $('#editor').append(renderer.domElement);
+    // Spheres of light, world and mesure
+    var geometry = new THREE.SphereGeometry( 5, 32, 32 );
+    var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    var sphere = new THREE.Mesh( geometry, material );
 
-  // camera
-  camera.position.z = 15;
-  camera.lookAt(new THREE.Vector3(0, 0, 0));
-  scene.add(camera);
+    var geometry_world = new THREE.SphereGeometry( 100, 32, 32 );
+    var material_world = new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true, transparent: true, opacity: 0.0} );
+    var sphere_world = new THREE.Mesh( geometry_world, material_world );
+    sphere_world.material.side = THREE.DoubleSide;
 
-  var clock = new THREE.Clock();
+    var geometryMesure = new THREE.SphereGeometry( 0.5, 32, 32 );
 
-  // orbit, pan, zoom controls
-  controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.enableZoom = true;
-  controls.addEventListener('change', function() {
-      return render;
-  });
+    var materialOne = new THREE.MeshBasicMaterial( {color: 0x0000ff} );
+    var sphereOne = new THREE.Mesh( geometryMesure, materialOne );
+    var materialTwo = new THREE.MeshBasicMaterial( {color: 0xff0000} );
+    var sphereTwo = new THREE.Mesh( geometryMesure, materialTwo );
 
-  // lightning
-  directionalLight = new THREE.DirectionalLight(0xffaa44, 0.8, 100);
-  directionalLight.position.set(10, 5, 10);
-  directionalLight.castShadow = true;
-  scene.add(directionalLight);
+    var scene = new THREE.Scene();
+    scene.add(object);
+    scene.add(object_f);
+    scene.add(sphere_world);
 
-  light = new THREE.AmbientLight(0xffffff, 0.5);
-  light.position.set(5, 1, 1);
-  light.castShadow = true;
-  scene.add(light);
-
-  this.onWindowResize = function(event) {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.fov = (360 / Math.PI) * Math.atan(tanFOV * (window.innerHeight / windowHeight));
-    camera.updateProjectionMatrix();
-    camera.lookAt(scene.position);
+    // render
+    renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
-    return renderer.render(scene, camera);
-  };
+    renderer.autoClear = true;
+    renderer.setClearColor(0xffffff, 0.0);
+    renderer.shadowMap.enabled = false;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-  this.onMouseMove = function(event) {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    return mouse.y = -(event.clientY / window.innerHeight) * 2 + 1.15;
-  };
+    $('#editor').append(renderer.domElement);
 
-  var render = function() {
-      requestAnimationFrame(render);
-      var delta = clock.getDelta();
-      object.rotation.y += delta/4;
-      renderer.render(scene, camera);
-  };
+    // raycaster
+    raycaster = new THREE.Raycaster();
 
-  render();
+    // selection material
+    selectionMaterial = new THREE.MeshLambertMaterial({
+        color: 0x40e0d0
+        });
+    // normal material
+    unselectedMAterial = new THREE.MeshLambertMaterial({
+        color: 0xcdb380
+        });
+    // wireframe material
+    wireframeMaterial = new THREE.MeshBasicMaterial({
+        color: 0xe8ddcb,
+        wireframe: true
+    });
+    // wireframe material
+    wireframeMaterialSelected = new THREE.MeshBasicMaterial({
+        color: 0x40e0d0,
+        wireframe: true
+    });
 
-  var loader = new THREE.PLYLoader();
+    // mousemove
+    window.addEventListener( 'mousemove', onmousemove, false );
+    function onmousemove(event) {
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    };
 
-  var rotate_m = new THREE.Matrix4();
-  rotate_m.set(
-                1,  0, 0, 0,
-                0,  0, 1, 0,
-                0, -1, 0, 0,
-                0,  0, 0, 1
-  );
+    // camera
+    camera.position.z = 30;
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    scene.add(camera);
 
-  var w = new Array(gon.pieces.length);
+    var clock = new THREE.Clock();
 
-  function startWorker() {
-      console.log(gon.pieces)
-      for(let index = 0; index < gon.pieces.length; index++){
-        console.log(index)
-        set_worker(index);
-      }
-  }
+    // orbit, pan, zoom controls
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableZoom = true;
+    controls.addEventListener('change', function() {
+        return render;
+    });
 
-  function set_worker(index){
-      if(typeof(Worker) !== "undefined") {
-          w[index] = new Worker('/js/parseModel.js');
-          console.log(index)
-          w[index].addEventListener("message", function (event) {
-            var abuffer = event.data.buffer;
-            var vertices = new Float32Array(abuffer);
-            var buffer = new THREE.BufferAttribute(vertices, 3);
+    // lightning
+    directionalLight = new THREE.DirectionalLight(0xffaa44, 0.8, 100);
+    directionalLight.position.set(10, 5, 10);
+    directionalLight.castShadow = true;
+    scene.add(directionalLight);
 
-            var material = new THREE.MeshLambertMaterial( { color: 0xffffff*Math.random() } );
-            var geo = new THREE.BufferGeometry();
-            geo.addAttribute('position',  buffer);
+    light = new THREE.AmbientLight(0xffffff, 0.5);
+    light.position.set(5, 1, 1);
+    light.castShadow = true;
+    scene.add(light);
 
-            geo.computeVertexNormals();
-            var child = new THREE.Mesh(geo, material);
-            child.scale.multiplyScalar( 0.01 );
-            child.rotation.y += Math.PI;
-            child.castShadow = true;
-            child.receiveShadow = true;
-            child.scale.multiplyScalar( 1000 );
+    window.addEventListener( 'resize', onWindowResize, false );
 
-            var scaleMatrix = new THREE.Matrix4();
-            var matrix = new THREE.Matrix4();
-            console.log(gon.matrices[index].trim().split(' ').filter(function(val) { return val.length != 0; }));
-            scaleMatrix.fromArray(gon.matrices[index].trim().split(' ').filter(function(val) { return val.length != 0; })).transpose();
-            scaleMatrix.multiplyMatrices ( rotate_m, scaleMatrix );
+    function onWindowResize(){
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        camera.lookAt(scene.position);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        raycaster.setFromCamera(mouse, camera);
+        renderer.render(scene, camera);
+    };
 
-            child.geometry.applyMatrix(scaleMatrix);
-            child.geometry.verticesNeedUpdate = true;
+    this.onMouseMove = function(event) {
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        return mouse.y = -(event.clientY / window.innerHeight) * 2 + 1.15;
+    };
 
-            object.add(child);
-          }, false);
-          console.log(gon.pieces[index]);
-          w[index].postMessage(gon.pieces[index]);
+    var render = function() {
+        requestAnimationFrame(render);
+        var delta = clock.getDelta();
+        if(rotationMode){
+        object.rotation.y += delta/4;
+        object_f.rotation.y += delta/4;
+        }
+        renderer.render(scene, camera);
+    };
 
-      } else {
-          console.log("Sorry, your browser does not support Web Workers...");
-      }
-  }
+    render();
 
-  startWorker();
+    var loader = new THREE.PLYLoader();
+
+    var rotate_m = new THREE.Matrix4();
+    rotate_m.set(
+                    1,  0, 0, 0,
+                    0,  0, 1, 0,
+                    0, -1, 0, 0,
+                    0,  0, 0, 1
+    );
+
+    var w = new Array(gon.pieces.length);
+
+    function startWorker() {
+        for(let index = 0; index < gon.pieces.length; index++){
+            set_worker(index);
+        }
+    }
+
+    function set_worker(index){
+        if(typeof(Worker) !== "undefined") {
+            w[index] = new Worker('/js/parseModel.js');
+            w[index].addEventListener("message", function (event) {
+                var abuffer = event.data.buffer;
+                var vertices = new Float32Array(abuffer);
+                var buffer = new THREE.BufferAttribute(vertices, 3);
+
+                var material = new THREE.MeshLambertMaterial( { color: 0xcdb380 } );
+                var geo = new THREE.BufferGeometry();
+                geo.addAttribute('position',  buffer);
+
+                geo.computeVertexNormals();
+                var child = new THREE.Mesh(geo, material);
+                child.scale.multiplyScalar( 0.01 );
+                child.rotation.y += Math.PI;
+                child.castShadow = true;
+                child.receiveShadow = true;
+                child.scale.multiplyScalar( 1000 );
+
+                var scaleMatrix = new THREE.Matrix4();
+                var matrix = new THREE.Matrix4();
+                scaleMatrix.fromArray(gon.matrices[index].trim().split(' ').filter(function(val) { return val.length != 0; })).transpose();
+                scaleMatrix.multiplyMatrices ( rotate_m, scaleMatrix );
+
+                child.geometry.applyMatrix(scaleMatrix);
+                child.geometry.verticesNeedUpdate = true;
+
+                if( gon.missings[index] ){
+                pieces.push(child);
+                object.add(child);
+                } else {
+                faltants.push(child);
+                object_f.add(child);
+                }
+            }, false);
+            w[index].postMessage(gon.pieces[index]);
+
+        } else {
+            console.log("Sorry, your browser does not support Web Workers...");
+        }
+    }
+
+    renderer.domElement.addEventListener('mousedown', function(event) {
+        var intersects, selected;
+        event.preventDefault();
+        raycaster.setFromCamera(mouse, camera);
+        intersects = raycaster.intersectObjects(pieces.concat(faltants));
+        if (intersects.length > 0) {
+        if(!wireframeMode){
+            if(selection !== null){
+            selection.material = unselectedMAterial;
+            }
+            selected = intersects[0].object;
+            selected.material = selectionMaterial;
+            selection = selected;
+        } else {
+            if(selection !== null){
+            selection.material = wireframeMaterial;
+            }
+            selected = intersects[0].object;
+            selected.material = wireframeMaterialSelected;
+            selection = selected;
+        }
+        } else {
+        intersects = raycaster.intersectObjects([sphere_world]);
+        console.log( intersects[ 0 ].point );
+        console.log(event.button);
+        if(torchMode & (event.button == 1)) {
+            scene.remove(sphere);
+            sphere.position.set( intersects[ 0 ].point.x , intersects[ 0 ].point.y, intersects[ 0 ].point.z );
+            scene.add(sphere);
+            spotLight.position.set( intersects[ 0 ].point.x, intersects[ 0 ].point.y, intersects[ 0 ].point.z );
+        }
+        }
+    });
+
+    startWorker();
+
+    function goodParts(){
+        allParts();
+        scene.remove(object_f);
+    }
+
+    function allParts(){
+        scene.add(object);
+        scene.add(object_f);
+    }
+
+    function faltantParts(){
+        allParts();
+        scene.remove(object);
+    }
+
+    function up_camera(){
+        camera.position.z = 30;
+        camera.position.y = 0;
+        camera.position.x = 0;
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+    }
+
+    function down_camera(){
+        camera.position.z = 0;
+        camera.position.y = 30;
+        camera.position.x = 0;
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+    }
+
+    function left_camera(){
+        camera.position.z = 0;
+        camera.position.y = 0;
+        camera.position.x = 30;
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+    }
+
+    function rule() {
+        console.log("Cosas");
+    }
+
+    function addtorch(){
+        if(!torchMode) {
+        renderer.shadowMap.enabled = true;
+        spotLight = new THREE.SpotLight( 0xffffff, 1 );
+        spotLight.position.set( 15, 40, 35 );
+        spotLight.angle = Math.PI / 4;
+        spotLight.penumbra = 0.05;
+        spotLight.decay = 2;
+        spotLight.distance = 200;
+        spotLight.castShadow = true;
+        spotLight.shadow.mapSize.width = 1024;
+        spotLight.shadow.mapSize.height = 1024;
+        spotLight.shadow.camera.near = 10;
+        spotLight.shadow.camera.far = 200;
+        scene.add( spotLight );
+        } else{
+        renderer.shadowMap.enabled = false;
+        scene.remove( spotLight );
+        scene.remove( sphere );
+        }
+        torchMode = !torchMode;
+    }
+
+    function wireframeSet(){
+        var index;
+        var allpieces =  pieces.concat(faltants);
+        for(index = 0; index < allpieces.length; index++) {
+            if(!wireframeMode){
+            allpieces[index].material = wireframeMaterial;
+            } else {
+            allpieces[index].material = unselectedMAterial;
+            }
+        }
+        wireframeMode = !wireframeMode;
+    }
+
+    function changeRotationMode() {
+        rotationMode = !rotationMode;
+    }
+
+    function saveAsImage() {
+            var imgData, imgNode;
+
+            try {
+                var strMime = "image/jpeg";
+                imgData = renderer.domElement.toDataURL(strMime);
+
+                saveFile(imgData.replace(strMime, strDownloadMime), "test.jpg");
+
+            } catch (e) {
+                console.log(e);
+                return;
+            }
+
+        }
+
+        var saveFile = function (strData, filename) {
+            var link = document.createElement('a');
+            if (typeof link.download === 'string') {
+                document.body.appendChild(link); //Firefox requires the link to be in the body
+                link.download = filename;
+                link.href = strData;
+                link.click();
+                document.body.removeChild(link); //remove the link when done
+            } else {
+                location.replace(uri);
+            }
+        }
+
   </script>

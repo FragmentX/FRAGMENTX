@@ -18,3 +18,117 @@
  .right {
     float: right;
  }
+
+#editor {
+  background: linear-gradient(to bottom right,#031634, #033649);
+  overflow: hidden;
+}
+
+#editor {
+  width: 100%;
+  height: 100%;
+}
+
+
+.full_height {
+  height: 100%;
+}
+
+#inform {
+  position: fixed;
+  width: 15%;
+  top: 4.5em;
+  right: 2em;
+  z-index: 90;
+}
+
+.all_in_line {
+  display: inline;
+}
+
+.btn-primary {
+  background-color: #033649;
+}
+
+#camera {
+  position: fixed;
+  padding: 1em;
+  top: 2em;
+  right: 30%;
+  border-radius: 25px;
+  background: #e8ddcb;
+}
+
+#camerainvisible {
+  position: fixed;
+  height: 0px;
+  width: 00px;
+  top: 0em;
+  right: 25em;
+  z-index: 95;
+}
+
+#camerainvisible:hover + #camera {
+  visibility: hidden;
+}
+
+#bdaText {
+  width: 100%;
+  padding: 5%;
+  margin-bottom: 10%;
+  border-radius: 25px;
+  background: #e8ddcb;
+}
+
+#fixed-div {
+  position: fixed;
+  background: #e8ddcb;
+  border-radius: 25px;
+  top: 6em;
+  left: 2em;
+  z-index: 90;
+  transition: left 2s;
+  text-align: center;
+}
+
+#fixed-div-invisible {
+  position: fixed;
+  height: 0px;
+  width: 0px;
+  top: 6em;
+  left: 0em;
+  z-index: 95;
+}
+
+#fixed-div-invisible:hover + #fixed-div {
+  top: 6em;
+  left: 2em;
+}
+
+#fixed-div:hover {
+  top: 6em;
+  left: 2em;
+}
+
+#fixed-div:hover + #fixed-div-invisible{
+  height: 0px;
+  width: 0px;
+}
+
+.icons_column {
+  margin: 1em;
+}
+
+.max_size{
+  width: 100%;
+}
+
+ul {
+  list-style-type: none;
+  margin-bottom: 0rem;
+  padding: 0em;
+}
+
+li{
+  list-style-type: none;
+}

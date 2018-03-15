@@ -622,6 +622,8 @@ GEM
     erubi (1.7.0)
     execjs (2.7.0)
     ffi (1.9.18-x86-mingw32)
+    font-awesome-rails (4.7.0.3)
+      railties (>= 3.2, < 5.2)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     gon (6.2.0)
@@ -762,6 +764,7 @@ DEPENDENCIES
   cocoon
   coffee-rails (~> 4.2)
   devise
+  font-awesome-rails
   gon
   high_voltage (~> 3.0.0)
   jbuilder (~> 2.5)

@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20180221101349) do
   create_table "restored_objects", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.integer "category_id"
+    t.integer "category"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

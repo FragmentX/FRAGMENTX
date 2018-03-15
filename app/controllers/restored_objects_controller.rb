@@ -17,9 +17,11 @@ class RestoredObjectsController < ApplicationController
     #@pieces = @object.pieces
     gon.pieces = []
     gon.matrices = []
+    gon.missings = []
     @object.pieces.each do |p|
       gon.pieces << p.model.url
       gon.matrices << p.matrix
+      gon.missings << p.missing
     end
   end
 
