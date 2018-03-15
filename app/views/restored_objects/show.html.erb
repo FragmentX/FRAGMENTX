@@ -11,6 +11,20 @@
                     <li class="icons_column"><button type="button" onclick="changeRotationMode()" class="btn btn-primary max_size">Pause</button></li>
                 </ul>
             </div>
+            <div id="bdaText">
+                <ul>
+                    <li class="icons_column"><button type="button" onclick="setClip(0)" class="btn btn-primary max_size">X</button></li>
+                    <li class="icons_column"><button type="button" onclick="setClip(1)" class="btn btn-primary max_size">Y</button></li>
+                    <li class="icons_column"><button type="button" onclick="setClip(2)" class="btn btn-primary max_size">Z</button></li>
+                </ul>
+            </div>
+            <div id="bdaText">
+                <ul>
+                    <li class="icons_column"><input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipX"></li>
+                    <li class="icons_column"><input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipY"></li>
+                    <li class="icons_column"><input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipZ"></li>
+                </ul>
+            </div>
         </div>
         <div id="fixed-div-invisible">
         </div>
@@ -51,6 +65,35 @@
     var strDownloadMime = "image/octet-stream";
     var mouse         = new THREE.Vector2();
 
+    var globalPlaneX = new THREE.Plane( new THREE.Vector3(  0,  0, -1 ),10000 );
+    var globalPlaneY = new THREE.Plane( new THREE.Vector3( -1,  0,  0 ),10000 );
+    var globalPlaneZ = new THREE.Plane( new THREE.Vector3(  0, -1,  0 ),10000 );
+
+    var clippingPlanes = [ globalPlaneX, globalPlaneY, globalPlaneZ ], Empty = Object.freeze( [] );
+
+    var clipping = [false, false, false];
+
+    var inputs = $('input[type=range]');
+
+    $('#clipX').on('input', function() { clip(0) });
+    $('#clipY').on('input', function() { clip(1) });
+    $('#clipZ').on('input', function() { clip(2) });
+
+    function clip(coord) {
+        if (clipping[coord]) clippingPlanes[coord].constant = inputs[coord].value;
+    }
+
+    function unclip(coord) {
+        clippingPlanes[coord].constant = 10000;
+    }
+
+    function setClip(coord) {
+        clipping[coord] = !clipping[coord];
+        if (clipping[coord]) clip(coord);
+        else unclip(coord);
+    }
+
+
     var object = new THREE.Object3D();
     var pieces = [];
 
@@ -62,24 +105,45 @@
     var renderer = new THREE.WebGLRenderer({
         preserveDrawingBuffer: true,
         antialias: true,
-        alpha: true
+        alpha: true,
+        localClippingEnabled : true
     });
+
+    renderer.clippingPlanes = clippingPlanes;
 
     // Spheres of light, world and mesure
     var geometry = new THREE.SphereGeometry( 5, 32, 32 );
-    var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    var material = new THREE.MeshBasicMaterial( {
+        color: 0xffff00,
+        side: THREE.DoubleSide,
+        clippingPlanes: clippingPlanes,
+        clipShadows: true} );
     var sphere = new THREE.Mesh( geometry, material );
 
     var geometry_world = new THREE.SphereGeometry( 100, 32, 32 );
-    var material_world = new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true, transparent: true, opacity: 0.0} );
+    var material_world = new THREE.MeshBasicMaterial( {
+        color: 0xffffff,
+        side: THREE.DoubleSide,
+        clippingPlanes: clippingPlanes,
+        clipShadows: true,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.0} );
     var sphere_world = new THREE.Mesh( geometry_world, material_world );
-    sphere_world.material.side = THREE.DoubleSide;
 
     var geometryMesure = new THREE.SphereGeometry( 0.5, 32, 32 );
 
-    var materialOne = new THREE.MeshBasicMaterial( {color: 0x0000ff} );
+    var materialOne = new THREE.MeshBasicMaterial( {
+        color: 0x0000ff,
+        side: THREE.DoubleSide,
+        clippingPlanes: clippingPlanes,
+        clipShadows: true} );
     var sphereOne = new THREE.Mesh( geometryMesure, materialOne );
-    var materialTwo = new THREE.MeshBasicMaterial( {color: 0xff0000} );
+    var materialTwo = new THREE.MeshBasicMaterial( {
+        color: 0xff0000,
+        side: THREE.DoubleSide,
+        clippingPlanes: clippingPlanes,
+        clipShadows: true} );
     var sphereTwo = new THREE.Mesh( geometryMesure, materialTwo );
 
     var scene = new THREE.Scene();
@@ -102,20 +166,32 @@
 
     // selection material
     selectionMaterial = new THREE.MeshLambertMaterial({
-        color: 0x40e0d0
+        color: 0x40e0d0,
+        side: THREE.DoubleSide,
+        clippingPlanes: clippingPlanes,
+        clipShadows: true
         });
     // normal material
     unselectedMAterial = new THREE.MeshLambertMaterial({
-        color: 0xcdb380
+        color: 0xcdb380,
+        side: THREE.DoubleSide,
+        clippingPlanes: clippingPlanes,
+        clipShadows: true
         });
     // wireframe material
     wireframeMaterial = new THREE.MeshBasicMaterial({
         color: 0xe8ddcb,
+        side: THREE.DoubleSide,
+        clippingPlanes: clippingPlanes,
+        clipShadows: true,
         wireframe: true
     });
     // wireframe material
     wireframeMaterialSelected = new THREE.MeshBasicMaterial({
         color: 0x40e0d0,
+        side: THREE.DoubleSide,
+        clippingPlanes: clippingPlanes,
+        clipShadows: true,
         wireframe: true
     });
 
@@ -205,12 +281,11 @@
                 var vertices = new Float32Array(abuffer);
                 var buffer = new THREE.BufferAttribute(vertices, 3);
 
-                var material = new THREE.MeshLambertMaterial( { color: 0xcdb380 } );
                 var geo = new THREE.BufferGeometry();
                 geo.addAttribute('position',  buffer);
 
                 geo.computeVertexNormals();
-                var child = new THREE.Mesh(geo, material);
+                var child = new THREE.Mesh(geo, unselectedMAterial);
                 child.scale.multiplyScalar( 0.01 );
                 child.rotation.y += Math.PI;
                 child.castShadow = true;
