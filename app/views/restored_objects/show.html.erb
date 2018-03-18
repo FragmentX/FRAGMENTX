@@ -1,9 +1,124 @@
-<div id="mini-branding" class="branding">
-  <h1><i class="fas fa-bars" onclick="showToolbar()"></i> ScanViewer</h1>
+<% if !cookies[:knows_controls] %>
+  <% cookies[:knows_controls] = "yes" %>
+  <div class="banner">
+    Use right button mouse to pan, left button to orbit and scroll to zoom in and out.
+  </div>
+<% end %>
+<div id="info-toggle" onclick="showInfo()">
+  <i class="fas fa-info fa-2x"></i>
+</div>
+<section id="info-container">
+  <div class="branding">
+    <i class="fas fa-times right" onclick="hideInfo()"></i>
+    <p>
+      <% @object.categories.each do |category| %>
+        <span class="badge badge-pill badge-light"><% category.name %></span>
+      <% end %>
+    </p>
+    <h1><%= @object.title %></h1>
+    <% if @object.author %>
+      <h2>By <%= @object.author %></h2>
+    <% end %>
+    <h3>
+      <% @object.materials.each do |material| %>
+        <span class="badge badge-pill badge-light"><%= material.name %></span>
+      <% end %>
+    </h3>
+    <small>
+        <% if @object.in_inventory %>
+            <%= @object.inventory_no %>
+        <% else %>
+            Not in inventory
+        <% end %>
+    </small>
+  </div>
+  <div class="toolbar-container">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="info-field">
+                <% if @object.state %>
+                    <%= label_tag :state %><br/>
+                    <%= @object.state.name%>
+                <% end %>
+            </div>
+            <div class="info-field">
+                <%= label_tag :priority %><br/>
+                <%= @object.priority.name %>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="info-field">
+                <%= label_tag :protection %><br/>
+                <%= @object.protection.name %><br/>
+            </div>
+            <div class="info-field">
+                <%= label_tag 'dimensions' %>
+                <p><%= dimensions(@object) %></p>
+            </div>
+        </div>
+    </div>
+    <% if @object.deteriorations %>
+        <%= label_tag :deteriorations%>
+        <div class="info-field">
+            <% @object.deteriorations.each do |deterioration| %>
+                <%= deterioration.name %><br/>
+            <% end %>
+        </div>
+    <% end %>
+    <div class="info-field">
+      <%= label_tag 'description' %>
+      <p><%= @object.description %></p>
+    </div>
+    <div class="info-field">
+      <%= label_tag 'epoch' %>
+      <p><%= @object.epoch %></p>
+    </div>
+    <div class="info-field">
+      <%= label_tag 'classification' %>
+      <p><%= @object.classification %></p>
+    </div>
+    <div class="info-field">
+      <%= label_tag 'technique' %>
+      <p><%= @object.classification %></p>
+    </div>
+    <div class="info-field">
+      <%= label_tag 'decoration' %>
+      <p><%= @object.classification %></p>
+    </div>
+    <div class="info-field">
+      <%= label_tag 'owner' %>
+      <p><%= @object.owner %></p>
+    </div>
+    <div class="info-field">
+      <%= label_tag 'deposit' %>
+      <p><%= @object.deposit %></p>
+      <p><%= @object.address %></p>
+      <p><%= @object.location %></p>
+      <% if @object.latitude && @object.longitude %>
+        <p><%= "(#{@object.longitude}, #{@object.longitude})" %></p>
+        <%= image_tag "http://maps.googleapis.com/maps/api/staticmap?center=#{@object.latitude},#{@object.longitude}&markers=#{@object.latitude},#{@object.longitude}&zoom=13&size=640x400&key=AIzaSyA5_37fS8M4baOAP7w8fiXCn-VA4FcgBSw", alt: "#{@object.address} on the map", class:'gmap' %>
+      <% end %>
+      <br/>
+    </div>
+    <div class="info-field">
+      <%= label_tag 'notes' %>
+      <p><%= @object.notes %></p>
+    </div>
+  </div>
+</section>
+
+<div id="mini-branding" onclick="showToolbar()">
+  <div class="branding mini-brand no-padding">
+    <h1><i class="fas fa-bars"></i> ScanViewer</h1>
+  </div>
+  <div id="mini-menu" class="no-padding">
+    <%= link_to "Back", restored_objects_path %>
+  </div>
 </div>
 <section id="toolbar">
   <div class="branding">
-    <h1 class="brand-title"><i class="fas fa-times" onclick="hideToolbar()"></i> ScanViewer</h1>
+    <i class="fas fa-times right" onclick="hideToolbar()"></i>
+    <h1 class="brand-title">ScanViewer</h1>
   </div>
   <div class="toolbar-container">
     <div class="toolbar-section">
@@ -58,8 +173,6 @@
   </div>
 </section>
 <div id="editor"></div>
-<section id="inform">
-</section>
 
   <script type="text/javascript" src="/js/three.min.js"></script>
   <script type="text/javascript" src="/js/PLYLoader.js"></script>
@@ -78,6 +191,20 @@
         $('#toolbar').animate({
             opacity: 1,
             left: "0"
+        }, 500);
+    }
+
+    function hideInfo() {
+        $('#info-container').animate({
+            opacity: 0.25,
+            right: "-=1000"
+        }, 500);
+    }
+
+    function showInfo() {
+        $('#info-container').animate({
+            opacity: 1,
+            right: "0"
         }, 500);
     }
 

@@ -24,6 +24,17 @@
   --main-hover-color: #99be8f;
 }
 
+.banner {
+  background: var(--main-dark-color);
+  bottom: 5px;
+  border-radius: 5px;
+  color: white;
+  padding: 5px;
+  position: fixed;
+  right: 5px;
+  z-index: 999;
+}
+
 .big {
   font-size: 1.5vw;
 }
@@ -55,6 +66,41 @@
   height: 100%;
 }
 
+.gmap {
+  width: 100%;
+}
+
+#info-container {
+  background: var(--main-bg-color);
+  bottom: 0;
+  overflow-y: scroll;
+  position: fixed;
+  right: -35%;
+  top: 0;
+  width: 35%;
+}
+
+#info-container label {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.info-field {
+  margin-bottom: 10px;
+}
+
+#info-toggle {
+  background: var(--main-bg-color);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  display: flex;
+  right: 0;
+  padding: 5px;
+  padding-left: 10px;
+  position: fixed;
+  top: 48%;
+}
+
 .inline-icon {
   display: inline;
   height: 1.5vw;
@@ -63,14 +109,28 @@
 }
 
 #mini-branding {
+  display: flex;
   left: 0;
-  padding-bottom: 0;
   position: fixed;
   top: 0;
 }
 
 #mini-branding h1 {
   font-size: 1em;
+}
+
+#mini-brand {
+  padding: 5px;
+}
+
+#mini-menu {
+  background: var(--main-bg-color);
+  margin-bottom: 1em;
+  padding: 5px;
+}
+
+.no-padding {
+  padding-bottom: 0;
 }
 
 .right {
