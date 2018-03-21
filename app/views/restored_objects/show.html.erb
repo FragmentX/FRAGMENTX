@@ -1,61 +1,213 @@
-  <div id="editor"></div>
-  <div id="inform"></br>
-            <div id="bdaText">
-                PLY viewer
-            </div>
-            <div id="bdaText">
-                <ul>
-                    <li class="icons_column"><button type="button" onclick="allParts()" class="btn btn-primary max_size">All pieces</button></li>
-                    <li class="icons_column"><button type="button" onclick="goodParts()" class="btn btn-primary max_size">No missing</button></li>
-                    <li class="icons_column"><button type="button" onclick="faltantParts()" class="btn btn-primary max_size">Missing</button></li>
-                    <li class="icons_column"><button type="button" onclick="changeRotationMode()" class="btn btn-primary max_size">Pause</button></li>
-                </ul>
-            </div>
-            <div id="bdaText">
-                <ul>
-                    <li class="icons_column"><button type="button" onclick="setClip(0)" class="btn btn-primary max_size">X</button></li>
-                    <li class="icons_column"><button type="button" onclick="setClip(1)" class="btn btn-primary max_size">Y</button></li>
-                    <li class="icons_column"><button type="button" onclick="setClip(2)" class="btn btn-primary max_size">Z</button></li>
-                </ul>
-            </div>
-            <div id="bdaText">
-                <ul>
-                    <li class="icons_column"><input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipX"></li>
-                    <li class="icons_column"><input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipY"></li>
-                    <li class="icons_column"><input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipZ"></li>
-                </ul>
-            </div>
-        </div>
-        <div id="fixed-div-invisible">
-        </div>
-        <div id="fixed-div">
-            <ul>
-                <li class="icons_column" onclick="saveAsImage()"><i class="fas fa-camera-retro fa-5x"></i></li>
-                <li class="icons_column" onclick="rule()"><i class="fas fa-question-circle fa-5x"></i></li>
-                <li class="icons_column" onclick="wireframeSet()"><i class="fas fa-cube fa-5x"></i></i></li>
-                <li class="icons_column" onclick="addtorch()"><i class="far fa-lightbulb fa-5x"></i></li>
-                <li class="icons_column" onclick="mesure()"><i class="fas fa-arrows-alt-v fa-5x"></i></i></li>
-            </ul>
-        </div>
-        <div id="camera">
-          <div class="all_in_line">
-            <i class="far fa-caret-square-down fa-5x" onclick="down_camera()"></i>
-          </div>
-          <div onclick="up_camera()" class="all_in_line">
-            <i class="far fa-caret-square-up fa-5x"></i>
-          </div>
-          <div class="all_in_line">
-            <i class="far fa-caret-square-left fa-5x" onclick="left_camera()"></i>
-          </div>
-        </div>
-        <div id="camerainvisible">
-        </div>
+<% if !cookies[:knows_controls] %>
+  <% cookies[:knows_controls] = "yes" %>
+  <div class="banner">
+    Use right button mouse to pan, left button to orbit and scroll to zoom in and out.
   </div>
+<% end %>
+<div id="info-toggle" onclick="showInfo()">
+  <i class="fas fa-info fa-2x"></i>
+</div>
+<section id="info-container">
+  <div class="branding">
+    <i class="fas fa-times right" onclick="hideInfo()"></i>
+    <p>
+      <% @object.categories.each do |category| %>
+        <span class="badge badge-pill badge-light"><% category.name %></span>
+      <% end %>
+    </p>
+    <h1><%= @object.title %></h1>
+    <% if @object.author %>
+      <h2>By <%= @object.author %></h2>
+    <% end %>
+    <h3>
+      <% @object.materials.each do |material| %>
+        <span class="badge badge-pill badge-light"><%= material.name %></span>
+      <% end %>
+    </h3>
+    <small>
+        <% if @object.in_inventory %>
+            <%= @object.inventory_no %>
+        <% else %>
+            Not in inventory
+        <% end %>
+    </small>
+  </div>
+  <div class="toolbar-container">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="info-field">
+                <% if @object.state %>
+                    <%= label_tag :state %><br/>
+                    <%= @object.state.name%>
+                <% end %>
+            </div>
+            <div class="info-field">
+                <%= label_tag :priority %><br/>
+                <%= @object.priority.name %>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="info-field">
+                <%= label_tag :protection %><br/>
+                <%= @object.protection.name %><br/>
+            </div>
+            <div class="info-field">
+                <%= label_tag 'dimensions' %>
+                <p><%= dimensions(@object) %></p>
+            </div>
+        </div>
+    </div>
+    <% if @object.deteriorations %>
+        <%= label_tag :deteriorations%>
+        <div class="info-field">
+            <% @object.deteriorations.each do |deterioration| %>
+                <%= deterioration.name %><br/>
+            <% end %>
+        </div>
+    <% end %>
+    <div class="info-field">
+      <%= label_tag 'description' %>
+      <p><%= @object.description %></p>
+    </div>
+    <div class="info-field">
+      <%= label_tag 'epoch' %>
+      <p><%= @object.epoch %></p>
+    </div>
+    <div class="info-field">
+      <%= label_tag 'classification' %>
+      <p><%= @object.classification %></p>
+    </div>
+    <div class="info-field">
+      <%= label_tag 'technique' %>
+      <p><%= @object.classification %></p>
+    </div>
+    <div class="info-field">
+      <%= label_tag 'decoration' %>
+      <p><%= @object.classification %></p>
+    </div>
+    <div class="info-field">
+      <%= label_tag 'owner' %>
+      <p><%= @object.owner %></p>
+    </div>
+    <div class="info-field">
+      <%= label_tag 'deposit' %>
+      <p><%= @object.deposit %></p>
+      <p><%= @object.address %></p>
+      <p><%= @object.location %></p>
+      <% if @object.latitude && @object.longitude %>
+        <p><%= "(#{@object.longitude}, #{@object.longitude})" %></p>
+        <%= image_tag "http://maps.googleapis.com/maps/api/staticmap?center=#{@object.latitude},#{@object.longitude}&markers=#{@object.latitude},#{@object.longitude}&zoom=13&size=640x400&key=AIzaSyA5_37fS8M4baOAP7w8fiXCn-VA4FcgBSw", alt: "#{@object.address} on the map", class:'gmap' %>
+      <% end %>
+      <br/>
+    </div>
+    <div class="info-field">
+      <%= label_tag 'notes' %>
+      <p><%= @object.notes %></p>
+    </div>
+  </div>
+</section>
+
+<div id="mini-branding" onclick="showToolbar()">
+  <div class="branding mini-brand no-padding">
+    <h1><i class="fas fa-bars"></i> ScanViewer</h1>
+  </div>
+  <div id="mini-menu" class="no-padding">
+    <%= link_to "Back", restored_objects_path %>
+  </div>
+</div>
+<section id="toolbar">
+  <div class="branding">
+    <i class="fas fa-times right" onclick="hideToolbar()"></i>
+    <h1 class="brand-title">ScanViewer</h1>
+  </div>
+  <div class="toolbar-container">
+    <div class="toolbar-section">
+        <p>Visibility mode</p>
+        <div class="toolbar-section-row">
+        <button onclick="allParts()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/all.svg" /><br/>All</button>
+        <button onclick="goodParts()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/pieces.svg" /><br/>Present</button>
+        <button onclick="faltantParts()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/missing.svg" /><br/>Missing</button>
+        </div>
+        <p>Model rotation</p>
+        <div class="toolbar-section-row">
+        <button id="pauseButton" onclick="changeRotationMode()" class="btn btn-primary toolbar-button big">
+            <i class="fas fa-pause"></i> Pause
+        </button>
+        </div>
+    </div>
+    <div class="toolbar-section">
+        <p>Perspective</p>
+        <div class="toolbar-section-row">
+        <button class="btn btn-primary toolbar-button" onclick="down_camera()"><img class="svg-icon" src="/icons/xz.svg" /><br/>XZ</button>
+        <button class="btn btn-primary toolbar-button" onclick="up_camera()"><img class="svg-icon" src="/icons/xy.svg" /><br/>XY</button>
+        <button class="btn btn-primary toolbar-button" onclick="left_camera()"><img class="svg-icon" src="/icons/zy.svg" /><br/>ZY</button>
+        </div>
+    </div>
+    <div class="toolbar-section">
+        <p>Cut object</p>
+        <div class="toolbar-section-row">
+        <button onclick="setClip(0)" class="btn btn-primary toolbar-button clip-button">X</button>
+        <input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipX">
+        </div>
+        <div class="toolbar-section-row">
+        <button onclick="setClip(1)" class="btn btn-primary toolbar-button clip-button">Y</button>
+        <input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipY">
+        </div>
+        <div class="toolbar-section-row">
+        <button onclick="setClip(2)" class="btn btn-primary toolbar-button clip-button">Z</button>
+        <input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipZ">
+        </div>
+    </div>
+    <div class="toolbar-section">
+        <p>Tools</p>
+        <div class="toolbar-section-row">
+        <button class="btn btn-primary toolbar-button" onclick="measure()"><img class="svg-icon" src="/icons/ruler.svg" /><br/>Measure</button>
+        <button class="btn btn-primary toolbar-button" onclick="wireframeSet()"><img class="svg-icon" src="/icons/wireframe.svg" /><br/>Wireframe</button>
+        <button class="btn btn-primary toolbar-button" onclick="addTorch()"><img class="svg-icon" src="/icons/light.svg" /><br/>Light</button>
+        </div>
+        <div class="toolbar-section-row">
+        <button class="btn btn-primary toolbar-button big"><img class="inline-icon" src="/icons/pic.svg" /> Save view as image</button>
+        </div>
+        </div>
+    </div>
+  </div>
+</section>
+<div id="editor"></div>
+
   <script type="text/javascript" src="/js/three.min.js"></script>
   <script type="text/javascript" src="/js/PLYLoader.js"></script>
   <script type="text/javascript" src="/js/OrbitControls.js"></script>
 
   <script>
+
+    function hideToolbar() {
+        $('#toolbar').animate({
+            opacity: 0.25,
+            left: "-=1000"
+        }, 500);
+    }
+
+    function showToolbar() {
+        $('#toolbar').animate({
+            opacity: 1,
+            left: "0"
+        }, 500);
+    }
+
+    function hideInfo() {
+        $('#info-container').animate({
+            opacity: 0.25,
+            right: "-=1000"
+        }, 500);
+    }
+
+    function showInfo() {
+        $('#info-container').animate({
+            opacity: 1,
+            right: "0"
+        }, 500);
+    }
+
     //var arrow     = null;
     var selection     = null;
     var wireframeMode = false;
@@ -65,9 +217,9 @@
     var strDownloadMime = "image/octet-stream";
     var mouse         = new THREE.Vector2();
 
-    var globalPlaneX = new THREE.Plane( new THREE.Vector3(  0,  0, -1 ),10000 );
-    var globalPlaneY = new THREE.Plane( new THREE.Vector3( -1,  0,  0 ),10000 );
-    var globalPlaneZ = new THREE.Plane( new THREE.Vector3(  0, -1,  0 ),10000 );
+    var globalPlaneX = new THREE.Plane( new THREE.Vector3( -1,  0,  0 ),10000 );
+    var globalPlaneY = new THREE.Plane( new THREE.Vector3(  0, -1,  0 ),10000 );
+    var globalPlaneZ = new THREE.Plane( new THREE.Vector3(  0,  0, -1 ),10000 );
 
     var clippingPlanes = [ globalPlaneX, globalPlaneY, globalPlaneZ ], Empty = Object.freeze( [] );
 
@@ -111,7 +263,7 @@
 
     renderer.clippingPlanes = clippingPlanes;
 
-    // Spheres of light, world and mesure
+    // Spheres of light, world and measure
     var geometry = new THREE.SphereGeometry( 5, 32, 32 );
     var material = new THREE.MeshBasicMaterial( {
         color: 0xffff00,
@@ -391,7 +543,7 @@
         console.log("Cosas");
     }
 
-    function addtorch(){
+    function addTorch(){
         if(!torchMode) {
         renderer.shadowMap.enabled = true;
         spotLight = new THREE.SpotLight( 0xffffff, 1 );
@@ -429,6 +581,11 @@
 
     function changeRotationMode() {
         rotationMode = !rotationMode;
+        if ($('#pauseButton').html().indexOf("Pause") >= 0) {
+            $('#pauseButton').html('<i class="fas fa-play"></i> Play');
+        } else {
+             $('#pauseButton').html('<i class="fas fa-pause"></i> Pause');
+        }
     }
 
     function saveAsImage() {

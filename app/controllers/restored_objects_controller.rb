@@ -104,7 +104,14 @@ class RestoredObjectsController < ApplicationController
   end
 
   def restored_object_params
-    params.require(:restored_object).permit(:title, :description,
-      pieces_attributes: [:id, :name, :description, :model, :missing, :matrix, :restored_object_id, :_destroy])
+    params.require(:restored_object).permit(:title, :description, :notes,
+      :classification, :author, :epoch,
+      :width, :height, :depth, :units_id, :state_id, :protection_id,
+      :technique, :decoration, :owner, :deposit,
+      :address, :longitude, :latitude, :in_inventory,
+      :inventory_no, :priority_id,
+      pieces_attributes: [:id, :name, :description,
+                          :model, :missing, :matrix, :restored_object_id, :_destroy],
+      material_ids: [], category_ids: [], deterioration_ids: [])
   end
 end

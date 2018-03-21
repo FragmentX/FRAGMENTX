@@ -7,16 +7,106 @@
             <%= f.label :title %><br/>
             <%= f.text_field :title, class: 'form-control' %>
             <br/>
-            <%= f.label :description %><br/>
-            <%= f.text_area :description, class: 'form-control' %>
-        </div>
-        <div class="col-sm-12 col-md-6 card">
-            <div id="pieces field card-body">
-                <h2>Piezas</h2>
-                <div class="links">
-                    <%= link_to_add_association f, :pieces do %>Añadir Pieza<% end %>
+            <%= f.label :author %><br/>
+            <%= f.text_field :author, class: 'form-control' %>
+            <br/>
+            <%= f.label :epoch %><br/>
+            <%= f.text_field :epoch, class: 'form-control' %>
+            <br/>
+            <div class="card">
+                <div class="card-body">
+                    <%= f.label :dimensions %><br/>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <%= f.label :width %><br/>
+                            <%= f.number_field :width, class: 'form-control' %>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <%= f.label :height %><br/>
+                            <%= f.number_field :height, class: 'form-control' %>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <%= f.label :depth %><br/>
+                            <%= f.number_field :depth, class: 'form-control' %>
+                        </div>
+                    </div>
+                    <br/>
+                    <%= f.select :units_id, Units.all.collect {|u| [u.name, u.id]}, {}, {class: 'form-control'} %>
                 </div>
             </div>
+            <br/>
+            <%= f.label :description %><br/>
+            <%= f.text_area :description, class: 'form-control' %>
+            <br/>
+            <%= f.label :classification %><br/>
+            <%= f.text_area :classification, class: 'form-control' %>
+            <br/>
+            <%= f.label :technique %><br/>
+            <%= f.text_area :technique, class: 'form-control' %>
+            <br/>
+            <%= f.label :decoration %><br/>
+            <%= f.text_area :decoration, class: 'form-control' %>
+            <br/>
+            <%= f.label :notes %><br/>
+            <%= f.text_area :notes, class: 'form-control' %>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <%= f.label :owner %><br/>
+            <%= f.text_field :owner, class: 'form-control' %>
+            <br/>
+            <%= f.label :deposit %><br/>
+            <%= f.text_field :deposit, class: 'form-control' %>
+            <br/>
+            <%= f.label :address %><br/>
+            <%= f.text_field :address, class: 'form-control' %>
+            <br/>
+            <%= f.label :inventory_no %>
+            <%= f.text_field :inventory_no, class:'form-control' %>
+            <br/>
+            <%= f.label :priority %><br/>
+            <%= f.select :priority_id, Priority.all.collect {|p| [p.name, p.id]}, {}, class: 'form-control' %>
+            <br/>
+            <%= f.label :state %><br/>
+            <%= f.select :state_id, State.all.collect {|s| [s.name, s.id]}, {}, class: 'form-control' %>
+            <br/>
+            <%= f.label :protection %><br/>
+            <%= f.select :protection_id, Protection.all.collect {|p| [p.name, p.id]}, {}, class: 'form-control' %>
+            <br/>
+            <%= f.label :categories %><br />
+            <div class="row">
+                <% Category.all.each do |category| %>
+                <div class="col-sm-12 col-md-6">
+                    <%= check_box_tag "restored_object[category_ids][]", category.id, f.object.categories.include?(category) %>
+                    <%= category.name %><br/>
+                </div>
+                <% end %>
+            </div>
+            <br/>
+            <%= f.label :materials %><br />
+            <div class="row">
+                <% Material.all.each do |material| %>
+                <div class="col-sm-12 col-md-6">
+                    <%= check_box_tag "restored_object[material_ids][]", material.id, f.object.materials.include?(material) %>
+                    <%= material.name %><br/>
+                </div>
+                <% end %>
+            </div>
+            <br/>
+            <%= f.label :deteriorations %><br />
+            <div class="row">
+                <% Deterioration.all.each do |deterioration| %>
+                <div class="col-sm-12 col-md-6">
+                    <%= check_box_tag "restored_object[deterioration_ids][]", deterioration.id, f.object.deteriorations.include?(deterioration) %>
+                    <%= deterioration.name %><br/>
+                </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <div id="pieces field">
+        <h2>Piezas</h2>
+        <div class="links">
+            <%= link_to_add_association f, :pieces do %>Añadir Pieza<% end %>
         </div>
     </div>
     <br/>
