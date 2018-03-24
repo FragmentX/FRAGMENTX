@@ -113,5 +113,5 @@
         </div>
     </div>
     <br/>
-    <%= f.submit :Guardar, class:'btn btn-primary' %>
+    <%= f.submit :Guardar, class:'btn btn-primary', onclick: "$('#loader').show(); $('#overlay').show()" %>
 <% end %>
