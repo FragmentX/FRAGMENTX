@@ -1,3 +1,5 @@
+require 'zip'
+
 class RestoredObjectsController < ApplicationController
   before_action :set_restored_object, only: %i[show edit update destroy]
 
