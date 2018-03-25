@@ -32,7 +32,7 @@
   padding: 5px;
   position: fixed;
   right: 5px;
-  z-index: 999;
+  z-index: 800;
 }
 
 .big {
@@ -108,6 +108,25 @@
   width: auto;
 }
 
+.loader {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid var(--main-focus-color);
+  border-radius: 50%;
+  position: fixed;
+  left: 45vw;
+  margin-top: 25vh;
+  width: 10vw;
+  height: 10vw;
+  display: none;
+  z-index: 999;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+
+  
 #measure {
   background: var(--main-bg-color);
   bottom: -20em;
@@ -170,6 +189,18 @@
   padding-bottom: 0;
 }
 
+#overlay, #overlay-threejs {
+  background: var(--main-dark-color);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 990;
+}
+
+#overlay {
+  display: none;
+}
+
 .right {
   float: right;
 }
@@ -221,6 +252,10 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.visible {
+  display: block;
 }
 
 input[type=range].slider {

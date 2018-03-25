@@ -29,6 +29,9 @@
             <%= @object.inventory_no %>
         <% else %>
             Not in inventory
+            <% @object.pieces.each do |p| %>
+                <%= p.matrix %>
+            <% end %>
         <% end %>
     </small>
   </div>
@@ -449,6 +452,7 @@
     );
 
     var w = new Array(gon.pieces.length);
+    var loaded = gon.pieces.length;
 
     function startWorker() {
         for(let index = 0; index < gon.pieces.length; index++) {
@@ -489,6 +493,13 @@
                 } else {
                 faltants.push(child);
                 object_f.add(child);
+                }
+
+                loaded--;
+                console.log(loaded);
+                if (loaded == 0) {
+                    $('#loader').hide();
+                    $('#overlay-threejs').hide();
                 }
             }, false);
             w[index].postMessage(gon.pieces[index]);

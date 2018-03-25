@@ -105,10 +105,13 @@
     </div>
     <div id="pieces field">
         <h2>Piezas</h2>
+        <%= label_tag :zip_file %>
+        <%= file_field_tag :zip_file, class:'form-control' %>
+        <br/>
         <div class="links">
             <%= link_to_add_association f, :pieces do %>Añadir Pieza<% end %>
         </div>
     </div>
     <br/>
-    <%= f.submit :Guardar, class:'btn btn-primary' %>
+    <%= f.submit :Guardar, class:'btn btn-primary', onclick: "$('#loader').show(); $('#overlay').show()" %>
 <% end %>

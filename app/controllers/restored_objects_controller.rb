@@ -41,6 +41,31 @@ class RestoredObjectsController < ApplicationController
   def create
     @object = RestoredObject.new(restored_object_params)
     @object.user_id = current_user.id
+
+    if params[:zip_file]
+      params[:pieces_attributes] = nil
+
+      puts "About to read the file"
+      Zip::File.open(params[:zip_file].path) do |zipfile|
+        puts "Reading zip file"
+        zipfile.glob('*{ply,stl,obj}') do |file|
+            puts "Reading #{file.name}"
+            tempfile = Tempfile.new(File.basename(file.name))
+            tempfile.binmode
+            tempfile.write file.get_input_stream.read
+
+            puts "Reading matrix"
+            matrix = zipfile.glob("#{file.name.split('.').first}.txt").first.get_input_stream.read
+            puts matrix
+
+            @object.pieces.build(model: tempfile, model_file_name: file.name,
+                                  name: file.name, matrix: matrix)
+
+            tempfile.close
+        end
+      end
+    end
+
     #authorize @object
     respond_to do |format|
       if @object.save
@@ -109,7 +134,7 @@ class RestoredObjectsController < ApplicationController
       :width, :height, :depth, :units_id, :state_id, :protection_id,
       :technique, :decoration, :owner, :deposit,
       :address, :longitude, :latitude, :in_inventory,
-      :inventory_no, :priority_id,
+      :inventory_no, :priority_id, :zip_file,
       pieces_attributes: [:id, :name, :description,
                           :model, :missing, :matrix, :restored_object_id, :_destroy],
       material_ids: [], category_ids: [], deterioration_ids: [])
