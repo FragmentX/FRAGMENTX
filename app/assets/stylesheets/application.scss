@@ -108,7 +108,7 @@
   width: auto;
 }
 
-#maesure {
+#measure {
   background: var(--main-bg-color);
   bottom: -20em;
   position: fixed;
@@ -119,19 +119,30 @@
   height: 10em;
 }
 
-.maesure-font {
+.measure-font {
   font-size: 300%;
   text-align: center;
 }
 
-.maesure-column {
+.measure-column {
   margin-top: 2em;
   margin-bottom: 2em;
 }
 
-.maesure-paragraph {
+.measure-paragraph {
   margin: 0em;
   text-align: center;
+}
+
+.measure-button {
+  background: var(--main-focus-color) !important;
+  border: none !important;  
+  width: 100%;
+}
+
+.measure-image {
+  width: 50px;
+  height: 50px;
 }
 
 #mini-branding {

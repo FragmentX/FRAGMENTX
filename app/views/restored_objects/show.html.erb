@@ -115,22 +115,22 @@
     <%= link_to "Back", restored_objects_path %>
   </div>
 </div>
-<div id="maesure">
+<div id="measure">
     <div class="container">
     <div class="row">
-        <div class="col-sm maesure-column">
-        <p class="maesure-paragraph">Points</p>
-        <p id="measurePo" class="maesure-font">0</p>
+        <div class="col-sm measure-column">
+          <p class="measure-paragraph">Points</p>
+          <p id="measurePo" class="measure-font">0</p>
         </div>
-        <div class="col-sm maesure-column">
-        <p class="maesure-paragraph">Maesure</p>
-        <p id="measureNo" class="maesure-font">0</p>
+        <div class="col-sm measure-column">
+          <p class="measure-paragraph">measure</p>
+          <p id="measureNo" class="measure-font">0</p>
         </div>
-        <div class="col-sm maesure-column">
-        <button onclick="deleteLastMesure()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/all.svg" /><br/>Remove last</button>
+        <div class="col-sm measure-column">
+          <button onclick="deleteLastMesure()" class="btn btn-primary measure-button"><img class="measure-image" src="/icons/removeLast.svg" /><br/>Remove last</button>
         </div>
-        <div class="col-sm maesure-column">
-        <button onclick="resetMesures()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/all.svg" /><br/>Remove all</button>
+        <div class="col-sm measure-column">
+          <button onclick="resetMesures()" class="btn btn-primary measure-button"><img class="measure-image" src="/icons/removeAll.svg" /><br/>Remove all</button>
         </div>
     </div>
     </div>
@@ -151,7 +151,7 @@
         <p>Model rotation</p>
         <div class="toolbar-section-row">
         <button id="pauseButton" onclick="changeRotationMode()" class="btn btn-primary toolbar-button big">
-            <i class="fas fa-pause"></i> Pause
+            <i class="fas fa-play"></i> Play
         </button>
         </div>
     </div>
@@ -166,27 +166,27 @@
     <div class="toolbar-section">
         <p>Cut object</p>
         <div class="toolbar-section-row">
-        <button onclick="setClip(0)" class="btn btn-primary toolbar-button clip-button">X</button>
-        <input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipX">
+            <button onclick="setClip(0)" class="btn btn-primary toolbar-button clip-button">X</button>
+            <input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipX">
         </div>
         <div class="toolbar-section-row">
-        <button onclick="setClip(1)" class="btn btn-primary toolbar-button clip-button">Y</button>
-        <input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipY">
+            <button onclick="setClip(1)" class="btn btn-primary toolbar-button clip-button">Y</button>
+            <input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipY">
         </div>
         <div class="toolbar-section-row">
-        <button onclick="setClip(2)" class="btn btn-primary toolbar-button clip-button">Z</button>
-        <input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipZ">
+            <button onclick="setClip(2)" class="btn btn-primary toolbar-button clip-button">Z</button>
+            <input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipZ">
         </div>
     </div>
     <div class="toolbar-section">
         <p>Tools</p>
         <div class="toolbar-section-row">
-        <button class="btn btn-primary toolbar-button" onclick="measures()"><img class="svg-icon" src="/icons/ruler.svg" /><br/>Measure</button>
-        <button class="btn btn-primary toolbar-button" onclick="wireframeSet()"><img class="svg-icon" src="/icons/wireframe.svg" /><br/>Wireframe</button>
-        <button class="btn btn-primary toolbar-button" onclick="addTorch()"><img class="svg-icon" src="/icons/light.svg" /><br/>Light</button>
+            <button class="btn btn-primary toolbar-button" onclick="measures()"><img class="svg-icon" src="/icons/ruler.svg" /><br/>Measure</button>
+            <button class="btn btn-primary toolbar-button" onclick="wireframeSet()"><img class="svg-icon" src="/icons/wireframe.svg" /><br/>Wireframe</button>
+            <button class="btn btn-primary toolbar-button" onclick="addTorch()"><img class="svg-icon" src="/icons/light.svg" /><br/>Light</button>
         </div>
         <div class="toolbar-section-row">
-        <button class="btn btn-primary toolbar-button big"><img class="inline-icon" src="/icons/pic.svg" /> Save view as image</button>
+            <button class="btn btn-primary toolbar-button big"><img class="inline-icon" src="/icons/pic.svg" /> Save view as image</button>
         </div>
         </div>
     </div>
@@ -222,6 +222,10 @@
     }
 
     function showInfo() {
+        hideMeasurebar();
+        if (measure) {
+            measures();
+        }        
         $('#info-container').animate({
             opacity: 1,
             right: "0"
@@ -229,14 +233,15 @@
     }
 
     function hideMeasurebar() {
-        $('#maesure').animate({
+        $('#measure').animate({
             opacity: 0.25,
             bottom: "-=1000"
         }, 500);
     }
 
     function showMeasurebar() {
-        $('#maesure').animate({
+        hideInfo();
+        $('#measure').animate({
             opacity: 1,
             bottom: "0"
         }, 500);
