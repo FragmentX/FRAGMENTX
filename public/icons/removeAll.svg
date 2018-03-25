@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 58.001282 58.001442"
+   version="1.1"
+   x="0px"
+   y="0px"
+   id="svg70"
+   sodipodi:docname="removeAll.svg"
+   width="58.001282"
+   height="58.001442"
+   inkscape:version="0.92.1 r15371">
+  <metadata
+     id="metadata76">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>17 -Space Geometry- (Outline)</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs74" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     id="namedview72"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="6.5103448"
+     inkscape:cx="22.591365"
+     inkscape:cy="34.705111"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g64" />
+  <title
+     id="title2">17 -Space Geometry- (Outline)</title>
+  <desc
+     id="desc4">Created with Sketch.</desc>
+  <g
+     id="g64"
+     style="fill:none;fill-rule:evenodd;stroke:none;stroke-width:1"
+     transform="translate(4.3996612e-4,9.4218318e-4)">
+    <circle
+       style="fill:none;stroke:#ffffff;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:4, 2;stroke-opacity:1;stroke-dashoffset:0"
+       id="path3716"
+       cx="10.502472"
+       cy="27.497589"
+       r="7.5029116" />
+    <circle
+       style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:4, 2;stroke-opacity:1;stroke-dashoffset:0"
+       id="path3716-9"
+       cx="29.502472"
+       cy="27.497589"
+       r="7.5029116" />
+    <circle
+       style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:4, 2;stroke-opacity:1;stroke-dashoffset:0"
+       id="path3716-9-8"
+       cx="48.502472"
+       cy="27.497589"
+       r="7.5029116" />
+  </g>
+</svg>
