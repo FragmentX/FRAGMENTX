@@ -108,6 +108,32 @@
   width: auto;
 }
 
+#maesure {
+  background: var(--main-bg-color);
+  bottom: -20em;
+  position: fixed;
+  right: 0;
+  border-top-left-radius: 5px;
+  opacity: 0.25;
+  width: 30em;
+  height: 10em;
+}
+
+.maesure-font {
+  font-size: 300%;
+  text-align: center;
+}
+
+.maesure-column {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.maesure-paragraph {
+  margin: 0em;
+  text-align: center;
+}
+
 #mini-branding {
   display: flex;
   left: 0;

@@ -115,6 +115,26 @@
     <%= link_to "Back", restored_objects_path %>
   </div>
 </div>
+<div id="maesure">
+    <div class="container">
+    <div class="row">
+        <div class="col-sm maesure-column">
+        <p class="maesure-paragraph">Points</p>
+        <p id="measurePo" class="maesure-font">0</p>
+        </div>
+        <div class="col-sm maesure-column">
+        <p class="maesure-paragraph">Maesure</p>
+        <p id="measureNo" class="maesure-font">0</p>
+        </div>
+        <div class="col-sm maesure-column">
+        <button onclick="deleteLastMesure()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/all.svg" /><br/>Remove last</button>
+        </div>
+        <div class="col-sm maesure-column">
+        <button onclick="resetMesures()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/all.svg" /><br/>Remove all</button>
+        </div>
+    </div>
+    </div>
+</div>
 <section id="toolbar">
   <div class="branding">
     <i class="fas fa-times right" onclick="hideToolbar()"></i>
@@ -161,7 +181,7 @@
     <div class="toolbar-section">
         <p>Tools</p>
         <div class="toolbar-section-row">
-        <button class="btn btn-primary toolbar-button" onclick="measure()"><img class="svg-icon" src="/icons/ruler.svg" /><br/>Measure</button>
+        <button class="btn btn-primary toolbar-button" onclick="measures()"><img class="svg-icon" src="/icons/ruler.svg" /><br/>Measure</button>
         <button class="btn btn-primary toolbar-button" onclick="wireframeSet()"><img class="svg-icon" src="/icons/wireframe.svg" /><br/>Wireframe</button>
         <button class="btn btn-primary toolbar-button" onclick="addTorch()"><img class="svg-icon" src="/icons/light.svg" /><br/>Light</button>
         </div>
@@ -208,11 +228,27 @@
         }, 500);
     }
 
+    function hideMeasurebar() {
+        $('#maesure').animate({
+            opacity: 0.25,
+            bottom: "-=1000"
+        }, 500);
+    }
+
+    function showMeasurebar() {
+        $('#maesure').animate({
+            opacity: 1,
+            bottom: "0"
+        }, 500);
+    }
+
+
     //var arrow     = null;
     var selection     = null;
     var wireframeMode = false;
     var torchMode     = false;
-    var rotationMode  = true;
+    var rotationMode  = false;
+    var measure       = false;
     var spotLight     = null;
     var strDownloadMime = "image/octet-stream";
     var mouse         = new THREE.Vector2();
@@ -252,6 +288,9 @@
     var object_f = new THREE.Object3D();
     var faltants = [];
 
+    var mesurePoints = new THREE.Object3D();
+    var mesurePointsList = [];
+
     var camera    = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
     var renderer = new THREE.WebGLRenderer({
@@ -283,20 +322,7 @@
         opacity: 0.0} );
     var sphere_world = new THREE.Mesh( geometry_world, material_world );
 
-    var geometryMesure = new THREE.SphereGeometry( 0.5, 32, 32 );
-
-    var materialOne = new THREE.MeshBasicMaterial( {
-        color: 0x0000ff,
-        side: THREE.DoubleSide,
-        clippingPlanes: clippingPlanes,
-        clipShadows: true} );
-    var sphereOne = new THREE.Mesh( geometryMesure, materialOne );
-    var materialTwo = new THREE.MeshBasicMaterial( {
-        color: 0xff0000,
-        side: THREE.DoubleSide,
-        clippingPlanes: clippingPlanes,
-        clipShadows: true} );
-    var sphereTwo = new THREE.Mesh( geometryMesure, materialTwo );
+    var geometryMesure = new THREE.SphereGeometry( 0.2, 32, 32 );
 
     var scene = new THREE.Scene();
     scene.add(object);
@@ -381,7 +407,7 @@
 
     window.addEventListener( 'resize', onWindowResize, false );
 
-    function onWindowResize(){
+    function onWindowResize() {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         camera.lookAt(scene.position);
@@ -398,7 +424,7 @@
     var render = function() {
         requestAnimationFrame(render);
         var delta = clock.getDelta();
-        if(rotationMode){
+        if(rotationMode) {
         object.rotation.y += delta/4;
         object_f.rotation.y += delta/4;
         }
@@ -420,12 +446,12 @@
     var w = new Array(gon.pieces.length);
 
     function startWorker() {
-        for(let index = 0; index < gon.pieces.length; index++){
+        for(let index = 0; index < gon.pieces.length; index++) {
             set_worker(index);
         }
     }
 
-    function set_worker(index){
+    function set_worker(index) {
         if(typeof(Worker) !== "undefined") {
             w[index] = new Worker('/js/parseModel.js');
             w[index].addEventListener("message", function (event) {
@@ -452,7 +478,7 @@
                 child.geometry.applyMatrix(scaleMatrix);
                 child.geometry.verticesNeedUpdate = true;
 
-                if( gon.missings[index] ){
+                if( gon.missings[index] ) {
                 pieces.push(child);
                 object.add(child);
                 } else {
@@ -472,78 +498,143 @@
         event.preventDefault();
         raycaster.setFromCamera(mouse, camera);
         intersects = raycaster.intersectObjects(pieces.concat(faltants));
+        if(!wireframeMode) {
+            if(selection !== null) {
+                selection.material = unselectedMAterial;
+            }
+        } else {
+            if(selection !== null) {
+                selection.material = wireframeMaterial;
+            }
+        }
         if (intersects.length > 0) {
-        if(!wireframeMode){
-            if(selection !== null){
-            selection.material = unselectedMAterial;
+            if (measure) {
+                if (event.button == 0) {
+                    var materialOne = new THREE.MeshBasicMaterial( {
+                        color: 0x4e8064,
+                        side: THREE.DoubleSide,
+                        clippingPlanes: clippingPlanes,
+                        clipShadows: true} );
+                    var sphereOne = new THREE.Mesh( geometryMesure, materialOne );
+                    sphereOne.position.set( intersects[ 0 ].point.x , intersects[ 0 ].point.y, intersects[ 0 ].point.z );
+                    mesurePointsList.push(sphereOne);
+                    mesurePoints.add(sphereOne);
+                    document.getElementById("measureNo").innerHTML = countMesure();
+                    document.getElementById("measurePo").innerHTML = mesurePointsList.length;
+                    scene.add(mesurePoints);
+                } else {
+                    intersects = raycaster.intersectObjects(mesurePointsList);
+                    var indexForRemove = mesurePointsList.indexOf(intersects[0].object);
+                    if (indexForRemove > -1) {
+                        mesurePointsList.splice(indexForRemove, 1);
+                    }
+                    mesurePoints.remove(intersects[0].object);
+                    document.getElementById("measurePo").innerHTML = mesurePointsList.length;
+                    document.getElementById("measureNo").innerHTML = countMesure();
+                }
+            } else {
+                selected = intersects[0].object;
+                if(!wireframeMode) {
+                    selected.material = selectionMaterial;
+                } else {
+                    selected.material = wireframeMaterialSelected;
+                }
+                selection = selected;
             }
-            selected = intersects[0].object;
-            selected.material = selectionMaterial;
-            selection = selected;
         } else {
-            if(selection !== null){
-            selection.material = wireframeMaterial;
+            if(torchMode & (event.button == 1)) {
+                intersects = raycaster.intersectObjects([sphere_world]);
+                scene.remove(sphere);
+                sphere.position.set( intersects[ 0 ].point.x , intersects[ 0 ].point.y, intersects[ 0 ].point.z );
+                scene.add(sphere);
+                spotLight.position.set( intersects[ 0 ].point.x, intersects[ 0 ].point.y, intersects[ 0 ].point.z );
             }
-            selected = intersects[0].object;
-            selected.material = wireframeMaterialSelected;
-            selection = selected;
-        }
-        } else {
-        intersects = raycaster.intersectObjects([sphere_world]);
-        console.log( intersects[ 0 ].point );
-        console.log(event.button);
-        if(torchMode & (event.button == 1)) {
-            scene.remove(sphere);
-            sphere.position.set( intersects[ 0 ].point.x , intersects[ 0 ].point.y, intersects[ 0 ].point.z );
-            scene.add(sphere);
-            spotLight.position.set( intersects[ 0 ].point.x, intersects[ 0 ].point.y, intersects[ 0 ].point.z );
-        }
         }
     });
 
     startWorker();
 
-    function goodParts(){
+    function goodParts() {
         allParts();
         scene.remove(object_f);
     }
 
-    function allParts(){
+    function allParts() {
         scene.add(object);
         scene.add(object_f);
     }
 
-    function faltantParts(){
+    function faltantParts() {
         allParts();
         scene.remove(object);
     }
 
-    function up_camera(){
+    function up_camera() {
         camera.position.z = 30;
         camera.position.y = 0;
         camera.position.x = 0;
         camera.lookAt(new THREE.Vector3(0, 0, 0));
     }
 
-    function down_camera(){
+    function down_camera() {
         camera.position.z = 0;
         camera.position.y = 30;
         camera.position.x = 0;
         camera.lookAt(new THREE.Vector3(0, 0, 0));
     }
 
-    function left_camera(){
+    function left_camera() {
         camera.position.z = 0;
         camera.position.y = 0;
         camera.position.x = 30;
         camera.lookAt(new THREE.Vector3(0, 0, 0));
     }
 
-    function rule() {
-        console.log("Cosas");
+    function measures() {
+        measure = !measure;
+        if(measure){
+            showMeasurebar();
+        } else {
+            hideMeasurebar();
+            scene.remove(mesurePoints);
+            resetMesures();
+        }
     }
 
-    function addTorch(){
+    function resetMesures() {
+        scene.remove(mesurePoints);
+        mesurePoints = new THREE.Object3D();
+        mesurePointsList = [];
+        document.getElementById("measurePo").innerHTML = mesurePointsList.length;
+        document.getElementById("measureNo").innerHTML = 0;
+    }
+
+    function deleteLastMesure() {
+        mesurePoints.remove(mesurePointsList.pop());
+        document.getElementById("measurePo").innerHTML = mesurePointsList.length;
+        document.getElementById("measureNo").innerHTML = countMesure();
+    }
+
+    function countMesure() {
+        var result = 0;
+        for (var i=0; i<(mesurePointsList.length-1); i++) {
+            var positionPointAnterior  = mesurePointsList[i].getWorldPosition();
+            var positionPointNow = mesurePointsList[i+1].getWorldPosition();
+            var distanceX = positionPointAnterior.x - positionPointNow.x;
+            var distanceY = positionPointAnterior.y - positionPointNow.y;
+            var distanceZ = positionPointAnterior.z - positionPointNow.z;
+            var distance  = Math.sqrt(distanceX*distanceX+distanceY*distanceY+distanceZ*distanceZ);
+            result += distance;
+        }
+        return precisionRound(result,1);
+    }
+
+    function precisionRound(number, precision) {
+        var factor = Math.pow(10, precision);
+        return Math.round(number * factor) / factor;
+    }
+
+    function addTorch() {
         if(!torchMode) {
         renderer.shadowMap.enabled = true;
         spotLight = new THREE.SpotLight( 0xffffff, 1 );
@@ -559,18 +650,18 @@
         spotLight.shadow.camera.far = 200;
         scene.add( spotLight );
         } else{
-        renderer.shadowMap.enabled = false;
-        scene.remove( spotLight );
-        scene.remove( sphere );
+            renderer.shadowMap.enabled = false;
+            scene.remove( spotLight );
+            scene.remove( sphere );
         }
         torchMode = !torchMode;
     }
 
-    function wireframeSet(){
+    function wireframeSet() {
         var index;
         var allpieces =  pieces.concat(faltants);
         for(index = 0; index < allpieces.length; index++) {
-            if(!wireframeMode){
+            if(!wireframeMode) {
             allpieces[index].material = wireframeMaterial;
             } else {
             allpieces[index].material = unselectedMAterial;
