@@ -581,6 +581,7 @@
                     selection = selected;
                 }
             } else {
+                selection = null;
                 if(torchMode & (event.button == 1)) {
                     intersects = raycaster.intersectObjects([sphere_world]);
                     scene.remove(sphere);
@@ -595,6 +596,7 @@
     startWorker();
 
     function resetMaterial() {
+        selection = null;
         if( wireframeMode ) {
             for(var i = 0; i < bboxes.length; i++) {
                 bbObjects[i].material = wireframeMaterial;
@@ -713,32 +715,34 @@
     }
 
     function nearbyPieces() {
-        var box3 = new THREE.Box3();
-        var box = new THREE.BoxHelper( selection, 0xffff00 );
-        box3.setFromObject( box );
-        var counter = 0;
-        for(var i = 0; i < bboxes.length; i++) {
-            var checker = box3.intersectsBox( bboxes[i] );
-            if(checker){
-                counter = counter + 1;
-                if( wireframeMode ) {
-                    bbObjects[i].material = wireframeMaterial;
-                } else {
-                    bbObjects[i].material = unselectedMAterial;
+        if (selection !== null) {
+            var box3 = new THREE.Box3();
+            var box = new THREE.BoxHelper( selection, 0xffff00 );
+            box3.setFromObject( box );
+            var counter = 0;
+            for(var i = 0; i < bboxes.length; i++) {
+                var checker = box3.intersectsBox( bboxes[i] );
+                if(checker){
+                    counter = counter + 1;
+                    if( wireframeMode ) {
+                        bbObjects[i].material = wireframeMaterial;
+                    } else {
+                        bbObjects[i].material = unselectedMAterial;
+                    }
+                    console.log(bbObjects[i].getWorldPosition());
+                    console.log(selection.getWorldPosition());
                 }
-                console.log(bbObjects[i].getWorldPosition());
-                console.log(selection.getWorldPosition());
+                else {
+                    bbObjects[i].material = material_translucid;
+                }
             }
-            else {
-                bbObjects[i].material = material_translucid;
+            if( wireframeMode ) {
+                selection.material = wireframeMaterialSelected;
+            } else {
+                selection.material = selectionMaterial;
             }
+            console.log(counter);
         }
-        if( wireframeMode ) {
-            selection.material = wireframeMaterialSelected;
-        } else {
-            selection.material = selectionMaterial;
-        }
-        console.log(counter);
     }
 
     function wireframeSet() {
