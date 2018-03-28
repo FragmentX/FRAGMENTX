@@ -259,6 +259,7 @@
     var rotationMode  = false;
     var measure       = false;
     var spotLight     = null;
+    var delayTime     = 0;
     var strDownloadMime = "image/octet-stream";
     var mouse         = new THREE.Vector2();
 
@@ -434,19 +435,14 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         raycaster.setFromCamera(mouse, camera);
         renderer.render(scene, camera);
-    };
-
-    this.onMouseMove = function(event) {
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        return mouse.y = -(event.clientY / window.innerHeight) * 2 + 1.15;
-    };
+    };  
 
     var render = function() {
         requestAnimationFrame(render);
         var delta = clock.getDelta();
         if(rotationMode) {
-        object.rotation.y += delta/4;
-        object_f.rotation.y += delta/4;
+            object.rotation.y += delta/4;
+            object_f.rotation.y += delta/4;
         }
         renderer.render(scene, camera);
     };
@@ -526,63 +522,72 @@
             console.log("Sorry, your browser does not support Web Workers...");
         }
     }
-
+    
     renderer.domElement.addEventListener('mousedown', function(event) {
-        var intersects, selected;
-        event.preventDefault();
-        raycaster.setFromCamera(mouse, camera);
-        intersects = raycaster.intersectObjects(pieces.concat(faltants));
-        if(!wireframeMode) {
-            if(selection !== null) {
-                selection.material = unselectedMAterial;
-            }
-        } else {
-            if(selection !== null) {
-                selection.material = wireframeMaterial;
-            }
-        }
-        if (intersects.length > 0) {
-            resetMaterial();
-            if (measure) {
-                if (event.button == 0) {
-                    var materialOne = new THREE.MeshBasicMaterial( {
-                        color: 0x4e8064,
-                        side: THREE.DoubleSide,
-                        clippingPlanes: clippingPlanes,
-                        clipShadows: true} );
-                    var sphereOne = new THREE.Mesh( geometryMesure, materialOne );
-                    sphereOne.position.set( intersects[ 0 ].point.x , intersects[ 0 ].point.y, intersects[ 0 ].point.z );
-                    mesurePointsList.push(sphereOne);
-                    mesurePoints.add(sphereOne);
-                    document.getElementById("measureNo").innerHTML = countMesure();
-                    document.getElementById("measurePo").innerHTML = mesurePointsList.length;
-                    scene.add(mesurePoints);
-                } else {
-                    intersects = raycaster.intersectObjects(mesurePointsList);
-                    var indexForRemove = mesurePointsList.indexOf(intersects[0].object);
-                    if (indexForRemove > -1) {
-                        mesurePointsList.splice(indexForRemove, 1);
-                    }
-                    mesurePoints.remove(intersects[0].object);
-                    document.getElementById("measurePo").innerHTML = mesurePointsList.length;
-                    document.getElementById("measureNo").innerHTML = countMesure();
+        var d = new Date();
+        delayTime = d.getTime();
+    })
+
+    renderer.domElement.addEventListener('mouseup', function(event) {
+        var d = new Date();
+        var deldel = d.getTime() - delayTime;
+        if( deldel < 300) {
+            var intersects, selected;
+            event.preventDefault();
+            raycaster.setFromCamera(mouse, camera);
+            intersects = raycaster.intersectObjects(pieces.concat(faltants));
+            if(!wireframeMode) {
+                if(selection !== null) {
+                    selection.material = unselectedMAterial;
                 }
             } else {
-                selected = intersects[0].object;
-                if(!wireframeMode) {
-                    selected.material = selectionMaterial;
-                } else {
-                    selected.material = wireframeMaterialSelected;
+                if(selection !== null) {
+                    selection.material = wireframeMaterial;
                 }
-                selection = selected;
             }
-        } else {
-            if(torchMode & (event.button == 1)) {
-                intersects = raycaster.intersectObjects([sphere_world]);
-                scene.remove(sphere);
-                sphere.position.set( intersects[ 0 ].point.x , intersects[ 0 ].point.y, intersects[ 0 ].point.z );
-                scene.add(sphere);
-                spotLight.position.set( intersects[ 0 ].point.x, intersects[ 0 ].point.y, intersects[ 0 ].point.z );
+            if (intersects.length > 0) {
+                resetMaterial();
+                if (measure) {
+                    if (event.button == 0) {
+                        var materialOne = new THREE.MeshBasicMaterial( {
+                            color: 0x4e8064,
+                            side: THREE.DoubleSide,
+                            clippingPlanes: clippingPlanes,
+                            clipShadows: true} );
+                        var sphereOne = new THREE.Mesh( geometryMesure, materialOne );
+                        sphereOne.position.set( intersects[ 0 ].point.x , intersects[ 0 ].point.y, intersects[ 0 ].point.z );
+                        mesurePointsList.push(sphereOne);
+                        mesurePoints.add(sphereOne);
+                        document.getElementById("measureNo").innerHTML = countMesure();
+                        document.getElementById("measurePo").innerHTML = mesurePointsList.length;
+                        scene.add(mesurePoints);
+                    } else {
+                        intersects = raycaster.intersectObjects(mesurePointsList);
+                        var indexForRemove = mesurePointsList.indexOf(intersects[0].object);
+                        if (indexForRemove > -1) {
+                            mesurePointsList.splice(indexForRemove, 1);
+                        }
+                        mesurePoints.remove(intersects[0].object);
+                        document.getElementById("measurePo").innerHTML = mesurePointsList.length;
+                        document.getElementById("measureNo").innerHTML = countMesure();
+                    }
+                } else {
+                    selected = intersects[0].object;
+                    if(!wireframeMode) {
+                        selected.material = selectionMaterial;
+                    } else {
+                        selected.material = wireframeMaterialSelected;
+                    }
+                    selection = selected;
+                }
+            } else {
+                if(torchMode & (event.button == 1)) {
+                    intersects = raycaster.intersectObjects([sphere_world]);
+                    scene.remove(sphere);
+                    sphere.position.set( intersects[ 0 ].point.x , intersects[ 0 ].point.y, intersects[ 0 ].point.z );
+                    scene.add(sphere);
+                    spotLight.position.set( intersects[ 0 ].point.x, intersects[ 0 ].point.y, intersects[ 0 ].point.z );
+                }
             }
         }
     });
