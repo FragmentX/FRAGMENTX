@@ -148,6 +148,9 @@
         <button onclick="goodParts()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/pieces.svg" /><br/>Present</button>
         <button onclick="faltantParts()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/missing.svg" /><br/>Missing</button>
         </div>
+        <div class="toolbar-section-row">
+            <button onclick="nearbyPieces()" class="btn btn-primary toolbar-button big"><img class="inline-icon" src="/icons/pic.svg" /> Show nearby pieces</button>
+        </div>
         <p>Model rotation</p>
         <div class="toolbar-section-row">
         <button id="pauseButton" onclick="changeRotationMode()" class="btn btn-primary toolbar-button big">
@@ -186,7 +189,7 @@
             <button class="btn btn-primary toolbar-button" onclick="addTorch()"><img class="svg-icon" src="/icons/light.svg" /><br/>Light</button>
         </div>
         <div class="toolbar-section-row">
-            <button class="btn btn-primary toolbar-button big"><img class="inline-icon" src="/icons/pic.svg" /> Save view as image</button>
+            <button onclick="saveAsImage()" class="btn btn-primary toolbar-button big"><img class="inline-icon" src="/icons/pic.svg" /> Save view as image</button>
         </div>
         </div>
     </div>
@@ -249,6 +252,7 @@
 
 
     //var arrow     = null;
+    var nearbyPiecesMode = false;
     var selection     = null;
     var wireframeMode = false;
     var torchMode     = false;
@@ -286,6 +290,8 @@
         else unclip(coord);
     }
 
+    var bboxes = [];
+    var bbObjects = [];
 
     var object = new THREE.Object3D();
     var pieces = [];
@@ -377,6 +383,15 @@
         clipShadows: true,
         wireframe: true
     });
+
+    // Material translucid
+    var material_translucid = new THREE.MeshBasicMaterial( {
+        color: 0xffffff,
+        side: THREE.DoubleSide,
+        clippingPlanes: clippingPlanes,
+        clipShadows: true,
+        transparent: true,
+        opacity: 0.1} );
 
     // mousemove
     window.addEventListener( 'mousemove', onmousemove, false );
@@ -485,15 +500,21 @@
                 child.geometry.verticesNeedUpdate = true;
 
                 if( gon.missings[index] ) {
-                pieces.push(child);
-                object.add(child);
+                    pieces.push(child);
+                    object.add(child);
                 } else {
-                faltants.push(child);
-                object_f.add(child);
+                    faltants.push(child);
+                    object_f.add(child);
                 }
 
+                // Test to adyacent content
+                var boundingBox = new THREE.Box3();
+                bbObjects.push(child);
+                var helperboundingBox = new THREE.BoxHelper( child, 0xffff00 );
+                boundingBox.setFromObject( helperboundingBox );
+                bboxes.push(boundingBox);
+                // end of the test
                 loaded--;
-                console.log(loaded);
                 if (loaded == 0) {
                     $('#loader').hide();
                     $('#overlay-threejs').hide();
@@ -521,6 +542,7 @@
             }
         }
         if (intersects.length > 0) {
+            resetMaterial();
             if (measure) {
                 if (event.button == 0) {
                     var materialOne = new THREE.MeshBasicMaterial( {
@@ -567,19 +589,34 @@
 
     startWorker();
 
+    function resetMaterial() {
+        if( wireframeMode ) {
+            for(var i = 0; i < bboxes.length; i++) {
+                bbObjects[i].material = wireframeMaterial;
+            }
+        } else {
+            for(var i = 0; i < bboxes.length; i++) {
+                bbObjects[i].material = unselectedMAterial;
+            }
+        }
+    }
+
     function goodParts() {
         allParts();
         scene.remove(object_f);
+        resetMaterial();
     }
 
     function allParts() {
         scene.add(object);
         scene.add(object_f);
+        resetMaterial();
     }
 
     function faltantParts() {
         allParts();
         scene.remove(object);
+        resetMaterial();
     }
 
     function up_camera() {
@@ -618,7 +655,7 @@
         scene.remove(mesurePoints);
         mesurePoints = new THREE.Object3D();
         mesurePointsList = [];
-        document.getElementById("measurePo").innerHTML = mesurePointsList.length;
+        document.getElementById("measurePo").innerHTML = 0;
         document.getElementById("measureNo").innerHTML = 0;
     }
 
@@ -670,14 +707,43 @@
         torchMode = !torchMode;
     }
 
+    function nearbyPieces() {
+        var box3 = new THREE.Box3();
+        var box = new THREE.BoxHelper( selection, 0xffff00 );
+        box3.setFromObject( box );
+        var counter = 0;
+        for(var i = 0; i < bboxes.length; i++) {
+            var checker = box3.intersectsBox( bboxes[i] );
+            if(checker){
+                counter = counter + 1;
+                if( wireframeMode ) {
+                    bbObjects[i].material = wireframeMaterial;
+                } else {
+                    bbObjects[i].material = unselectedMAterial;
+                }
+                console.log(bbObjects[i].getWorldPosition());
+                console.log(selection.getWorldPosition());
+            }
+            else {
+                bbObjects[i].material = material_translucid;
+            }
+        }
+        if( wireframeMode ) {
+            selection.material = wireframeMaterialSelected;
+        } else {
+            selection.material = selectionMaterial;
+        }
+        console.log(counter);
+    }
+
     function wireframeSet() {
         var index;
         var allpieces =  pieces.concat(faltants);
         for(index = 0; index < allpieces.length; index++) {
             if(!wireframeMode) {
-            allpieces[index].material = wireframeMaterial;
+                allpieces[index].material = wireframeMaterial;
             } else {
-            allpieces[index].material = unselectedMAterial;
+                allpieces[index].material = unselectedMAterial;
             }
         }
         wireframeMode = !wireframeMode;
@@ -694,7 +760,6 @@
 
     function saveAsImage() {
             var imgData, imgNode;
-
             try {
                 var strMime = "image/jpeg";
                 imgData = renderer.domElement.toDataURL(strMime);
