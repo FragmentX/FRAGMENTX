@@ -1,0 +1,13 @@
+<% RestoredObject.all.each do |obj| %>
+    <div class="card">
+        <div class="card-body">   
+            <% obj.category_ids.each do |cat| %>
+                <p><%= Category.find(cat).name %></p>
+            <% end %>
+        </div>
+        <div class="card-footer">
+            <%= time_ago_in_words obj.created_at %>
+        </div>
+    </div>
+    <br/>
+<% end %>

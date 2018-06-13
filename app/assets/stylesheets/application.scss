@@ -51,9 +51,25 @@
   padding-bottom: 1em;
 }
 
+.card-custom-style {
+  border-radius: 5px !important;
+  background: rgba(3, 40, 64, 0.8);
+  margin-left: 0.1em !important;
+  margin-right: 0.1em !important;
+  height: 5em !important;
+}
+
+.centred-objects {
+  text-align: center;
+}
+
 .clip-button {
   margin-right: 5px;
   width: auto !important;
+}
+
+.color_buttons_editor {
+  background: rgba(3, 40, 64, 0.8);
 }
 
 #editor {
@@ -187,6 +203,10 @@
 
 .no-padding {
   padding-bottom: 0;
+}
+
+.no-underline { 
+  text-decoration: none !important
 }
 
 #overlay, #overlay-threejs {
