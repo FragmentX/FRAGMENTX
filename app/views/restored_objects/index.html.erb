@@ -1,17 +1,19 @@
-<%= link_to "Añadir objeto", new_restored_object_path, class: 'btn btn-primary right' %>
-<h1>Objetos restaurados</h1>
+<div class="container">
+    <%= link_to "Añadir objeto", new_restored_object_path, class: 'btn btn-primary right' %>
+    <h1>Objetos restaurados</h1>
 
-<% @objects.each do |obj| %>
-    <div class="card">
-        <div class="card-body">
-            <h2>
-                <%= link_to obj.title, obj, data: { no_turbolink: true } %> <span class="badge badge-pill badge-info"><%= obj.pieces.count %> pieces </span>
-            </h2>
-            <p><%= obj.description %>
+    <% @objects.each do |obj| %>
+        <div class="card">
+            <div class="card-body">
+                <h2>
+                    <%= link_to obj.title, obj, data: { no_turbolink: true } %> <span class="badge badge-pill badge-info"><%= obj.pieces.count %> pieces </span>
+                </h2>
+                <p><%= obj.description %>
+            </div>
+            <div class="card-footer">
+                <%= time_ago_in_words obj.created_at %>
+            </div>
         </div>
-        <div class="card-footer">
-            <%= time_ago_in_words obj.created_at %>
-        </div>
-    </div>
-    <br/>
-<% end %>
+        <br/>
+    <% end %>
+</div>

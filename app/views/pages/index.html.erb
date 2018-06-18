@@ -1,42 +1,75 @@
-<div class="centred-objects">
-  <div class="card-group">
-    <% Category.all[0..(Category.all.count/2+1)].each do |category| %>
-    <div class="card card-custom-style">
-      <div class="card-body text-center ">
-       <h8 class="card-title text-white">           
-        <%= link_to category, class:'text-white no-underline' do %>
-          <%= category.name %> 
-        <% end %>
-      </h8>
+<div class="container">
+  <div class="centred-objects">
+    <div class="card-group">
+      <% Category.all[0..(Category.all.count/2+1)].each do |category| %>
+      <div class="card card-custom-style">
+        <div class="card-body text-center ">
+         <h8 class="card-title text-white">           
+          <%= link_to category, class:'text-white no-underline' do %>
+            <%= category.name %> 
+          <% end %>
+        </h8>
+        </div>
       </div>
+      <% end %>
     </div>
+    </br>
+    <div class="card-group">
+      <% Category.all[(Category.all.count/2+1)..(Category.all.count)].each do |category| %>
+      <div class="card card-custom-style">
+        <div class="card-body text-center ">
+         <%= link_to category, class:'text-white no-underline' do %>
+            <%= category.name %> 
+          <% end %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    </br>
+    </br>
+    </br>
+    <% RestoredObject.all[0..5].each do |restored_object| %>
+      <div class="card d-inline-block" style="width: 18rem;">
+        <img class="card-img-top" src="https://image.ibb.co/nFSgNo/Captura.png" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title"> <%= restored_object.title %> </h5>
+          <p class="card-text"> <%= restored_object.description.truncate(30)  %> </p>
+          <%= link_to restored_object, class:'btn color_buttons_editor text-white' do %>
+            Go somewhere
+          <% end %>
+        </div>
+      </div>
     <% end %>
   </div>
-  </br>
-  <div class="card-group">
-    <% Category.all[(Category.all.count/2+1)..(Category.all.count)].each do |category| %>
-    <div class="card card-custom-style">
-      <div class="card-body text-center ">
-       <%= link_to category, class:'text-white no-underline' do %>
-          <%= category.name %> 
-        <% end %>
-      </div>
-    </div>
-    <% end %>
-  </div>
-  </br>
-  </br>
-  </br>
-  <% RestoredObject.all.each do |restored_object| %>
-    <div class="card d-inline-block" style="width: 18rem;">
+</div>
+<section class="beauty">
+  <div class="container float-right">
+    <div class="card" style="width: 18rem;">
       <img class="card-img-top" src="https://image.ibb.co/nFSgNo/Captura.png" alt="Card image cap">
       <div class="card-body">
-        <h5 class="card-title"> <%= restored_object.title %> </h5>
-        <p class="card-text"> <%= restored_object.description.truncate(30)  %> </p>
-        <%= link_to restored_object, class:'btn color_buttons_editor text-white' do %>
-          Go somewhere
+        <% id = rand(4..(RestoredObject.all.count)) %>
+        <%= RestoredObject.find(id).title %>
+        <%= link_to RestoredObject.find(id), class:'btn color_buttons_editor text-white' do %>
+            Go somewhere
         <% end %>
+        <p class="card-text"></p>
       </div>
     </div>
-  <% end %>
+  </div>
+</section>
+<div class="container">
+  <div class="centred-objects">
+    <% RestoredObject.all[5..7].each do |restored_object| %>
+      <div class="card d-inline-block" style="width: 18rem;">
+        <img class="card-img-top" src="https://image.ibb.co/nFSgNo/Captura.png" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title"> <%= restored_object.title %> </h5>
+          <p class="card-text"> <%= restored_object.description.truncate(30)  %> </p>
+          <%= link_to restored_object, class:'btn color_buttons_editor text-white' do %>
+            Go somewhere
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>

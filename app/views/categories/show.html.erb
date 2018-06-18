@@ -1,1 +1,30 @@
-hihi
+<div class="container">
+  <div class="centred-objects">
+    <h1><%= @category.name %></h1>  
+      <% RestoredObject.all.each do |obj| %>
+          <% if (@category.id).in?(obj.category_ids) %>
+            <div class="card d-inline-block align-top" style="width: 10rem;">
+                <div class="card-body card-custom-category">                       
+                  <div class="card-text card-text">
+                    <p><%= obj.title  %> </p>
+                    <p>
+                    <% obj.category_ids.each do |cat| %>
+                        <%= Category.find(cat).name %>,              
+                    <% end %>   
+                    </p>  
+                    <p><%= obj.description.truncate(30) %></p>                           
+                  </div>
+                  <div class="align-text-bottom">
+                  <%= link_to obj, class:'btn color_buttons_editor text-white ' do %>  
+                      Go somewhere
+                  <% end %> 
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <p><%= time_ago_in_words obj.created_at %></p>            
+                </div>                
+            </div>
+          <% end %>        
+      <% end %>  
+  </div>
+</div>

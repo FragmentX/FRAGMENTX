@@ -35,6 +35,19 @@
   z-index: 800;
 }
 
+.beauty {
+  width: 150%;
+  height: 26em;
+  margin-top: 5em;
+  margin-bottom: 5em;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  background-image: url('https://images.freeimages.com/images/large-previews/fd8/masks-1548494.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center; 
+}
+
 .big {
   font-size: 1.5vw;
 }
@@ -50,6 +63,15 @@
   padding: 0.5em;
   padding-bottom: 1em;
 }
+
+.card-custom-category {
+  height: 18em;
+}
+
+.card-custom-footer {
+  height: 5em;
+}
+
 
 .card-custom-style {
   border-radius: 5px !important;
@@ -70,6 +92,10 @@
 
 .color_buttons_editor {
   background: rgba(3, 40, 64, 0.8);
+}
+
+.card-text {
+  height: 80%;
 }
 
 #editor {
@@ -223,6 +249,10 @@
 
 .right {
   float: right;
+}
+
+.right-objects {
+  text-align: right;
 }
 
 .svg-icon {
