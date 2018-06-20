@@ -5,9 +5,19 @@ class CategoriesController < ApplicationController
     @objects     = RestoredObject.all
     half_size    = @categories.count/2+1
     @first_half  = @categories[0..half_size] 
-    @second_half = @categories[half_size..(@categories.count)]
-    @first_sixs_elements       = @objects[0..5]
-    @second_three_elements     = @objects[5..7]
+    @second_half = @categories[half_size..(@categories.count-1)]
+    if @objects.count >= 6
+      @first_sixs_elements      = @objects[0..5]
+      if @objects.count >= 12
+        @second_three_elements  = @objects[5..7]
+      else
+        @second_three_elements  = @objects[5..(@categories.count-1)]
+      end
+    else
+      @first_sixs_elements      = @objects[0..(@categories.count-1)]
+      @second_three_elements    = nil
+    end    
+    
     @random_outstanding_object = getRandomObject
   end
 
