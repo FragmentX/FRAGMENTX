@@ -1,15 +1,15 @@
 <div class="container">
   <div class="centred-objects">
     <h1><%= @category.name %></h1>  
-      <% RestoredObject.all.each do |obj| %>
+      <% @objects.each do |obj| %>
           <% if (@category.id).in?(obj.category_ids) %>
-            <div class="card d-inline-block align-top" style="width: 10rem;">
+            <div class="card d-inline-block align-top" style="width: 15rem;">
                 <div class="card-body card-custom-category">                       
                   <div class="card-text card-text">
                     <p><%= obj.title  %> </p>
                     <p>
-                    <% obj.category_ids.each do |cat| %>
-                        <%= Category.find(cat).name %>,              
+                    <% obj.categories.each do |cat| %>
+                        <%= cat.name %>,              
                     <% end %>   
                     </p>  
                     <p><%= obj.description.truncate(30) %></p>                           
