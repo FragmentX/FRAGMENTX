@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="centred-objects">
+    <div class="index-up-w">
+        <div class="card-group">
+          <% @first_half.each do |category| %>
+          <div class="card card-custom-style">
+            <div class="card-body text-center ">
+             <h8 class="card-title text-white">           
+              <%= link_to category, class:'text-white no-underline' do %>
+                <%= category.name %> 
+              <% end %>
+            </h8>
+            </div>
+          </div>
+          <% end %>
+        </div>
+    </div>
+    </br>
+    <div class="index-up-w">
+        <div class="card-group">
+          <% @second_half.each do |category| %>
+          <div class="card card-custom-style">
+            <div class="card-body text-center ">
+             <%= link_to category, class:'text-white no-underline' do %>
+                <%= category.name %> 
+              <% end %>
+            </div>
+          </div>
+          <% end %>
+        </div>
+    </div>
+    </br>
+    </br>
+    </br>
+    <% @first_sixs_elements.each do |restored_object| %>
+      <div class="card d-inline-block" style="width: 18rem;">
+        <img class="card-img-top" src="https://image.ibb.co/nFSgNo/Captura.png" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title"> <%= restored_object.title %> </h5>
+          <p class="card-text"> <%= restored_object.description.truncate(30)  %> </p>
+          <%= link_to restored_object, class:'btn color_buttons_editor text-white' do %>
+            Go somewhere
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<section class="beauty">
+  <div class="container float-right">
+    <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src="https://image.ibb.co/nFSgNo/Captura.png" alt="Card image cap">
+      <div class="card-body">
+        <%= @random_outstanding_object.title %>
+        <%= link_to @random_outstanding_object, class:'btn color_buttons_editor text-white' do %>
+            Go somewhere
+        <% end %>
+        <p class="card-text"></p>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="container">
+  <div class="centred-objects">
+    <% @second_three_elements.each do |restored_object| %>
+      <div class="card d-inline-block" style="width: 18rem;">
+        <img class="card-img-top" src="https://image.ibb.co/nFSgNo/Captura.png" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title"> <%= restored_object.title %> </h5>
+          <p class="card-text"> <%= restored_object.description.truncate(30)  %> </p>
+          <%= link_to restored_object, class:'btn color_buttons_editor text-white' do %>
+            Go somewhere
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+

@@ -42,8 +42,7 @@ class RestoredObjectsController < ApplicationController
   # POST /restored_objects.json
   def create
     @object = RestoredObject.new(restored_object_params)
-    @object.user_id = current_user.id
-
+    @object.user_id = current_user.id    
     if params[:zip_file]
       params[:pieces_attributes] = nil
 
