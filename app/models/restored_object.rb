@@ -28,4 +28,7 @@ class RestoredObject < ApplicationRecord
 
     geocoded_by :address
     after_validation :geocode
+
+    has_attached_file :avatar
+    validates_attachment_content_type :avatar, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 end
