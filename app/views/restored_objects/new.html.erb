@@ -1,3 +1,4 @@
+<div class="container">
 <h1>Añadiendo un nuevo objeto</h1>
 
 <%= form_for(@object, :html => { multipart: true }) do |f| %>
@@ -103,6 +104,12 @@
             </div>
         </div>
     </div>
+     <div class="form-group">
+        <%= f.label :avatar %>
+        <div class="col-sm-6">
+            <%= f.file_field :avatar %>
+        </div>
+    </div>
     <div id="pieces field">
         <h2>Piezas</h2>
         <%= label_tag :zip_file %>
@@ -115,3 +122,4 @@
     <br/>
     <%= f.submit :Guardar, class:'btn btn-primary', onclick: "$('#loader').show(); $('#overlay').show()" %>
 <% end %>
+</div>

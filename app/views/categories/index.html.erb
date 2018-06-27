@@ -55,7 +55,7 @@
 <section class="beauty">
   <div class="float-right beurty-prop">
     <div class="card" style="width: 18rem;">
-      <img class="card-img-top" src="https://image.ibb.co/nFSgNo/Captura.png" alt="Card image cap">
+      <img class="card-img-top" <%= image_tag(@random_outstanding_object.avatar.url(:thumb)) %>
       <div class="card-body">
         <%= @random_outstanding_object.title %>
         <%= link_to @random_outstanding_object, class:'btn color_buttons_editor text-white' do %>
