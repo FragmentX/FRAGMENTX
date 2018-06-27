@@ -29,6 +29,6 @@ class RestoredObject < ApplicationRecord
     geocoded_by :address
     after_validation :geocode
 
-    has_attached_file :avatar
+    has_attached_file :avatar, default_url: "https://image.ibb.co/nFSgNo/Captura.png"
     validates_attachment_content_type :avatar, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 end

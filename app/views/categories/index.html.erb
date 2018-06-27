@@ -34,7 +34,7 @@
     </br>
     <% @first_sixs_elements.each do |restored_object| %>
       <div class="card d-inline-block" style="width: 18rem;">
-        <img class="card-img-top" src="https://image.ibb.co/nFSgNo/Captura.png" alt="Card image cap">
+        <img class="card-img-top" <%= image_tag(restored_object.avatar.url(:thumb)) %>
         <div class="card-body">
           <h5 class="card-title"> <%= restored_object.title %> </h5>
           <p class="card-text"> <%= restored_object.description.truncate(30)  %> </p>
@@ -49,7 +49,7 @@
 <section class="beauty">
   <div class="container float-right">
     <div class="card" style="width: 18rem;">
-      <img class="card-img-top" src="https://image.ibb.co/nFSgNo/Captura.png" alt="Card image cap">
+      <img class="card-img-top" <%= image_tag(@random_outstanding_object.avatar.url(:thumb)) %>
       <div class="card-body">
         <%= @random_outstanding_object.title %>
         <%= link_to @random_outstanding_object, class:'btn color_buttons_editor text-white' do %>
@@ -63,14 +63,14 @@
 <div class="container">
   <div class="centred-objects">
     <% @second_three_elements.each do |restored_object| %>
-      <div class="card d-inline-block" style="width: 18rem;">
-        <img class="card-img-top" src="https://image.ibb.co/nFSgNo/Captura.png" alt="Card image cap">
+      <div class="card d-inline-block" style="width: 18rem;">        
+        <img class="card-img-top" <%= image_tag(restored_object.avatar.url(:thumb)) %>
         <div class="card-body">
           <h5 class="card-title"> <%= restored_object.title %> </h5>
           <p class="card-text"> <%= restored_object.description.truncate(30)  %> </p>
           <%= link_to restored_object, class:'btn color_buttons_editor text-white' do %>
             Go somewhere
-          <% end %>
+          <% end %>          
         </div>
       </div>
     <% end %>
