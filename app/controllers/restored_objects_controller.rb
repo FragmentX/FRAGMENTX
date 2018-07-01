@@ -131,7 +131,7 @@ class RestoredObjectsController < ApplicationController
 
   def restored_object_params
     params.require(:restored_object).permit(:title, :description, :notes,
-      :classification, :author, :epoch,
+      :classification, :author, :epoch, :avatar,
       :width, :height, :depth, :units_id, :state_id, :protection_id,
       :technique, :decoration, :owner, :deposit,
       :address, :longitude, :latitude, :in_inventory,
