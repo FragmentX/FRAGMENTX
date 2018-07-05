@@ -161,9 +161,9 @@
     <div class="toolbar-section">
         <p>Perspective</p>
         <div class="toolbar-section-row">
-        <button class="btn btn-primary toolbar-button" onclick="down_camera()"><img class="svg-icon" src="/icons/xz.svg" /><br/>XZ</button>
-        <button class="btn btn-primary toolbar-button" onclick="up_camera()"><img class="svg-icon" src="/icons/xy.svg" /><br/>XY</button>
-        <button class="btn btn-primary toolbar-button" onclick="left_camera()"><img class="svg-icon" src="/icons/zy.svg" /><br/>ZY</button>
+        <button class="btn btn-primary toolbar-button" onclick="downCamera()"><img class="svg-icon" src="/icons/xz.svg" /><br/>XZ</button>
+        <button class="btn btn-primary toolbar-button" onclick="upCamera()"><img class="svg-icon" src="/icons/xy.svg" /><br/>XY</button>
+        <button class="btn btn-primary toolbar-button" onclick="leftCamera()"><img class="svg-icon" src="/icons/zy.svg" /><br/>ZY</button>
         </div>
     </div>
     <div class="toolbar-section">
@@ -291,16 +291,16 @@
         else unclip(coord);
     }
 
-    var bboxes = [];
+    var bBoxes    = [];
     var bbObjects = [];
 
-    var object = new THREE.Object3D();
-    var pieces = [];
+    var object    = new THREE.Object3D();
+    var pieces    = [];
 
-    var object_f = new THREE.Object3D();
-    var faltants = [];
+    var objectF  = new THREE.Object3D();
+    var faltants  = [];
 
-    var mesurePoints = new THREE.Object3D();
+    var mesurePoints     = new THREE.Object3D();
     var mesurePointsList = [];
 
     var camera    = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -316,30 +316,21 @@
 
     // Spheres of light, world and measure
     var geometry = new THREE.SphereGeometry( 5, 32, 32 );
-    var material = new THREE.MeshBasicMaterial( {
-        color: 0xffff00,
-        side: THREE.DoubleSide,
-        clippingPlanes: clippingPlanes,
-        clipShadows: true} );
+    var material = materialFactory(true, 0xffff00, THREE.DoubleSide, clippingPlanes, true, false, 1, false);
+
     var sphere = new THREE.Mesh( geometry, material );
 
-    var geometry_world = new THREE.SphereGeometry( 100, 32, 32 );
-    var material_world = new THREE.MeshBasicMaterial( {
-        color: 0xffffff,
-        side: THREE.DoubleSide,
-        clippingPlanes: clippingPlanes,
-        clipShadows: true,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.0} );
-    var sphere_world = new THREE.Mesh( geometry_world, material_world );
+    var geometryWorld = new THREE.SphereGeometry( 100, 32, 32 );
+    materialWorld = materialFactory(true, 0xffffff, THREE.DoubleSide, clippingPlanes, true, true, 0.0, true);
+
+    var sphereWorld = new THREE.Mesh( geometryWorld, materialWorld );
 
     var geometryMesure = new THREE.SphereGeometry( 0.2, 32, 32 );
 
     var scene = new THREE.Scene();
     scene.add(object);
-    scene.add(object_f);
-    scene.add(sphere_world);
+    scene.add(objectF);
+    scene.add(sphereWorld);
 
     // render
     renderer.setPixelRatio(window.devicePixelRatio);
@@ -354,68 +345,47 @@
     // raycaster
     raycaster = new THREE.Raycaster();
 
-    // selection material
-    selectionMaterial = new THREE.MeshLambertMaterial({
-        color: 0x40e0d0,
-        side: THREE.DoubleSide,
-        clippingPlanes: clippingPlanes,
-        clipShadows: true
-        });
-    // normal material
-    unselectedMAterial = new THREE.MeshLambertMaterial({
-        color: 0xcdb380,
-        side: THREE.DoubleSide,
-        clippingPlanes: clippingPlanes,
-        clipShadows: true
-        });
-    // wireframe material
-    wireframeMaterial = new THREE.MeshBasicMaterial({
-        color: 0xe8ddcb,
-        side: THREE.DoubleSide,
-        clippingPlanes: clippingPlanes,
-        clipShadows: true,
-        wireframe: true
-    });
-    // wireframe material
-    wireframeMaterialSelected = new THREE.MeshBasicMaterial({
-        color: 0x40e0d0,
-        side: THREE.DoubleSide,
-        clippingPlanes: clippingPlanes,
-        clipShadows: true,
-        wireframe: true
-    });
+    // Selection material
+    selectionMaterial  = materialFactory(false, 0x40e0d0, THREE.DoubleSide, clippingPlanes, true, false, 1, false);
 
-    // Material translucid
-    var material_translucid = new THREE.MeshBasicMaterial( {
-        color: 0xffffff,
-        side: THREE.DoubleSide,
-        clippingPlanes: clippingPlanes,
-        clipShadows: true,
-        transparent: true,
-        opacity: 0.1} );
+    // Normal material
+    unselectedMAterial = materialFactory(false, 0xcdb380, THREE.DoubleSide, clippingPlanes, true, false, 1, false);
+
+    // Wireframe material
+    wireframeMaterial = materialFactory(true, 0xe8ddcb, THREE.DoubleSide, clippingPlanes, true, false, 1, true);
+
+    // Wireframe material
+    wireframeMaterialSelected = materialFactory(true, 0x40e0d0, THREE.DoubleSide, clippingPlanes, true, false, 1, true);
+
+    // Translucid material
+    var materialTranslucid = materialFactory(true, 0xffffff, THREE.DoubleSide, clippingPlanes, true, true, 0.1, false);
+
+    // Measure material
+    materialOne = materialFactory(true, 0x4e8064, THREE.DoubleSide, clippingPlanes, true, false, 1, false);
+
 
     // mousemove
     window.addEventListener( 'mousemove', onmousemove, false );
     function onmousemove(event) {
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.x =  (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     };
 
-    // camera
+    // Set up camera
     camera.position.z = 30;
     camera.lookAt(new THREE.Vector3(0, 0, 0));
     scene.add(camera);
 
     var clock = new THREE.Clock();
 
-    // orbit, pan, zoom controls
+    // Set up orbit, pan, zoom controls
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableZoom = true;
     controls.addEventListener('change', function() {
         return render;
     });
 
-    // lightning
+    // Set up Lights
     directionalLight = new THREE.DirectionalLight(0xffaa44, 0.8, 100);
     directionalLight.position.set(10, 5, 10);
     directionalLight.castShadow = true;
@@ -435,14 +405,14 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         raycaster.setFromCamera(mouse, camera);
         renderer.render(scene, camera);
-    };  
+    };
 
     var render = function() {
         requestAnimationFrame(render);
         var delta = clock.getDelta();
         if(rotationMode) {
             object.rotation.y += delta/4;
-            object_f.rotation.y += delta/4;
+            objectF.rotation.y += delta/4;
         }
         renderer.render(scene, camera);
     };
@@ -451,8 +421,8 @@
 
     var loader = new THREE.PLYLoader();
 
-    var rotate_m = new THREE.Matrix4();
-    rotate_m.set(
+    var rotateM = new THREE.Matrix4();
+    rotateM.set(
                     1,  0, 0, 0,
                     0,  0, 1, 0,
                     0, -1, 0, 0,
@@ -464,11 +434,11 @@
 
     function startWorker() {
         for(let index = 0; index < gon.pieces.length; index++) {
-            set_worker(index);
+            setWorker(index);
         }
     }
 
-    function set_worker(index) {
+    function setWorker(index) {
         if(typeof(Worker) !== "undefined") {
             w[index] = new Worker('/js/parseModel.js');
             w[index].addEventListener("message", function (event) {
@@ -490,7 +460,7 @@
                 var scaleMatrix = new THREE.Matrix4();
                 var matrix = new THREE.Matrix4();
                 scaleMatrix.fromArray(gon.matrices[index].trim().split(' ').filter(function(val) { return val.length != 0; })).transpose();
-                scaleMatrix.multiplyMatrices ( rotate_m, scaleMatrix );
+                scaleMatrix.multiplyMatrices ( rotateM, scaleMatrix );
 
                 child.geometry.applyMatrix(scaleMatrix);
                 child.geometry.verticesNeedUpdate = true;
@@ -500,7 +470,7 @@
                     object.add(child);
                 } else {
                     faltants.push(child);
-                    object_f.add(child);
+                    objectF.add(child);
                 }
 
                 // Test to adyacent content
@@ -508,7 +478,7 @@
                 bbObjects.push(child);
                 var helperboundingBox = new THREE.BoxHelper( child, 0xffff00 );
                 boundingBox.setFromObject( helperboundingBox );
-                bboxes.push(boundingBox);
+                bBoxes.push(boundingBox);
                 // end of the test
                 loaded--;
                 if (loaded == 0) {
@@ -522,7 +492,7 @@
             console.log("Sorry, your browser does not support Web Workers...");
         }
     }
-    
+
     renderer.domElement.addEventListener('mousedown', function(event) {
         var d = new Date();
         delayTime = d.getTime();
@@ -549,11 +519,6 @@
                 resetMaterial();
                 if (measure) {
                     if (event.button == 0) {
-                        var materialOne = new THREE.MeshBasicMaterial( {
-                            color: 0x4e8064,
-                            side: THREE.DoubleSide,
-                            clippingPlanes: clippingPlanes,
-                            clipShadows: true} );
                         var sphereOne = new THREE.Mesh( geometryMesure, materialOne );
                         sphereOne.position.set( intersects[ 0 ].point.x , intersects[ 0 ].point.y, intersects[ 0 ].point.z );
                         mesurePointsList.push(sphereOne);
@@ -583,7 +548,7 @@
             } else {
                 selection = null;
                 if(torchMode & (event.button == 1)) {
-                    intersects = raycaster.intersectObjects([sphere_world]);
+                    intersects = raycaster.intersectObjects([sphereWorld]);
                     scene.remove(sphere);
                     sphere.position.set( intersects[ 0 ].point.x , intersects[ 0 ].point.y, intersects[ 0 ].point.z );
                     scene.add(sphere);
@@ -598,11 +563,11 @@
     function resetMaterial() {
         selection = null;
         if( wireframeMode ) {
-            for(var i = 0; i < bboxes.length; i++) {
+            for(var i = 0; i < bBoxes.length; i++) {
                 bbObjects[i].material = wireframeMaterial;
             }
         } else {
-            for(var i = 0; i < bboxes.length; i++) {
+            for(var i = 0; i < bBoxes.length; i++) {
                 bbObjects[i].material = unselectedMAterial;
             }
         }
@@ -610,13 +575,13 @@
 
     function goodParts() {
         allParts();
-        scene.remove(object_f);
+        scene.remove(objectF);
         resetMaterial();
     }
 
     function allParts() {
         scene.add(object);
-        scene.add(object_f);
+        scene.add(objectF);
         resetMaterial();
     }
 
@@ -626,21 +591,21 @@
         resetMaterial();
     }
 
-    function up_camera() {
+    function upCamera() {
         camera.position.z = 30;
         camera.position.y = 0;
         camera.position.x = 0;
         camera.lookAt(new THREE.Vector3(0, 0, 0));
     }
 
-    function down_camera() {
+    function downCamera() {
         camera.position.z = 0;
         camera.position.y = 30;
         camera.position.x = 0;
         camera.lookAt(new THREE.Vector3(0, 0, 0));
     }
 
-    function left_camera() {
+    function leftCamera() {
         camera.position.z = 0;
         camera.position.y = 0;
         camera.position.x = 30;
@@ -720,8 +685,8 @@
             var box = new THREE.BoxHelper( selection, 0xffff00 );
             box3.setFromObject( box );
             var counter = 0;
-            for(var i = 0; i < bboxes.length; i++) {
-                var checker = box3.intersectsBox( bboxes[i] );
+            for(var i = 0; i < bBoxes.length; i++) {
+                var checker = box3.intersectsBox( bBoxes[i] );
                 if(checker){
                     counter = counter + 1;
                     if( wireframeMode ) {
@@ -729,11 +694,9 @@
                     } else {
                         bbObjects[i].material = unselectedMAterial;
                     }
-                    console.log(bbObjects[i].getWorldPosition());
-                    console.log(selection.getWorldPosition());
                 }
                 else {
-                    bbObjects[i].material = material_translucid;
+                    bbObjects[i].material = materialTranslucid;
                 }
             }
             if( wireframeMode ) {
@@ -743,6 +706,52 @@
             }
             console.log(counter);
         }
+    }
+
+    function changeRotationMode() {
+        rotationMode = !rotationMode;
+        if ($('#pauseButton').html().indexOf("Pause") >= 0) {
+            $('#pauseButton').html('<i class="fas fa-play"></i> Play');
+        } else {
+             $('#pauseButton').html('<i class="fas fa-pause"></i> Pause');
+        }
+    }
+
+    function materialFactory(basic, colorF, sideF, clippingPlanesF, clipShadowsF, transparentF, opacityF, wireframeF) {
+        var materialServed;
+        if (basic) {
+            materialServed = new THREE.MeshBasicMaterial( {
+                color: colorF,
+                side: sideF,
+                clippingPlanes: clippingPlanesF,
+                clipShadows: clipShadowsF,
+                transparent: transparentF,
+                wireframe: wireframeF,
+                opacity: opacityF} );
+        } else {
+            materialServed = new THREE.MeshLambertMaterial({
+                color: colorF,
+                side: sideF,
+                clippingPlanes: clippingPlanesF,
+                clipShadows: clipShadowsF,
+                transparent: transparentF,
+                wireframe: wireframeF,
+                opacity: opacityF});
+        }
+        return materialServed;
+    }
+
+    function saveAsImage() {
+        var imgData, imgNode;
+        try {
+            var strMime = "image/jpeg";
+            imgData = renderer.domElement.toDataURL(strMime);
+            saveFile(imgData.replace(strMime, strDownloadMime), "test.jpg");
+        } catch (e) {
+            console.log(e);
+            return;
+        }
+
     }
 
     function wireframeSet() {
@@ -758,41 +767,17 @@
         wireframeMode = !wireframeMode;
     }
 
-    function changeRotationMode() {
-        rotationMode = !rotationMode;
-        if ($('#pauseButton').html().indexOf("Pause") >= 0) {
-            $('#pauseButton').html('<i class="fas fa-play"></i> Play');
+    var saveFile = function (strData, filename) {
+        var link = document.createElement('a');
+        if (typeof link.download === 'string') {
+            document.body.appendChild(link);
+            link.download = filename;
+            link.href = strData;
+            link.click();
+            document.body.removeChild(link);
         } else {
-             $('#pauseButton').html('<i class="fas fa-pause"></i> Pause');
+            location.replace(uri);
         }
     }
-
-    function saveAsImage() {
-            var imgData, imgNode;
-            try {
-                var strMime = "image/jpeg";
-                imgData = renderer.domElement.toDataURL(strMime);
-
-                saveFile(imgData.replace(strMime, strDownloadMime), "test.jpg");
-
-            } catch (e) {
-                console.log(e);
-                return;
-            }
-
-        }
-
-        var saveFile = function (strData, filename) {
-            var link = document.createElement('a');
-            if (typeof link.download === 'string') {
-                document.body.appendChild(link); //Firefox requires the link to be in the body
-                link.download = filename;
-                link.href = strData;
-                link.click();
-                document.body.removeChild(link); //remove the link when done
-            } else {
-                location.replace(uri);
-            }
-        }
 
   </script>

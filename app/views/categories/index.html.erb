@@ -39,7 +39,7 @@
     <% if @first_sixs_elements != nil %>
         <% @first_sixs_elements.each do |restored_object| %>
           <div class="card d-inline-block" style="width: 18rem;">
-            <img class="card-img-top" src="https://image.ibb.co/nFSgNo/Captura.png" alt="Card image cap">
+            <img class="card-img-top" <%= image_tag(@random_outstanding_object.avatar.url(:thumb)) %>
             <div class="card-body">
               <h5 class="card-title"> <%= restored_object.title %> </h5>
               <p class="card-text"> <%= restored_object.description.truncate(30)  %> </p>
@@ -71,7 +71,7 @@
     <% if @second_three_elements != nil %>
         <% @second_three_elements.each do |restored_object| %>
           <div class="card d-inline-block" style="width: 18rem;">
-            <img class="card-img-top" src="https://image.ibb.co/nFSgNo/Captura.png" alt="Card image cap">
+            <img class="card-img-top" <%= image_tag(@random_outstanding_object.avatar.url(:thumb)) %>
             <div class="card-body">
               <h5 class="card-title"> <%= restored_object.title %> </h5>
               <p class="card-text"> <%= restored_object.description.truncate(30)  %> </p>
