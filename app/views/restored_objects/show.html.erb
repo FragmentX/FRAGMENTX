@@ -251,17 +251,17 @@
   }
 
 
-  //var arrow   = null;
+  //var arrow          = null;
   var nearbyPiecesMode = false;
-  var selection   = null;
-  var wireframeMode = false;
-  var torchMode   = false;
-  var rotationMode  = false;
-  var measure     = false;
-  var spotLight   = null;
-  var delayTime   = 0;
-  var strDownloadMime = "image/octet-stream";
-  var mouse     = new THREE.Vector2();
+  var selection        = null;
+  var wireframeMode    = false;
+  var torchMode        = false;
+  var rotationMode     = false;
+  var measure          = false;
+  var spotLight        = null;
+  var delayTime        = 0;
+  var strDownloadMime  = "image/octet-stream";
+  var mouse            = new THREE.Vector2();
 
   var globalPlaneX = new THREE.Plane( new THREE.Vector3( -1,  0,  0 ),10000 );
   var globalPlaneY = new THREE.Plane( new THREE.Vector3(  0, -1,  0 ),10000 );
@@ -291,13 +291,13 @@
     else unclip(coord);
   }
 
-  var bBoxes  = [];
+  var bBoxes    = [];
   var bbObjects = [];
 
   var object  = new THREE.Object3D();
   var pieces  = [];
 
-  var objectF  = new THREE.Object3D();
+  var objectF   = new THREE.Object3D();
   var faltants  = [];
 
   var mesurePoints   = new THREE.Object3D();
@@ -352,7 +352,7 @@
   unselectedMAterial = materialFactory(false, 0xcdb380, THREE.DoubleSide, clippingPlanes, true, false, 1, false);
 
   // Wireframe material
-  wireframeMaterial = materialFactory(true, 0xe8ddcb, THREE.DoubleSide, clippingPlanes, true, false, 1, true);
+  wireframeMaterial  = materialFactory(true, 0xe8ddcb, THREE.DoubleSide, clippingPlanes, true, false, 1, true);
 
   // Wireframe material
   wireframeMaterialSelected = materialFactory(true, 0x40e0d0, THREE.DoubleSide, clippingPlanes, true, false, 1, true);
@@ -411,7 +411,7 @@
     requestAnimationFrame(render);
     var delta = clock.getDelta();
     if(rotationMode) {
-      object.rotation.y += delta/4;
+      object.rotation.y  += delta/4;
       objectF.rotation.y += delta/4;
     }
     renderer.render(scene, camera);
@@ -473,13 +473,11 @@
           objectF.add(child);
         }
 
-        // Test to adyacent content
         var boundingBox = new THREE.Box3();
         bbObjects.push(child);
         var helperboundingBox = new THREE.BoxHelper( child, 0xffff00 );
         boundingBox.setFromObject( helperboundingBox );
         bBoxes.push(boundingBox);
-        // end of the test
         loaded--;
         if (loaded == 0) {
           $('#loader').hide();
