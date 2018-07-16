@@ -93,6 +93,16 @@
                 <% end %>
             </div>
             <br/>
+            <%= f.label "Format" %><br />
+            <div class="row">
+                <% @formats.each do |format_key| %>
+                <div class="col-sm-12 col-md-6">
+                    <%= check_box_tag "restored_object[object_type]", format_key %>
+                    <%= format_key %><br/>
+                </div>
+                <% end %>
+            </div>
+            <br/>
             <%= f.label :deteriorations %><br />
             <div class="row">
                 <% Deterioration.all.each do |deterioration| %>

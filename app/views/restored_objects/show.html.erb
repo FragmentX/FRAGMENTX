@@ -198,7 +198,6 @@
 <div id="editor"></div>
 
   <script type="text/javascript" src="/js/three.min.js"></script>
-  <script type="text/javascript" src="/js/PLYLoader.js"></script>
   <script type="text/javascript" src="/js/OrbitControls.js"></script>
 
   <script>
@@ -419,8 +418,6 @@
 
   render();
 
-  var loader = new THREE.PLYLoader();
-
   var rotateM = new THREE.Matrix4();
   rotateM.set(
           1,  0, 0, 0,
@@ -431,7 +428,7 @@
 
   var w = new Array(gon.pieces.length);
   var loaded = gon.pieces.length;
-
+  console.log(gon.type);
   function startWorker() {
     for(let index = 0; index < gon.pieces.length; index++) {
       setWorker(index);
@@ -440,7 +437,7 @@
 
   function setWorker(index) {
     if(typeof(Worker) !== "undefined") {
-      w[index] = new Worker('/js/parseModel.js');
+      w[index] = new Worker('/js/PLYparseModel.js');
       w[index].addEventListener("message", function (event) {
         var abuffer = event.data.buffer;
         var vertices = new Float32Array(abuffer);
