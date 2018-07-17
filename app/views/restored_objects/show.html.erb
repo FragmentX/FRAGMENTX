@@ -473,9 +473,11 @@
 
         var boundingBox = new THREE.Box3();
         bbObjects.push(child);
-        console.log("Fallo aqui 92");
+
         var helperboundingBox = new THREE.BoxHelper( child, 0xffff00 );
-        console.log("Fallo aqui 93");
+        var box = new THREE.Box3().setFromObject( child );
+        var scalation =  (box.getSize().x+box.getSize().y+box.getSize().z)/36.7;
+        child.scale.set(1/scalation*10,1/scalation*10,1/scalation*10);
         boundingBox.setFromObject( helperboundingBox );
         bBoxes.push(boundingBox);
         loaded--;
