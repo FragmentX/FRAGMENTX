@@ -73,6 +73,9 @@
             <%= f.label :protection %><br/>
             <%= f.select :protection_id, Protection.all.collect {|p| [p.name, p.id]}, {}, class: 'form-control' %>
             <br/>
+            <%= f.label "Format" %><br />
+            <%= f.select :object_type, @formats, {}, class: 'form-control' %>
+            <br/>
             <%= f.label :categories %><br />
             <div class="row">
                 <% Category.all.each do |category| %>
@@ -89,16 +92,6 @@
                 <div class="col-sm-12 col-md-6">
                     <%= check_box_tag "restored_object[material_ids][]", material.id, f.object.materials.include?(material) %>
                     <%= material.name %><br/>
-                </div>
-                <% end %>
-            </div>
-            <br/>
-            <%= f.label "Format" %><br />
-            <div class="row">
-                <% @formats.each do |format_key| %>
-                <div class="col-sm-12 col-md-6">
-                    <%= check_box_tag "restored_object[object_type]", format_key %>
-                    <%= format_key %><br/>
                 </div>
                 <% end %>
             </div>
