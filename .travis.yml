@@ -7,6 +7,7 @@ install: gem install rails
 before_install:
   - gem update --system
   - gem --version
+  - bundle install
 
 rvm:
  - 2.3.3
