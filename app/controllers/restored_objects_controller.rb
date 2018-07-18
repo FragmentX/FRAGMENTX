@@ -20,6 +20,11 @@ class RestoredObjectsController < ApplicationController
     gon.pieces = []
     gon.matrices = []
     gon.missings = []
+    if  @object.object_type != nil
+      gon.type = @object.object_type
+    else
+      gon.type = "ply"
+    end
     @object.pieces.each do |p|
       gon.pieces << p.model.url
       gon.matrices << p.matrix
@@ -30,6 +35,7 @@ class RestoredObjectsController < ApplicationController
   # GET /restored_objects/new
   def new
     @object = RestoredObject.new
+    @formats =  [ :ply, :obj, :stl, :other ]
     #authorize @object
   end
 
@@ -42,10 +48,9 @@ class RestoredObjectsController < ApplicationController
   # POST /restored_objects.json
   def create
     @object = RestoredObject.new(restored_object_params)
-    @object.user_id = current_user.id    
+    @object.user_id = current_user.id
     if params[:zip_file]
       params[:pieces_attributes] = nil
-
       puts "About to read the file"
       Zip::File.open(params[:zip_file].path) do |zipfile|
         puts "Reading zip file"
@@ -135,7 +140,7 @@ class RestoredObjectsController < ApplicationController
       :width, :height, :depth, :units_id, :state_id, :protection_id,
       :technique, :decoration, :owner, :deposit,
       :address, :longitude, :latitude, :in_inventory,
-      :inventory_no, :priority_id, :zip_file,
+      :inventory_no, :priority_id, :zip_file, :object_type,
       pieces_attributes: [:id, :name, :description,
                           :model, :missing, :matrix, :restored_object_id, :_destroy],
       material_ids: [], category_ids: [], deterioration_ids: [])
