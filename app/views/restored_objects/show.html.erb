@@ -198,7 +198,6 @@
 <div id="editor"></div>
 
   <script type="text/javascript" src="/js/three.min.js"></script>
-  <script type="text/javascript" src="/js/PLYLoader.js"></script>
   <script type="text/javascript" src="/js/OrbitControls.js"></script>
 
   <script>
@@ -419,8 +418,6 @@
 
   render();
 
-  var loader = new THREE.PLYLoader();
-
   var rotateM = new THREE.Matrix4();
   rotateM.set(
           1,  0, 0, 0,
@@ -431,7 +428,6 @@
 
   var w = new Array(gon.pieces.length);
   var loaded = gon.pieces.length;
-
   function startWorker() {
     for(let index = 0; index < gon.pieces.length; index++) {
       setWorker(index);
@@ -439,16 +435,18 @@
   }
 
   function setWorker(index) {
-    if(typeof(Worker) !== "undefined") {
-      w[index] = new Worker('/js/parseModel.js');
+    if (typeof(Worker) !== "undefined") {
+      if (gon.type == 'ply') {
+        w[index] = new Worker('/js/PLYparseModel.js');
+      } else if (gon.type == 'stl') {
+        w[index] = new Worker('/js/STLparseModel.js');
+      }
       w[index].addEventListener("message", function (event) {
         var abuffer = event.data.buffer;
         var vertices = new Float32Array(abuffer);
         var buffer = new THREE.BufferAttribute(vertices, 3);
-
         var geo = new THREE.BufferGeometry();
         geo.addAttribute('position',  buffer);
-
         geo.computeVertexNormals();
         var child = new THREE.Mesh(geo, unselectedMAterial);
         child.scale.multiplyScalar( 0.01 );
@@ -456,8 +454,8 @@
         child.castShadow = true;
         child.receiveShadow = true;
         child.scale.multiplyScalar( 1000 );
-
         var scaleMatrix = new THREE.Matrix4();
+
         var matrix = new THREE.Matrix4();
         scaleMatrix.fromArray(gon.matrices[index].trim().split(' ').filter(function(val) { return val.length != 0; })).transpose();
         scaleMatrix.multiplyMatrices ( rotateM, scaleMatrix );
@@ -475,7 +473,9 @@
 
         var boundingBox = new THREE.Box3();
         bbObjects.push(child);
+        console.log("Fallo aqui 92");
         var helperboundingBox = new THREE.BoxHelper( child, 0xffff00 );
+        console.log("Fallo aqui 93");
         boundingBox.setFromObject( helperboundingBox );
         bBoxes.push(boundingBox);
         loaded--;
