@@ -1,6 +1,12 @@
 language: ruby
+
 os: windows
+
+install: gem install rails
+
+before_install:
+  - gem update --system
+  - gem --version
+
 rvm:
  - 2.3.3
- - jruby
- - rbx-3
