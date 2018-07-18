@@ -1,4 +1,5 @@
 language: ruby
+os: windows
 rvm:
  - 2.3.3
  - jruby
