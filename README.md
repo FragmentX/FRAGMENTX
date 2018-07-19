@@ -1,24 +1,5 @@
-# README
+[![Maintainability](https://api.codeclimate.com/v1/badges/9e8a357351f1110dad3f/maintainability)](https://codeclimate.com/github/Duxy1996/eduproject/maintainability)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+<a href="https://codeclimate.com/github/Duxy1996/eduproject/test_coverage"><img src="https://api.codeclimate.com/v1/badges/9e8a357351f1110dad3f/test_coverage" /></a>
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+[![Build Status](https://travis-ci.org/Duxy1996/eduproject.svg?branch=TestBranch)](https://travis-ci.org/Duxy1996/eduproject)
