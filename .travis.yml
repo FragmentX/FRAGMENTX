@@ -8,6 +8,11 @@ before_install:
   - gem update --system
   - gem --version
   - bundle install
+
+env:
+  - DB=postgresql
+
+before_script:
   - rails db:create
   - rails db:migrate
 
