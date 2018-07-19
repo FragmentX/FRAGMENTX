@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20180716181427) do
 
   create_table "collections_restored_objects", force: :cascade do |t|
     t.integer "collection_id"
-    t.integer "restored_object"
+    t.integer "restored_object_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

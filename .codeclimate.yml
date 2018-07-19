@@ -3,3 +3,4 @@ exclude_patterns:
 - "public/js/PLYLoader.js"
 - "public/js/STLLoader.js"
 - "public/js/three.min.js"
+- "db"
