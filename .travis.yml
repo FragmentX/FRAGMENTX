@@ -1,6 +1,6 @@
 language: ruby
 
-os: windows
+os: linux
 
 install: gem install rails
 
