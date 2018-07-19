@@ -1,0 +1,5 @@
+exclude_patterns:
+- "public/js/OrbitControls.js"
+- "public/js/PLYLoader.js"
+- "public/js/STLLoader.js"
+- "public/js/three.min.js"
