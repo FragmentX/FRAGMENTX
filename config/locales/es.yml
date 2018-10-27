@@ -30,4 +30,13 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 es:
-  hello: "Hola mundo"
+
+  nav_bar:
+    restored_objects: Objetos restaurados
+    home: Inicio
+    sing_in: Iniciar sesion
+    sing_up: Registrarte
+
+  categories:
+
+  restored_objects:
