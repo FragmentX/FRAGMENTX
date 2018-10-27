@@ -1,3 +1,7 @@
+<header class="container home-header centred-objects">
+  <h1><img src="/logo.svg" alt="FragmentX"></h1>
+  <h2>Visualizador 3D de muestras de museos recompuestas</h2>
+</header>
 <div class="container">
   <div class="centred-objects">
     <div class="index-up-w">
@@ -6,9 +10,9 @@
               <% @first_half.each do |category| %>
               <div class="card card-custom-style">
                 <div class="card-body text-center ">
-                 <h8 class="card-title text-white">           
+                 <h8 class="card-title text-white">
                   <%= link_to category, class:'text-white no-underline' do %>
-                    <%= category.name %> 
+                    <%= category.name %>
                   <% end %>
                 </h8>
                 </div>
@@ -25,7 +29,7 @@
               <div class="card card-custom-style">
                 <div class="card-body text-center ">
                  <%= link_to category, class:'text-white no-underline' do %>
-                    <%= category.name %> 
+                    <%= category.name %>
                   <% end %>
                 </div>
               </div>

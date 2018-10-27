@@ -2,8 +2,8 @@
 
 one:
   collection_id: 1
-  restored_object: 1
+  restored_object_id: 1
 
 two:
   collection_id: 1
-  restored_object: 1
+  restored_object_id: 1
