@@ -676,13 +676,9 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
-<<<<<<< HEAD
     devise-i18n (1.6.5)
       devise (>= 4.4)
-    erubi (1.7.0)
-=======
     erubi (1.7.1)
->>>>>>> master
     execjs (2.7.0)
     ffi (1.9.25)
     ffi (1.9.25-x86-mingw32)
