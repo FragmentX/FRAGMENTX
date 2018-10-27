@@ -1,5 +1,4 @@
 language: ruby
-
 os: linux
 
 install: gem install rails

@@ -1,0 +1,2 @@
+class ObjectFormat < ApplicationRecord
+end

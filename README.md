@@ -1,1 +1,6 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/9e8a357351f1110dad3f/maintainability)](https://codeclimate.com/github/Duxy1996/eduproject/maintainability) <a href="https://codeclimate.com/github/Duxy1996/eduproject/test_coverage"><img src="https://api.codeclimate.com/v1/badges/9e8a357351f1110dad3f/test_coverage" /></a> [![Build Status](https://travis-ci.org/Duxy1996/eduproject.svg?branch=TestBranch)](https://travis-ci.org/Duxy1996/eduproject)
+# FragmentX
+## 3D Visualization of restored objects
+
+[![Build Status](https://travis-ci.org/FragmentX/FRAGMENTX.svg?branch=master)](https://travis-ci.org/FragmentX/FRAGMENTX) [![Maintainability](https://api.codeclimate.com/v1/badges/900fd8a114c8d71e0142/maintainability)](https://codeclimate.com/github/FragmentX/FRAGMENTX/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/900fd8a114c8d71e0142/test_coverage)](https://codeclimate.com/github/FragmentX/FRAGMENTX/test_coverage) [![security](https://hakiri.io/github/FragmentX/FRAGMENTX/master.svg)](https://hakiri.io/github/FragmentX/FRAGMENTX/master)
+
+http://scanviewer.herokuapp.com/
