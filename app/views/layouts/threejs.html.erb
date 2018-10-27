@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ScanViewer</title>
+    <title>FragmentX</title>
     <%= csrf_meta_tags %>
     <%= include_gon %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-    <link rel="stylesheet" href="/css/style.css">
   </head>
 
   <body>
-    <div id="loader" class="loader visible"></div>
-    <div id="overlay-threejs"></div>
+    <div id="loader" class="loader"><img src="/loading.svg"/> The object pieces are currently being loaded...</div>
     <%= yield %>
   </body>
 </html>

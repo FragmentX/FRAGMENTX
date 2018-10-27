@@ -1,5 +1,19 @@
 language: ruby
+os: linux
+
+install: gem install rails
+
+before_install:
+  - gem update --system
+  - gem --version
+  - bundle install
+
+env:
+  - DB=postgresql
+
+before_script:
+  - rails db:create
+  - rails db:migrate
+
 rvm:
  - 2.3.3
- - jruby
- - rbx-3

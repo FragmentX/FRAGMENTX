@@ -4,11 +4,11 @@
     Use right button mouse to pan, left button to orbit and scroll to zoom in and out.
   </div>
 <% end %>
-<div id="info-toggle" onclick="showInfo()">
+<div id="info-toggle" class="pointer" onclick="showInfo()">
   <i class="fas fa-info fa-2x"></i>
 </div>
 <section id="info-container">
-  <div class="branding">
+  <div class="branding padding-toolbar">
     <i class="fas fa-times right" onclick="hideInfo()"></i>
     <p>
       <% @object.categories.each do |category| %>
@@ -32,7 +32,7 @@
         <% end %>
     </small>
   </div>
-  <div class="toolbar-container">
+  <div class="toolbar-container padding-toolbar">
     <div class="row">
         <div class="col-sm-6">
             <div class="info-field">
@@ -109,10 +109,10 @@
 
 <div id="mini-branding" onclick="showToolbar()">
   <div class="branding mini-brand no-padding">
-    <h1><i class="fas fa-bars"></i> ScanViewer</h1>
+    <h1><i class="fas fa-bars"></i> FragmentX</h1>
   </div>
   <div id="mini-menu" class="no-padding">
-    <%= link_to "Back", restored_objects_path %>
+    <%= link_to "Back to the gallery", restored_objects_path %>
   </div>
 </div>
 <div id="measure">
@@ -136,11 +136,9 @@
     </div>
 </div>
 <section id="toolbar">
-  <div class="branding">
-    <i class="fas fa-times right" onclick="hideToolbar()"></i>
-    <h1 class="brand-title">ScanViewer</h1>
-  </div>
   <div class="toolbar-container">
+    <i class="pointer fas fa-times right main" onclick="hideToolbar()"></i>
+    <br/>
     <div class="toolbar-section">
         <p>Visibility mode</p>
         <div class="toolbar-section-row">
@@ -183,7 +181,7 @@
     </div>
     <div class="toolbar-section">
         <p>Tools</p>
-        <div class="toolbar-section-row">
+        <div class="toolbar-section-row extras">
             <button class="btn btn-primary toolbar-button" onclick="measures()"><img class="svg-icon" src="/icons/ruler.svg" /><br/>Measure</button>
             <button class="btn btn-primary toolbar-button" onclick="wireframeSet()"><img class="svg-icon" src="/icons/wireframe.svg" /><br/>Wireframe</button>
             <button class="btn btn-primary toolbar-button" onclick="addTorch()"><img class="svg-icon" src="/icons/light.svg" /><br/>Light</button>
@@ -192,6 +190,9 @@
             <button onclick="saveAsImage()" class="btn btn-primary toolbar-button big"><img class="inline-icon" src="/icons/pic.svg" /> Save view as image</button>
         </div>
         </div>
+    </div>
+    <div class="branding">
+      <h1 class="brand-title">2018 - FragmentX</h1>
     </div>
   </div>
 </section>
@@ -473,15 +474,14 @@
 
         var boundingBox = new THREE.Box3();
         bbObjects.push(child);
-
+        console.log("Fallo aqui 92");
         var helperboundingBox = new THREE.BoxHelper( child, 0xffff00 );
-        
+        console.log("Fallo aqui 93");
         boundingBox.setFromObject( helperboundingBox );
         bBoxes.push(boundingBox);
         loaded--;
         if (loaded == 0) {
           $('#loader').hide();
-          $('#overlay-threejs').hide();
         }
       }, false);
       w[index].postMessage(gon.pieces[index]);
