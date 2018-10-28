@@ -39,4 +39,37 @@ en:
 
   categories:
 
-  restored_objects:
+  restored_object:
+    add_piece: Add piece
+
+  activerecord:
+    models:
+      restored_object:
+        one: Restored Object
+        other: Restored objects
+    attributes:
+      restored_object:
+        title: Title
+        author: Author
+        epoch: Epoch
+        dimensions: Dimensions
+        width: Width
+        height: Height
+        depth: Depth
+        description: Description
+        classification: Classification
+        technique: Technique
+        decoration: Decoration
+        notes: Notes
+        owner: Owner
+        deposit: Deposit
+        address: Adress
+        inventory no: Inventory no
+        priority: Restoration priority
+        state: Piece state
+        protection: Protection required
+        format: Pieces file format
+        categories: Categories
+        materials: Materials
+        deteriorations: Deteriorations
+        avatar: Avatar

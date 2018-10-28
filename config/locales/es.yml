@@ -39,4 +39,44 @@ es:
 
   categories:
 
-  restored_objects:
+  restored_object:
+    add_piece: Añadir pieza
+    pieces: Piezas
+    zip_file: Archivo zip
+    save: Guardar
+    add_object: Añadir objeto nuevo
+
+  activerecord:
+    models:
+      restored_object:
+        one: Objeto restaurado
+        other: Objetos restaurados
+    attributes:
+      restored_object:
+        title: Título
+        author: Autor
+        epoch: Época
+        dimensions: Dimensiones
+        width: Anchura
+        height: Altura
+        depth: Profunidad
+        description: Descripción
+        classification: Calsificación
+        technique: Técnica
+        decoration: Decoración
+        notes: Notas
+        owner: Propietario
+        deposit: Depósito
+        address: Dirección
+        inventory no: Número de inventario
+        priority: Prioridad de restauración
+        state: Estado de la pieza
+        protection: Proteción requerida
+        format: Formato de las piezas
+        categories: Categorias
+        materials: Materiales
+        deteriorations: Deterioración
+        avatar: Imagen representativa
+
+
+
