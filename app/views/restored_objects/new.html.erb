@@ -73,7 +73,7 @@
             <%= f.label :protection %><br/>
             <%= f.select :protection_id, Protection.all.collect {|p| [p.name, p.id]}, {}, class: 'form-control' %>
             <br/>
-            <%= f.label "Format" %><br />
+            <%= f.label :formats %><br />
             <%= f.select :object_type, @formats, {}, class: 'form-control' %>
             <br/>
             <%= f.label :categories %><br />

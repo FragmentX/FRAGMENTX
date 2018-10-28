@@ -1,7 +1,7 @@
 <% if !cookies[:knows_controls] %>
   <% cookies[:knows_controls] = "yes" %>
   <div class="banner">
-    Use right button mouse to pan, left button to orbit and scroll to zoom in and out.
+    <%= t('restored_object.viewer.banner_info') %>
   </div>
 <% end %>
 <div id="info-toggle" class="pointer" onclick="showInfo()">
@@ -17,7 +17,7 @@
     </p>
     <h1><%= @object.title %></h1>
     <% if @object.author %>
-      <h2>By <%= @object.author %></h2>
+      <h2><%= t('restored_object.viewer.by') %> <%= @object.author %></h2>
     <% end %>
     <h3>
       <% @object.materials.each do |material| %>
@@ -28,7 +28,7 @@
         <% if @object.in_inventory %>
             <%= @object.inventory_no %>
         <% else %>
-            Not in inventory
+            <%= t('restored_object.viewer.not_inventory') %>
         <% end %>
     </small>
   </div>
@@ -52,13 +52,13 @@
                 <%= @object.protection.name %><br/>
             </div>
             <div class="info-field">
-                <%= label_tag 'dimensions' %>
+                <%= label_tag :dimensions %>
                 <p><%= dimensions(@object) %></p>
             </div>
         </div>
     </div>
     <% if @object.deteriorations %>
-        <%= label_tag :deteriorations%>
+        <%= label_tag :deteriorations %>
         <div class="info-field">
             <% @object.deteriorations.each do |deterioration| %>
                 <%= deterioration.name %><br/>
@@ -66,31 +66,31 @@
         </div>
     <% end %>
     <div class="info-field">
-      <%= label_tag 'description' %>
+      <%= label_tag :description %>
       <p><%= @object.description %></p>
     </div>
     <div class="info-field">
-      <%= label_tag 'epoch' %>
+      <%= label_tag :epoch %>
       <p><%= @object.epoch %></p>
     </div>
     <div class="info-field">
-      <%= label_tag 'classification' %>
+      <%= label_tag :classification %>
       <p><%= @object.classification %></p>
     </div>
     <div class="info-field">
-      <%= label_tag 'technique' %>
+      <%= label_tag :technique %>
       <p><%= @object.classification %></p>
     </div>
     <div class="info-field">
-      <%= label_tag 'decoration' %>
+      <%= label_tag :decoration %>
       <p><%= @object.classification %></p>
     </div>
     <div class="info-field">
-      <%= label_tag 'owner' %>
+      <%= label_tag :owner %>
       <p><%= @object.owner %></p>
     </div>
     <div class="info-field">
-      <%= label_tag 'deposit' %>
+      <%= label_tag :deposit %>
       <p><%= @object.deposit %></p>
       <p><%= @object.address %></p>
       <p><%= @object.location %></p>
@@ -101,7 +101,7 @@
       <br/>
     </div>
     <div class="info-field">
-      <%= label_tag 'notes' %>
+      <%= label_tag :notes %>
       <p><%= @object.notes %></p>
     </div>
   </div>
@@ -112,25 +112,25 @@
     <h1><i class="fas fa-bars"></i> FragmentX</h1>
   </div>
   <div id="mini-menu" class="no-padding">
-    <%= link_to "Back to the gallery", restored_objects_path %>
+    <%= link_to t('restored_object.viewer.back_to_gallery') , restored_objects_path %>
   </div>
 </div>
 <div id="measure">
     <div class="container">
     <div class="row">
         <div class="col-sm measure-column">
-          <p class="measure-paragraph">Points</p>
+          <p class="measure-paragraph"><%= t('restored_object.viewer.points') %></p>
           <p id="measurePo" class="measure-font">0</p>
         </div>
         <div class="col-sm measure-column">
-          <p class="measure-paragraph">measure</p>
+          <p class="measure-paragraph"><%= t('restored_object.viewer.measure') %></p>
           <p id="measureNo" class="measure-font">0</p>
         </div>
         <div class="col-sm measure-column">
-          <button onclick="deleteLastMesure()" class="btn btn-primary measure-button"><img class="measure-image" src="/icons/removeLast.svg" /><br/>Remove last</button>
+          <button onclick="deleteLastMesure()" class="btn btn-primary measure-button"><img class="measure-image" src="/icons/removeLast.svg" /><br/><%= t('restored_object.viewer.rem_last') %></button>
         </div>
         <div class="col-sm measure-column">
-          <button onclick="resetMesures()" class="btn btn-primary measure-button"><img class="measure-image" src="/icons/removeAll.svg" /><br/>Remove all</button>
+          <button onclick="resetMesures()" class="btn btn-primary measure-button"><img class="measure-image" src="/icons/removeAll.svg" /><br/><%= t('restored_object.viewer.rem_all') %></button>
         </div>
     </div>
     </div>
@@ -140,16 +140,16 @@
     <i class="pointer fas fa-times right main" onclick="hideToolbar()"></i>
     <br/>
     <div class="toolbar-section">
-        <p>Visibility mode</p>
+        <p><%= t('restored_object.viewer.vis_mode') %></p>
         <div class="toolbar-section-row">
-        <button onclick="allParts()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/all.svg" /><br/>All</button>
-        <button onclick="goodParts()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/pieces.svg" /><br/>Present</button>
-        <button onclick="faltantParts()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/missing.svg" /><br/>Missing</button>
+        <button onclick="allParts()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/all.svg" /><br/><%= t('restored_object.viewer.all') %></button>
+        <button onclick="goodParts()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/pieces.svg" /><br/><%= t('restored_object.viewer.present') %></button>
+        <button onclick="faltantParts()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/missing.svg" /><br/><%= t('restored_object.viewer.missing') %></button>
         </div>
         <div class="toolbar-section-row">
-            <button onclick="nearbyPieces()" class="btn btn-primary toolbar-button big"><img class="inline-icon" src="/icons/pic.svg" /> Show nearby pieces</button>
+            <button onclick="nearbyPieces()" class="btn btn-primary toolbar-button big"><img class="inline-icon" src="/icons/pic.svg" /> <%= t('restored_object.viewer.nearby_pieces') %></button>
         </div>
-        <p>Model rotation</p>
+        <p><%= t('restored_object.viewer.model_rot') %></p>
         <div class="toolbar-section-row">
         <button id="pauseButton" onclick="changeRotationMode()" class="btn btn-primary toolbar-button big">
             <i class="fas fa-play"></i> Play
@@ -157,7 +157,7 @@
         </div>
     </div>
     <div class="toolbar-section">
-        <p>Perspective</p>
+        <p><%= t('restored_object.viewer.perspective') %></p>
         <div class="toolbar-section-row">
         <button class="btn btn-primary toolbar-button" onclick="downCamera()"><img class="svg-icon" src="/icons/xz.svg" /><br/>XZ</button>
         <button class="btn btn-primary toolbar-button" onclick="upCamera()"><img class="svg-icon" src="/icons/xy.svg" /><br/>XY</button>
@@ -165,7 +165,7 @@
         </div>
     </div>
     <div class="toolbar-section">
-        <p>Cut object</p>
+        <p><%= t('restored_object.viewer.cut_obj') %></p>
         <div class="toolbar-section-row">
             <button onclick="setClip(0)" class="btn btn-primary toolbar-button clip-button">X</button>
             <input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipX">
@@ -180,14 +180,14 @@
         </div>
     </div>
     <div class="toolbar-section">
-        <p>Tools</p>
+        <p><%= t('restored_object.viewer.tools') %></p>
         <div class="toolbar-section-row extras">
-            <button class="btn btn-primary toolbar-button" onclick="measures()"><img class="svg-icon" src="/icons/ruler.svg" /><br/>Measure</button>
-            <button class="btn btn-primary toolbar-button" onclick="wireframeSet()"><img class="svg-icon" src="/icons/wireframe.svg" /><br/>Wireframe</button>
-            <button class="btn btn-primary toolbar-button" onclick="addTorch()"><img class="svg-icon" src="/icons/light.svg" /><br/>Light</button>
+            <button class="btn btn-primary toolbar-button" onclick="measures()"><img class="svg-icon" src="/icons/ruler.svg" /><br/><%= t('restored_object.viewer.measure') %></button>
+            <button class="btn btn-primary toolbar-button" onclick="wireframeSet()"><img class="svg-icon" src="/icons/wireframe.svg" /><br/><%= t('restored_object.viewer.wireframe') %></button>
+            <button class="btn btn-primary toolbar-button" onclick="addTorch()"><img class="svg-icon" src="/icons/light.svg" /><br/><%= t('restored_object.viewer.light') %></button>
         </div>
         <div class="toolbar-section-row">
-            <button onclick="saveAsImage()" class="btn btn-primary toolbar-button big"><img class="inline-icon" src="/icons/pic.svg" /> Save view as image</button>
+            <button onclick="saveAsImage()" class="btn btn-primary toolbar-button big"><img class="inline-icon" src="/icons/pic.svg" /> <%= t('restored_object.viewer.save_img') %></button>
         </div>
         </div>
     </div>
