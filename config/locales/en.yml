@@ -38,6 +38,8 @@ en:
     sing_up: Sing up
 
   categories:
+  link_button: Show the object
+  description: 3D viewer of recomposed museum samples
 
   restored_object:
     add_piece: Add piece
@@ -66,6 +68,7 @@ en:
       wireframe: Wireframe
       light: Light
       save_img: Save view as image
+      loading_text: The object pieces are currently being loaded...
 
   activerecord:
     models:
