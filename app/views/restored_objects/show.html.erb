@@ -4,108 +4,110 @@
     <%= t('restored_object.viewer.banner_info') %>
   </div>
 <% end %>
-<div id="info-toggle" class="pointer" onclick="showInfo()">
-  <i class="fas fa-info fa-2x"></i>
-</div>
-<section id="info-container">
-  <div class="branding padding-toolbar">
-    <i class="fas fa-times right" onclick="hideInfo()"></i>
-    <p>
-      <% @object.categories.each do |category| %>
-        <span class="badge badge-pill badge-light"><% category.name %></span>
-      <% end %>
-    </p>
-    <h1><%= @object.title %></h1>
-    <% if @object.author %>
-      <h2><%= t('restored_object.viewer.by') %> <%= @object.author %></h2>
-    <% end %>
-    <h3>
-      <% @object.materials.each do |material| %>
-        <span class="badge badge-pill badge-light"><%= material.name %></span>
-      <% end %>
-    </h3>
-    <small>
-        <% if @object.in_inventory %>
-            <%= @object.inventory_no %>
-        <% else %>
-            <%= t('restored_object.viewer.not_inventory') %>
+<%= form_for(@object) do |f| %>
+  <div id="info-toggle" class="pointer" onclick="showInfo()">
+    <i class="fas fa-info fa-2x"></i>
+  </div>
+  <section id="info-container">
+    <div class="branding padding-toolbar">
+      <i class="fas fa-times right" onclick="hideInfo()"></i>
+      <p>
+        <% @object.categories.each do |category| %>
+          <span class="badge badge-pill badge-light"><% category.name %></span>
         <% end %>
-    </small>
-  </div>
-  <div class="toolbar-container padding-toolbar">
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="info-field">
-                <% if @object.state %>
-                    <%= label_tag :state %><br/>
-                    <%= @object.state.name%>
-                <% end %>
-            </div>
-            <div class="info-field">
-                <%= label_tag :priority %><br/>
-                <%= @object.priority.name %>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="info-field">
-                <%= label_tag :protection %><br/>
-                <%= @object.protection.name %><br/>
-            </div>
-            <div class="info-field">
-                <%= label_tag :dimensions %>
-                <p><%= dimensions(@object) %></p>
-            </div>
-        </div>
-    </div>
-    <% if @object.deteriorations %>
-        <%= label_tag :deteriorations %>
-        <div class="info-field">
-            <% @object.deteriorations.each do |deterioration| %>
-                <%= deterioration.name %><br/>
-            <% end %>
-        </div>
-    <% end %>
-    <div class="info-field">
-      <%= label_tag :description %>
-      <p><%= @object.description %></p>
-    </div>
-    <div class="info-field">
-      <%= label_tag :epoch %>
-      <p><%= @object.epoch %></p>
-    </div>
-    <div class="info-field">
-      <%= label_tag :classification %>
-      <p><%= @object.classification %></p>
-    </div>
-    <div class="info-field">
-      <%= label_tag :technique %>
-      <p><%= @object.classification %></p>
-    </div>
-    <div class="info-field">
-      <%= label_tag :decoration %>
-      <p><%= @object.classification %></p>
-    </div>
-    <div class="info-field">
-      <%= label_tag :owner %>
-      <p><%= @object.owner %></p>
-    </div>
-    <div class="info-field">
-      <%= label_tag :deposit %>
-      <p><%= @object.deposit %></p>
-      <p><%= @object.address %></p>
-      <p><%= @object.location %></p>
-      <% if @object.latitude && @object.longitude %>
-        <p><%= "(#{@object.longitude}, #{@object.longitude})" %></p>
-        <%= image_tag "http://maps.googleapis.com/maps/api/staticmap?center=#{@object.latitude},#{@object.longitude}&markers=#{@object.latitude},#{@object.longitude}&zoom=13&size=640x400&key=AIzaSyA5_37fS8M4baOAP7w8fiXCn-VA4FcgBSw", alt: "#{@object.address} on the map", class:'gmap' %>
+      </p>
+      <h1><%= @object.title %></h1>
+      <% if @object.author %>
+        <h2><%= t('restored_object.viewer.by') %> <%= @object.author %></h2>
       <% end %>
-      <br/>
+      <h3>
+        <% @object.materials.each do |material| %>
+          <span class="badge badge-pill badge-light"><%= material.name %></span>
+        <% end %>
+      </h3>
+      <small>
+          <% if @object.in_inventory %>
+              <%= @object.inventory_no %>
+          <% else %>
+              <%= t('restored_object.viewer.not_inventory') %>
+          <% end %>
+      </small>
     </div>
-    <div class="info-field">
-      <%= label_tag :notes %>
-      <p><%= @object.notes %></p>
+    <div class="toolbar-container padding-toolbar">
+      <div class="row">
+          <div class="col-sm-6">
+              <div class="info-field">
+                  <% if @object.state %>
+                      <%= f.label :state %><br/>
+                      <%= @object.state.name%>
+                  <% end %>
+              </div>
+              <div class="info-field">
+                  <%= f.label :priority %><br/>
+                  <%= @object.priority.name %>
+              </div>
+          </div>
+          <div class="col-sm-6">
+              <div class="info-field">
+                  <%= f.label :protection %><br/>
+                  <%= @object.protection.name %><br/>
+              </div>
+              <div class="info-field">
+                  <%= f.label :dimensions %>
+                  <p><%= dimensions(@object) %></p>
+              </div>
+          </div>
+      </div>
+      <% if @object.deteriorations %>
+          <%= f.label :deteriorations %>
+          <div class="info-field">
+              <% @object.deteriorations.each do |deterioration| %>
+                  <%= deterioration.name %><br/>
+              <% end %>
+          </div>
+      <% end %>
+      <div class="info-field">
+        <%= f.label :description %>
+        <p><%= @object.description %></p>
+      </div>
+      <div class="info-field">
+        <%= f.label :epoch %>
+        <p><%= @object.epoch %></p>
+      </div>
+      <div class="info-field">
+        <%= f.label :classification %>
+        <p><%= @object.classification %></p>
+      </div>
+      <div class="info-field">
+        <%= f.label :technique %>
+        <p><%= @object.classification %></p>
+      </div>
+      <div class="info-field">
+        <%= f.label :decoration %>
+        <p><%= @object.classification %></p>
+      </div>
+      <div class="info-field">
+        <%= f.label :owner %>
+        <p><%= @object.owner %></p>
+      </div>
+      <div class="info-field">
+        <%= f.label :deposit %>
+        <p><%= @object.deposit %></p>
+        <p><%= @object.address %></p>
+        <p><%= @object.location %></p>
+        <% if @object.latitude && @object.longitude %>
+          <p><%= "(#{@object.longitude}, #{@object.longitude})" %></p>
+          <%= image_tag "http://maps.googleapis.com/maps/api/staticmap?center=#{@object.latitude},#{@object.longitude}&markers=#{@object.latitude},#{@object.longitude}&zoom=13&size=640x400&key=AIzaSyA5_37fS8M4baOAP7w8fiXCn-VA4FcgBSw", alt: "#{@object.address} on the map", class:'gmap' %>
+        <% end %>
+        <br/>
+      </div>
+      <div class="info-field">
+        <%= f.label :notes %>
+        <p><%= @object.notes %></p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+<% end %>
 
 <div id="mini-branding" onclick="showToolbar()">
   <div class="branding mini-brand no-padding">
