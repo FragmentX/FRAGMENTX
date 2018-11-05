@@ -689,7 +689,7 @@ GEM
       actionpack (>= 3.0)
       multi_json
       request_store (>= 1.0)
-    high_voltage (3.0.0)
+    high_voltage (3.1.0)
     i18n (1.1.1)
       concurrent-ruby (~> 1.0)
     jbuilder (2.7.0)
@@ -834,7 +834,7 @@ DEPENDENCIES
   devise-i18n
   geocoder
   gon
-  high_voltage (~> 3.0.0)
+  high_voltage (~> 3.1.0)
   jbuilder (~> 2.5)
   jquery-rails
   paperclip
