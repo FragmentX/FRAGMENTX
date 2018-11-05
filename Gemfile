@@ -24,6 +24,8 @@ gem 'jquery-rails'
 gem 'aws-sdk'
 gem 'paperclip'
 
+gem 'devise-i18n'
+
 gem 'gon'
 
 gem 'bootstrap'

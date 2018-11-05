@@ -30,4 +30,83 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+
+  nav_bar:
+    restored_objects: Restored objects
+    home: Home
+    sing_in: Sing in
+    sing_up: Sing up
+
+  categories:
+  link_button: Show the object
+  description: 3D viewer of recomposed museum samples
+
+  restored_object:
+    add_piece: Add piece
+    pieces: Pieces
+    zip_file: Zip file
+    save: Save
+    add_object: Add new object
+    viewer:
+      banner_info: Use right button mouse to pan, left button to orbit and scroll to zoom in and out.
+      by: by
+      not_inventory: Not in inventory
+      back_to_gallery: Back to gallery
+      points: Points
+      measure: Measure
+      rem_last: Remove last
+      rem_all: Remove all
+      all: All
+      present: Present
+      missing: Missing
+      nearby_pieces: Show nearby pieces
+      vis_mode: Visualization mode
+      model_rot: Model rotation
+      perspective: Perspective
+      cut_obj: Cut object
+      tools: Tools
+      wireframe: Wireframe
+      light: Light
+      save_img: Save view as image
+      loading_text: The object pieces are currently being loaded...
+
+  activerecord:
+    models:
+      restored_object:
+        one: Restored Object
+        other: Restored objects
+    attributes:
+      restored_object:
+        title: Title
+        author: Author
+        epoch: Epoch
+        dimensions: Dimensions
+        width: Width
+        height: Height
+        depth: Depth
+        description: Description
+        classification: Classification
+        technique: Technique
+        decoration: Decoration
+        notes: Notes
+        owner: Owner
+        deposit: Deposit
+        address: Adress
+        inventory no: Inventory no
+        priority: Restoration priority
+        state: Piece state
+        protection: Protection required
+        formats: Pieces file format
+        categories: Categories
+        materials: Materials
+        deteriorations: Deteriorations
+        avatar: Avatar
+
+  datetime:
+    distance_in_words:
+      x_days:
+        one: 1 day
+        other: '%{count} days'
+      x_months:
+        one: 1 month
+        other: '%{count} months'

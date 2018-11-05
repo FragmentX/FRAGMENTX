@@ -1,6 +1,6 @@
 <header class="container home-header centred-objects">
   <h1><img src="/logo.svg" alt="FragmentX"></h1>
-  <h2>Visualizador 3D de muestras de museos recompuestas</h2>
+  <%= t('categories.description') %>
 </header>
 <div class="container">
   <div class="centred-objects">
@@ -21,7 +21,7 @@
           <% end %>
         </div>
     </div>
-    </br>
+    <br/>
     <div class="index-up-w">
         <div class="card-group">
           <% if @first_half != nil %>
@@ -37,9 +37,9 @@
           <% end %>
         </div>
     </div>
-    </br>
-    </br>
-    </br>
+    <br/>
+    <br/>
+    <br/>
     <% if @first_sixs_elements != nil %>
         <% @first_sixs_elements.each do |restored_object| %>
           <div class="card d-inline-block" style="width: 18rem;">
@@ -48,7 +48,7 @@
               <h5 class="card-title"> <%= restored_object.title %> </h5>
               <p class="card-text"> <%= restored_object.description.truncate(30)  %> </p>
               <%= link_to restored_object, class:'btn color_buttons_editor text-white' do %>
-                Go somewhere
+                <%= t('categories.link_button') %>
               <% end %>
             </div>
           </div>
@@ -63,7 +63,7 @@
       <div class="card-body">
         <%= @random_outstanding_object.title %>
         <%= link_to @random_outstanding_object, class:'btn color_buttons_editor text-white' do %>
-            Go somewhere
+            <%= t('categories.link_button') %>
         <% end %>
         <p class="card-text"></p>
       </div>
@@ -80,7 +80,7 @@
               <h5 class="card-title"> <%= restored_object.title %> </h5>
               <p class="card-text"> <%= restored_object.description.truncate(30)  %> </p>
               <%= link_to restored_object, class:'btn color_buttons_editor text-white' do %>
-                Go somewhere
+                <%= t('categories.link_button') %>
               <% end %>
             </div>
           </div>

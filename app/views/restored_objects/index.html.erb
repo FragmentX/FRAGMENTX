@@ -1,12 +1,11 @@
 <div class="container">
-    <%= link_to "Añadir objeto", new_restored_object_path, class: 'btn btn-primary right' %>
-    <h1>Objetos restaurados</h1>
-
+    <%= link_to t('restored_object.add_object'), new_restored_object_path, class: 'btn btn-primary right' %>
+    <h1><%= t('activerecord.models.restored_object.other') %></h1>
     <% @objects.each do |obj| %>
         <div class="card">
             <div class="card-body">
                 <h2>
-                    <%= link_to obj.title, obj, data: { no_turbolink: true } %> <span class="badge badge-pill badge-info"><%= obj.pieces.count %> pieces </span>
+                    <%= link_to obj.title, obj, data: { no_turbolink: true } %> <span class="badge badge-pill badge-info"><%= obj.pieces.count %> <%= t('restored_object.pieces') %> </span>
                 </h2>
                 <p><%= obj.description %>
             </div>

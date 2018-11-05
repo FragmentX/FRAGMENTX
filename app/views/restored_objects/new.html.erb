@@ -1,8 +1,7 @@
 <div class="container">
-<h1>Añadiendo un nuevo objeto</h1>
+<h1><%= t('restored_object.add_object') %></h1>
 
 <%= form_for(@object, :html => { multipart: true }) do |f| %>
-
     <div class="row">
         <div class="col-sm-12 col-md-6">
             <%= f.label :title %><br/>
@@ -73,7 +72,7 @@
             <%= f.label :protection %><br/>
             <%= f.select :protection_id, Protection.all.collect {|p| [p.name, p.id]}, {}, class: 'form-control' %>
             <br/>
-            <%= f.label "Format" %><br />
+            <%= f.label :formats %><br />
             <%= f.select :object_type, @formats, {}, class: 'form-control' %>
             <br/>
             <%= f.label :categories %><br />
@@ -114,15 +113,16 @@
         </div>
     </div>
     <div id="pieces field">
-        <h2>Piezas</h2>
-        <%= label_tag :zip_file %>
+        <h2><%= t('restored_object.pieces')%></h2>
+        <%= label_tag t('restored_object.zip_file') %>
         <%= file_field_tag :zip_file, class:'form-control' %>
         <br/>
         <div class="links">
-            <%= link_to_add_association f, :pieces do %>Añadir Pieza<% end %>
+            <%= link_to_add_association f, :pieces do %> <%= t('restored_object.add_piece') %> <% end %>
         </div>
     </div>
     <br/>
-    <%= f.submit :Guardar, class:'btn btn-primary', onclick: "$('#loader').show(); $('#overlay').show()" %>
+    <%= f.submit t('restored_object.save'), class:'btn btn-primary', onclick: "$('#loader').show(); $('#overlay').show()" %>
 <% end %>
+<br/>
 </div>
