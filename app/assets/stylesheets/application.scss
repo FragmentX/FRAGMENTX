@@ -316,10 +316,41 @@ footer {
   color: var(--main-focus-color);
 }
 
-.main-section {
-  font-size: 1.5em;
-  padding-bottom: 4em;
-  padding-top: 4em;
+.masonry {
+  column-count: 4;
+  column-gap: 1em;
+}
+
+.masonry-item {
+  display: inline-table;
+  text-align: center;
+}
+
+.masonry-heigh-10 {
+  height: 10vw;
+}
+
+.masonry-heigh-5 {
+  height: 5vw;
+}
+
+.masonry-heigh-2 {
+  height: 2vw;
+}
+
+.masonry-heigh-7 {
+  height: 7vw;
+}
+
+.masonry-widht-50 {
+  width: 49%;
+}
+
+
+.color {
+  margin: 0 0 1em 0;
+  padding: 1em;
+  background-color: red;
 }
 
 #measure {
