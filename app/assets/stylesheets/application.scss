@@ -346,11 +346,17 @@ footer {
   width: 49%;
 }
 
+.masonry-widht-100 {
+  width: 100%;
+}
+
 
 .color {
   margin: 0 0 1em 0;
   padding: 1em;
-  background-color: red;
+  border-radius: 15px;
+  color: rgba(255, 255, 255, 1);
+  background-color: rgba(54, 1, 216, 1);
 }
 
 #measure {

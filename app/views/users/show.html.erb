@@ -1,23 +1,28 @@
 <div class="container">
   <h1>Hello</h1>
   <h2><%= @user.email %></h2>
-
   <div class="masonry">
-    <div class="masonry-item masonry-heigh-10 color">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
-    <div>
-    <div class="masonry-item masonry-heigh-5 color masonry-widht-50">Locopizza</div>
-    <div class="masonry-item masonry-heigh-5 color masonry-widht-50">MAGIC</div>
-    </div>
-    <div class="masonry-item masonry-heigh-10 color">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
-    <div class="masonry-item masonry-heigh-5 color">Texto medio limitado a poco</div>
-    <div class="masonry-item masonry-heigh-7 color">Texto corto pero tampoco mucho</div>
-    <div class="masonry-item masonry-heigh-7 color">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
-    <div>
-    <div class="masonry-item masonry-heigh-10 color masonry-widht-50">Corto</div>
-    <div class="masonry-item masonry-heigh-10 color masonry-widht-50">Min</div>
-    <div>
-    <div class="masonry-item masonry-heigh-5 color">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Demasiado largo</div>
-    <div class="masonry-item masonry-heigh-5 color">Locopizza pero medio</div>
-    <div class="masonry-item masonry-heigh-5 color">MAGIC corto</div>
+    <% user_objects = @user.restored_objects; frame = true; %>
+    <% user_objects.each_with_index do |object, index| %>
+      <% if ((getRandomPosition(index)) & frame) %>
+        <div class="masonry-item masonry-widht-100 color masonry-heigh-2">
+          <%= object.title %></br>
+          <%= object.description %></br>
+          <%= link_to object, class:'btn color_buttons_editor text-white ' do %>
+
+          <% end %>
+        </div>
+        <% frame = true %>
+      <% else %>
+        <div class="masonry-item masonry-widht-50 color masonry-heigh-10">
+          <%= object.title %></br>
+          <%= object.description %></br>
+          <%= link_to object, class:'btn color_buttons_editor text-white ' do %>
+
+          <% end %>
+        </div>
+        <% frame = !frame %>
+      <% end %>
+    <% end %>
   </div>
 </div>
