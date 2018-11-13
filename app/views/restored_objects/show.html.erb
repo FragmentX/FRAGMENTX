@@ -13,7 +13,7 @@
       <i class="fas fa-times right" onclick="hideInfo()"></i>
       <p>
         <% @object.categories.each do |category| %>
-          <span class="badge badge-pill badge-light"><% category.name %></span>
+          <span class="badge badge-pill badge-light"><%= category.name %></span>
         <% end %>
       </p>
       <h1><%= @object.title %></h1>
