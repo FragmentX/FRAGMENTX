@@ -34,8 +34,9 @@ es:
   nav_bar:
     restored_objects: Objetos restaurados
     home: Inicio
-    sing_in: Iniciar sesion
-    sing_up: Registrarte
+    sign_in: Iniciar sesión
+    sign_up: Regístrate
+    sign_out: Cerrar sesión
 
   categories:
     link_button: Mostrar el objeto
@@ -58,7 +59,7 @@ es:
       rem_all: Eliminar todos
       all: Todas
       present: Reales
-      missing: Generadas
+      missing: Ausentes
       nearby_pieces: Mostrar piezas cercanas
       vis_mode: Modos de visualización
       model_rot: Rotación del modelo

@@ -7,6 +7,13 @@
     <%= javascript_include_tag 'application' %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0005fb">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
   </head>
 
   <body>
@@ -26,10 +33,13 @@
           </li>
           <% if !(user_signed_in?) %>
           <li class="nav-item">
-            <%= link_to t('nav_bar.sing_in'), new_user_session_path, class:'nav-link' %>
+            <%= link_to t('nav_bar.sign_in'), new_user_session_path, class:'nav-link' %>
           </li>
           <li class="nav-item">
-            <%= link_to t('nav_bar.sing_up'), new_user_registration_path, class:'nav-link' %>
+            <%= link_to t('nav_bar.sign_up'), new_user_registration_path, class:'nav-link' %>
+          <% else %>
+          <li class="nav-item">
+            <%= link_to "/logout", {class: "nav-link"} do %><%= I18n.t 'nav_bar.sign_out' %><% end %>
           <% end %>
           </li>
       </div>

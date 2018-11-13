@@ -34,12 +34,13 @@ en:
   nav_bar:
     restored_objects: Restored objects
     home: Home
-    sing_in: Sing in
-    sing_up: Sing up
+    sign_in: Sign in
+    sign_up: Sign up
+    sign_out: Sign out
 
   categories:
-  link_button: Show the object
-  description: 3D viewer of recomposed museum samples
+    link_button: Show the object
+    description: 3D viewer of recomposed museum samples
 
   restored_object:
     add_piece: Add piece
