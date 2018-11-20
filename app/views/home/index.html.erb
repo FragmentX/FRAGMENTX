@@ -5,9 +5,7 @@
 <section class="diagonal">
   <div class="container row d-flex align-items-center" style="margin: 0 auto">
     <div class="col-xs-12 col-lg-8">
-      Built for a <span class="diagonal-highlight">cross-platform</span> experience.<br/>
-      Whenever you want. Wherever you are.<br/>
-      Enjoy the app on <span class="diagonal-highlight">all your devices</span>.
+      <%= t('home.intro').html_safe %>
     </div>
     <div class="col-xs-12 col-lg-4" id="visor">
   </div>
@@ -16,8 +14,7 @@
 
 <section class="main-section">
   <div class="container">
-    Discover a gallery of restored objects your <span class="highlight">browser</span>.<br/>
-    Curated <span class="highlight">collections</span> by museums and institutions at your fingertips.<br/>
+    <%= t('home.museums').html_safe %>
   </div>
 </section>
 
@@ -25,27 +22,26 @@
   <div class="container row" style="margin: 0 auto">
     <div class="col-xs-12 col-md-4 center">
       <img class="clip clip1 mb-4" src="/discover.svg" />
-      <h2>Discover</h2>
-      <p>Browse a gallery of reconstructed objects from many museums and institutions.</p>
+      <h2><%= t('home.discover') %></h2>
+      <p><%= t('home.discover_info') %></p>
     </div>
     <div class="col-xs-12 col-md-4 center">
       <img class="clip clip2 mb-4" src="/learn.svg" />
-      <h2>Learn</h2>
-      <p>Get insights about each object's material, origin, location, etc.</p>
+      <h2><%= t('home.learn') %></h2>
+      <p><%= t('home.learn_info') %></p>
     </div>
     <div class="col-xs-12 col-md-4 center">
       <img class="clip clip3 mb-4" src="/measure.svg" />
-      <h2>Inspect</h2>
-      <p>You can use the measurement tools to learn more about an
-         object's shape and real dimensions</p>
+      <h2><%= t('home.inspect') %></h2>
+      <p><%= t('home.inspect_info') %></p>
     </div>
   </div>
 </section>
 
 <section id="featured">
   <div class="container">
-    <h2 class="fancy-title">Featured objects</h2>
-    <p>Take a look at some of the objects from the gallery</p>
+    <h2 class="fancy-title"><%= t('home.featured') %></h2>
+    <p><%= t('home.featured_info') %></p>
     <div class="card-columns">
       <% @featured.each do |obj| %>
         <div class="card">
