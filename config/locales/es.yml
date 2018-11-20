@@ -38,6 +38,21 @@ es:
     sign_up: Regístrate
     sign_out: Cerrar sesión
 
+  home:
+    intro: Creada para una experiencia <span class="diagonal-highlight">multiplataforma</span>.<br/>
+           Donde quieras. Cuando quieras.<br/>
+           Disfruta la app en todos tus dispositivos.
+    museums: Descubre una galería de objetos restaurados en tu <span class="highlight">navegador</span>.<br/>
+             <span class="highlight">Colecciones</span> confeccionadas por diversos museos e instituciones.<br/>
+    discover: Descubre
+    discover_info: Navega por la galería de objetos aportados por muchos museos e instituciones.
+    learn: Aprende
+    learn_info: Conoce detalles sobre el material, origen o la localización de cada obra.
+    inspect: Inspecciona
+    inspect_info: Puedes usar las herramientas de medición para comprender mejor las dimensiones y la geometría del objeto.
+    featured: Objetos destacados
+    featured_info: Echa un vistazo a algunos de los objetos de la galería.
+
   categories:
     link_button: Mostrar el objeto
     description: Visualizador 3D de muestras de museos recompuestas

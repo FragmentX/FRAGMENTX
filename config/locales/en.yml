@@ -38,6 +38,21 @@ en:
     sign_up: Sign up
     sign_out: Sign out
 
+  home:
+    intro: Built for a <span class="diagonal-highlight">cross-platform</span> experience.<br/>
+           Whenever you want. Wherever you are.<br/>
+           Enjoy the app on <span class="diagonal-highlight">all your devices</span>.
+    museums: Discover a gallery of restored objects your <span class="highlight">browser</span>.<br/>
+             Curated <span class="highlight">collections</span> by museums and institutions at your fingertips.<br/>
+    discover: Discover
+    discover_info: Browse a gallery of reconstructed objects from many museums and institutions.
+    learn: Learn
+    learn_info: Get insights about each object's material, origin, location, etc.
+    inspect: Inspect
+    inspect_info: You can use the measurement tools to learn more about an object's shape and real dimensions.
+    featured: Featured objects
+    featured_info: Take a look at some of the objects from the gallery.
+
   categories:
     link_button: Show the object
     description: 3D viewer of recomposed museum samples
