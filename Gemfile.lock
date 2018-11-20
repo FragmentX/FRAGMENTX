@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/codahale/bcrypt-ruby.git
-  revision: a28449a23fff24f3f28e58f284b24ff4fe635002
+  revision: 1d7e9094b404e77cccd72cfec71c6ea98acd19e7
   specs:
     bcrypt (3.1.12)
 
@@ -811,8 +811,8 @@ GEM
       tzinfo (>= 1.0.0)
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
-    warden (1.2.7)
-      rack (>= 1.0)
+    warden (1.2.8)
+      rack (>= 2.0.6)
     web-console (3.7.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)

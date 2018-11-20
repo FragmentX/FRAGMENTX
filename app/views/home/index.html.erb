@@ -1,0 +1,103 @@
+<header class="container home-header centred-objects">
+  <h1><img src="/logo.svg" alt="FragmentX" id="logo"></h1>
+  <h2><%= t('categories.description') %></h2>
+</header>
+<section class="diagonal">
+  <div class="container row d-flex align-items-center" style="margin: 0 auto">
+    <div class="col-xs-12 col-lg-8">
+      Built for a <span class="diagonal-highlight">cross-platform</span> experience.<br/>
+      Whenever you want. Wherever you are.<br/>
+      Enjoy the app on <span class="diagonal-highlight">all your devices</span>.
+    </div>
+    <div class="col-xs-12 col-lg-4" id="visor">
+  </div>
+  </div>
+</section>
+
+<section class="main-section">
+  <div class="container">
+    Discover a gallery of restored objects your <span class="highlight">browser</span>.<br/>
+    Curated <span class="highlight">collections</span> by museums and institutions at your fingertips.<br/>
+  </div>
+</section>
+
+<section id="features">
+  <div class="container row" style="margin: 0 auto">
+    <div class="col-xs-12 col-md-4 center">
+      <img class="clip clip1 mb-4" src="/discover.svg" />
+      <h2>Discover</h2>
+      <p>Browse a gallery of reconstructed objects from many museums and institutions.</p>
+    </div>
+    <div class="col-xs-12 col-md-4 center">
+      <img class="clip clip2 mb-4" src="/learn.svg" />
+      <h2>Learn</h2>
+      <p>Get insights about each object's material, origin, location, etc.</p>
+    </div>
+    <div class="col-xs-12 col-md-4 center">
+      <img class="clip clip3 mb-4" src="/measure.svg" />
+      <h2>Inspect</h2>
+      <p>You can use the measurement tools to learn more about an
+         object's shape and real dimensions</p>
+    </div>
+  </div>
+</section>
+
+<section id="featured">
+  <div class="container">
+    <h2 class="fancy-title">Featured objects</h2>
+    <p>Take a look at some of the objects from the gallery</p>
+    <div class="card-columns">
+      <% @featured.each do |obj| %>
+        <div class="card">
+          <%= image_tag(obj.avatar.url(:thumb), class:'card-img-top') %>
+          <div class="card-body">
+              <span class="badge badge-pill badge-info float-right"><%= obj.pieces.count %> <%= t('restored_object.pieces') %></span>
+              <h2><%= link_to obj.title, obj, data: { no_turbolink: true } %></h2>
+              <p><%= truncate(obj.description, length: 150, omission: "...") %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container center">
+    FragmentX 2018<br/>
+    Icons by Made, Dinosoft Labs, and SBTS from the Noun Project
+  </div>
+</footer>
+
+<script type="text/javascript" src="/js/three.min.js"></script>
+<script>
+var $container = $('#visor');
+var renderer = new THREE.WebGLRenderer({antialias: true, alpha: true });
+var camera = new THREE.PerspectiveCamera(80,1,0.1,10000);
+var scene = new THREE.Scene();
+
+scene.add(camera);
+renderer.setSize(400, 400);
+$container.append(renderer.domElement);
+
+camera.position.z = 170;
+
+var material = new THREE.MeshBasicMaterial({wireframe: true, wireframeLinewidth: 10});
+
+
+var Ico = new THREE.Mesh(new THREE.IcosahedronGeometry(75,1), material);
+Ico.rotation.z = 0.5;
+scene.add(Ico);
+
+function update(){
+   Ico.rotation.x+=0.002;
+   Ico.rotation.y+=0.002;
+}
+
+function render() {
+  requestAnimationFrame(render);
+  renderer.render(scene, camera);
+  update();
+}
+
+render();
+</script>
