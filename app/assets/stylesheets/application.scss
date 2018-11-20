@@ -29,6 +29,10 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+.badge-info {
+  background: var(--main-focus-color);
+}
+
 .banner {
   background: var(--main-dark-color);
   bottom: 5px;
@@ -50,6 +54,7 @@ body {
   background-position: center;
   background-size: 100vw auto;
 }
+
 .beurty-prop {
   margin: 3em;
 }
@@ -90,10 +95,13 @@ body {
   height: 5em !important;
 }
 
-.centred-objects {
+.centred-objects, .center {
   text-align: center;
 }
 
+.clip {
+  width: 40%;
+}
 .clip-button {
   margin-right: 10px !important;
   width: auto !important;
@@ -105,6 +113,24 @@ body {
 
 .card-text {
   height: 80%;
+}
+
+.diagonal {
+  background: var(--main-focus-color);
+  clip-path: polygon(
+    0 6vw,
+    100% 0,
+    100% 100%,
+    0 calc(100% - 6vw)
+  );
+  color: black;
+  font-size: 1.8em;
+  padding: 8em 2em 8em 2em;
+}
+
+.diagonal-highlight {
+  color: var(--main-hover-color);
+  font-weight: bold;
 }
 
 #editor {
@@ -121,12 +147,33 @@ body {
   align-items: stretch !important;
 }
 
+.fancy-title {
+  color: var(--main-focus-color);
+  font-weight: bold;
+}
+
+#features {
+  font-size: 1.2em;
+  padding-bottom: 4em;
+  padding-top: 4em;
+}
+
+footer {
+  font-size: 0.8em;
+  padding-bottom: 4em;
+}
+
 .form-control {
   height: auto;
 }
 
 .gmap {
   width: 100%;
+}
+
+.highlight {
+  color: var(--main-focus-color);
+  font-weight: bold;
 }
 
 .home-header {
@@ -142,7 +189,6 @@ body {
 .home-header h2 {
   font-size: 1.2em;
 }
-
 
 .index-up-w {
   width: 100%;
@@ -207,8 +253,18 @@ body {
   margin-right: 1em;
 }
 
+#logo {
+  width: 60%;
+}
+
 .main {
   color: var(--main-focus-color);
+}
+
+.main-section {
+  font-size: 1.5em;
+  padding-bottom: 4em;
+  padding-top: 4em;
 }
 
 #measure {
@@ -278,6 +334,14 @@ body {
   background: var(--main-bg-color);
   padding: 1em;
 
+}
+
+.navbar {
+  background: #ffffff00 !important;
+}
+
+.navbar a {
+  font-weight: bold;
 }
 
 .navbar-brand img {
@@ -470,12 +534,25 @@ input[type=range].slider:focus::-ms-fill-upper {
 }
 
 @media only screen and (max-width: 819px) {
+
+  #logo {
+    width: 90%;
+  }
+
+  .main-section, .diagonal {
+    font-size: 1.2em;
+  }
+
   #toolbar {
     width: 45%;
   }
 
   .toolbar-button {
     font-size: 1.2vw;
+  }
+
+  #visor {
+    display: none;
   }
 }
 
