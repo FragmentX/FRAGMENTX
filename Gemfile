@@ -34,6 +34,9 @@ gem 'geocoder'
 
 gem 'rubyzip'
 
+gem 'bootstrap4-kaminari-views'
+gem 'kaminari'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara', '~> 3.10'

@@ -33,6 +33,11 @@ body {
   background: var(--main-focus-color);
 }
 
+.badge-secondary {
+  background: #f2f2f2;
+  color: var(--main-focus-color);
+}
+
 .banner {
   background: var(--main-dark-color);
   bottom: 5px;
@@ -78,6 +83,45 @@ body {
   padding: 1em;
 }
 
+.btn {
+  border-radius: 20px;
+  border: none;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(133,133,133,0.39);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(133,133,133,0.39);
+  box-shadow: 0px 0px 5px 0px rgba(133,133,133,0.39);
+  font-weight: bold;
+  transition: all 0.5s ease-in-out;
+}
+
+.btn:hover {
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(73, 73, 73, 0.5);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(73,73,73,0.5);
+  box-shadow: 0px 0px 5px 0px rgba(73,73,73,0.5);
+}
+
+.btn-primary {
+  background: var(--main-focus-color);
+  border: none;
+}
+
+.btn-primary:hover {
+  background: var(--main-focus-shadow-color);
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(133,133,133,0.39);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(133,133,133,0.39);
+  box-shadow: 0px 0px 5px 0px rgba(133,133,133,0.39);
+}
+
+.card h1 a, .card h2 a, .card h1 a:hover, .card h2 a:hover {
+  color: var(--main-dark-color);
+  font-size: 0.8em;
+  text-decoration: none;
+}
+
 .card-custom-category {
   height: 18em;
 }
@@ -86,13 +130,23 @@ body {
   height: 5em;
 }
 
-
 .card-custom-style {
   border-radius: 5px !important;
   background: rgba(3, 40, 64, 0.8);
   margin-left: 0.1em !important;
   margin-right: 0.1em !important;
   height: 5em !important;
+}
+
+.card-footer {
+  background: white;
+  border: none;
+  color: var(--main-focus-color);
+}
+
+.card-img-top {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .centred-objects, .center {
@@ -161,6 +215,7 @@ body {
 footer {
   font-size: 0.8em;
   padding-bottom: 4em;
+  padding-top: 6em;
 }
 
 .form-control {
@@ -279,6 +334,17 @@ footer {
   z-index: 10000;
 }
 
+#measure .btn, #toolbar .btn {
+  border-radius: 5px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow:none;
+}
+
+#measure .btn {
+  color: white;
+}
+
 .measure-font {
   font-size: 300%;
   text-align: center;
@@ -371,6 +437,46 @@ footer {
 .padding-toolbar {
   padding-left: 1em !important;
   padding-right: 1em !important;
+}
+
+.page-item a {
+  color: var(--main-focus-color);
+}
+
+.page-item .page-link {
+  transition: all 0.5s ease-in-out;
+}
+
+.page-item .page-link:hover {
+  background: var(--main-focus-color) !important;
+  color: white;
+}
+
+.page-item.active .page-link {
+  background: var(--main-focus-color) !important;
+  transition: all 0.5s ease-in-out;
+}
+
+.page-item.active .page-link:hover {
+  background: var(--main-focus-shadow-color) !important;
+}
+
+.pagination li a{
+  border-radius: 100px !important;
+  border: none;
+
+  margin-right: 1em;
+  min-width: 3em;
+
+  text-align: center;
+
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(133,133,133,0.39);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(133,133,133,0.39);
+  box-shadow: 0px 0px 5px 0px rgba(133,133,133,0.39);
+}
+
+.pagination li {
+  border: none;
 }
 
 .pointer {

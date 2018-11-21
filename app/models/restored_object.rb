@@ -31,7 +31,7 @@ class RestoredObject < ApplicationRecord
 
     enum object_type: [ :ply, :obj, :stl, :other ]
 
-    has_attached_file :avatar, default_url: "https://loremflickr.com/320/240/sculpture"
+    has_attached_file :avatar, default_url: "/object.svg"
     validates_attachment_content_type :avatar, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 
 end

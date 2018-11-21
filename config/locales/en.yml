@@ -126,3 +126,11 @@ en:
       x_months:
         one: 1 month
         other: '%{count} months'
+
+  views:
+    pagination:
+      first: "&laquo; First"
+      last: Last &raquo;
+      next: Next &rsaquo;
+      previous: "&lsaquo; Prev"
+      truncate: "&hellip;"
