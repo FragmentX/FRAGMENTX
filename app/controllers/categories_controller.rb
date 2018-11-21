@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
     @categories  = Category.all
     @objects     = RestoredObject.all
     half_size    = @categories.count/2+1
-    @first_half  = @categories[0..half_size] 
+    @first_half  = @categories[0..half_size]
     @second_half = @categories[half_size..(@categories.count-1)]
     if @objects.count >= 6
       @first_sixs_elements      = @objects[0..5]
@@ -16,16 +16,14 @@ class CategoriesController < ApplicationController
     else
       @first_sixs_elements      = @objects[0..(@categories.count-1)]
       @second_three_elements    = nil
-    end    
-    
+    end
+
     @random_outstanding_object = getRandomObject
   end
 
-  def show    
-    @categories  = Category.all
-    @objects     = RestoredObject.all
-    @category    = Category.find(params[:id])
-    @category_id = params[:id]    
+  def show
+    @category  = Category.find(params[:id])
+    @objects   = @category.restored_objects.page params[:page]
   end
 
   def getRandomObject

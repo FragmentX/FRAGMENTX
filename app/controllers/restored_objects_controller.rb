@@ -9,7 +9,7 @@ class RestoredObjectsController < ApplicationController
   # GET /restored_objects
   # GET /restored_objects.json
   def index
-    @objects = RestoredObject.all
+    @objects = RestoredObject.all.page params[:page]
   end
 
   # GET /restored_objects/1

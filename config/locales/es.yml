@@ -126,3 +126,11 @@ es:
       x_months:
         one: 1 mes
         other: '%{count} meses'
+
+  views:
+    pagination:
+      first: "&laquo; Primera"
+      last: "Última &raquo;"
+      next: Siguiente &rsaquo;
+      previous: "&lsaquo; Anterior"
+      truncate: "&hellip;"

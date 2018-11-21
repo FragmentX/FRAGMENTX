@@ -18,7 +18,7 @@
 
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="/"><img src="logo-mini.svg"/></a>
+      <a class="navbar-brand" href="/"><img src="/logo-mini.svg"/></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -45,8 +45,12 @@
       </div>
     </nav>
     <br/>
-    <div class="">
-      <%= yield %>
-    </div>
+    <%= yield %>
+    <footer>
+      <div class="container center">
+        FragmentX 2018<br/>
+        Icons by Made, Dinosoft Labs, and SBTS from the Noun Project
+      </div>
+    </footer>
   </body>
 </html>

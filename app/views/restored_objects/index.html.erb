@@ -1,18 +1,27 @@
 <div class="container">
     <%= link_to t('restored_object.add_object'), new_restored_object_path, class: 'btn btn-primary right' %>
     <h1><%= t('activerecord.models.restored_object.other') %></h1>
+    <br/>
+    <div class="card-columns">
     <% @objects.each do |obj| %>
         <div class="card">
+            <%= image_tag(obj.avatar.url(:thumb), class:'card-img-top') %>
             <div class="card-body">
-                <h2>
-                    <%= link_to obj.title, obj, data: { no_turbolink: true } %> <span class="badge badge-pill badge-info"><%= obj.pieces.count %> <%= t('restored_object.pieces') %> </span>
-                </h2>
-                <p><%= obj.description %>
+                <span class="badge badge-pill badge-info float-right"><%= obj.pieces.count %> <%= t('restored_object.pieces') %></span>
+                <h2><%= link_to obj.title, obj, data: { no_turbolink: true } %></h2>
+                <p><%= truncate(obj.description, length: 150, omission: "...") %>
             </div>
             <div class="card-footer">
-                <%= time_ago_in_words obj.created_at %>
+                <%= time_ago_in_words obj.created_at %><br/>
+                <% obj.categories.each do |cat| %>
+                    <%= link_to cat do %>
+                        <span class="badge badge-pill badge-secondary"><%= cat.name %></span>
+                    <% end %>
+                <% end %>
             </div>
         </div>
-        <br/>
     <% end %>
+    </div>
+    <br/><br/>
+    <%= paginate @objects, theme: 'twitter-bootstrap-4' %>
 </div>

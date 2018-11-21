@@ -1,30 +1,28 @@
 <div class="container">
-  <div class="centred-objects">
-    <h1><%= @category.name %></h1>
+  <h1><%= @category.name %></h1>
+  <br/>
+  <div class="card-columns">
       <% @objects.each do |obj| %>
-          <% if (@category.id).in?(obj.category_ids) %>
-            <div class="card d-inline-block align-top" style="width: 15rem;">
-                <div class="card-body card-custom-category">
-                  <div class="card-text card-text">
-                    <p><%= obj.title  %> </p>
-                    <p>
-                    <% obj.categories.each do |cat| %>
-                        <%= cat.name %>,
-                    <% end %>
-                    </p>
-                    <p><%= obj.description.truncate(30) %></p>
-                  </div>
-                  <div class="align-text-bottom">
-                  <%= link_to obj, class:'btn color_buttons_editor text-white ' do %>
-                      <%= t('categories.link_button') %>
-                  <% end %>
-                  </div>
-                </div>
-                <div class="card-footer">
-                  <p><%= time_ago_in_words obj.created_at %></p>
-                </div>
+        <%= link_to obj do %>
+          <div class="card">
+            <%= image_tag(obj.avatar.url(:thumb), class:'card-img-top') %>
+            <div class="card-body">
+                <span class="badge badge-pill badge-info float-right"><%= obj.pieces.count %> <%= t('restored_object.pieces') %></span>
+                <h2><%= link_to obj.title, obj, data: { no_turbolink: true } %></h2>
+                <p><%= truncate(obj.description, length: 150, omission: "...") %>
             </div>
-          <% end %>
+            <div class="card-footer">
+                <%= time_ago_in_words obj.created_at %><br/>
+                <% obj.categories.each do |cat| %>
+                    <%= link_to cat do %>
+                        <span class="badge badge-pill badge-secondary"><%= cat.name %></span>
+                    <% end %>
+                <% end %>
+            </div>
+          </div>
+        <% end %>
       <% end %>
   </div>
+  <br/><br/>
+  <%= paginate @objects, theme: 'twitter-bootstrap-4' %>
 </div>
