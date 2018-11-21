@@ -1,0 +1,37 @@
+<div class="container">
+    <h1><%= t('collections.add_collection') %></h1>
+
+    <%= form_for(@collection, :html => { multipart: true }) do |f| %>
+
+        <%= f.label :title %><br/>
+        <%= f.text_field :title, class: 'form-control' %>
+        <br/>
+        <%= f.label :description %><br/>
+        <%= f.text_area :description, class: 'form-control' %>
+        <br/>
+
+        <div id="collections_restored_objects field">
+            <h2><%= t('collections.restored_objects')%></h2>
+            <br/>
+
+            <div class="card-columns">
+                <%= f.fields_for :collections_restored_objects do |h| %>
+                    <div class="card">
+                    <div class="field card-body center">
+                        <p><%= h.object.restored_object.title %><p>
+                        <%= h.check_box :_destroy %>
+                        <%= h.label :_destroy %>
+                    </div>
+                    </div>
+                <% end %>
+            </div>
+            <br/>
+
+            <div class="links">
+                <%= link_to_add_association f, :collections_restored_objects do %> <%= t('collections.add_restored_objects') %> <% end %>
+            </div>
+        </div>
+        <br/>
+        <%= f.submit t('collections.save'), class:'btn btn-primary' %>
+    <% end %>
+</div>

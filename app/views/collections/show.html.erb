@@ -1,0 +1,31 @@
+<div class="container">
+  <%= link_to t('shared.update'), edit_collection_path(@collection), class: 'btn btn-primary right' %>
+  <%= link_to t('shared.destroy'), collection_path(@collection), method: :delete, class: 'btn btn-danger right mr-2' %>
+  <h1><%= @collection.title %></h1>
+  <p><%= @collection.description %></p>
+  <br/>
+  <div class="card-columns">
+      <% @objects.each do |obj| %>
+        <%= link_to obj do %>
+          <div class="card">
+            <%= image_tag(obj.avatar.url(:thumb), class:'card-img-top') %>
+            <div class="card-body">
+                <span class="badge badge-pill badge-info float-right"><%= obj.pieces.count %> <%= t('restored_object.pieces') %></span>
+                <h2><%= link_to obj.title, obj, data: { no_turbolink: true } %></h2>
+                <p><%= truncate(obj.description, length: 150, omission: "...") %>
+            </div>
+            <div class="card-footer">
+                <%= time_ago_in_words obj.created_at %><br/>
+                <% obj.categories.each do |cat| %>
+                    <%= link_to cat do %>
+                        <span class="badge badge-pill badge-secondary"><%= cat.name %></span>
+                    <% end %>
+                <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+  </div>
+  <br/><br/>
+  <%= paginate @objects, theme: 'twitter-bootstrap-4' %>
+</div>

@@ -1,0 +1,25 @@
+<div class="container">
+  <%= link_to t('collections.add'), new_collection_path, class: 'btn btn-primary right' %>
+  <h1><%= t('nav_bar.collections') %></h1>
+  <br/>
+  <div class="card-columns">
+    <% @collections.each do |collection| %>
+      <div class="card">
+        <div class="card-body">
+          <span class="badge badge-pill badge-info float-right"><%= collection.restored_objects.count %> <%= t('collections.restored_objects') %></span>
+          <h2 class="card-title">
+            <%= link_to collection do %>
+              <%= collection.title %>
+            <% end %>
+          </h2>
+          <div class="card-text">
+            <p><%= collection.description %></p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <%= collection.user.email %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
