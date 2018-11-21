@@ -33,10 +33,15 @@ en:
 
   nav_bar:
     restored_objects: Restored objects
+    collections: Collections
     home: Home
     sign_in: Sign in
     sign_up: Sign up
     sign_out: Sign out
+
+  shared:
+    update: Update
+    destroy: Destroy
 
   home:
     intro: Built for a <span class="diagonal-highlight">cross-platform</span> experience.<br/>
@@ -56,6 +61,12 @@ en:
   categories:
     link_button: Show the object
     description: 3D viewer of recomposed museum samples
+
+  collections:
+    add: Add a new collection
+    restored_objects: Objects
+    add_restored_objects: Add object
+    save: Save collection
 
   restored_object:
     add_piece: Add piece

@@ -33,10 +33,15 @@ es:
 
   nav_bar:
     restored_objects: Objetos restaurados
+    collections: Colecciones
     home: Inicio
     sign_in: Iniciar sesión
     sign_up: Regístrate
     sign_out: Cerrar sesión
+
+  shared:
+    update: Actualizar
+    destroy: Eliminar
 
   home:
     intro: Creada para una experiencia <span class="diagonal-highlight">multiplataforma</span>.<br/>
@@ -56,6 +61,12 @@ es:
   categories:
     link_button: Mostrar el objeto
     description: Visualizador 3D de muestras de museos recompuestas
+
+  collections:
+    add: Crear una colección
+    restored_objects: Objetos
+    add_restored_objects: Añadir objeto
+    save: Guardar colección
 
   restored_object:
     add_piece: Añadir pieza

@@ -3,4 +3,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :restored_objects
+  has_many :collections
 end

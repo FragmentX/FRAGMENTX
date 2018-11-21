@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :restored_objects
   resources :categories
+  resources :collections
 
   devise_for :users
 

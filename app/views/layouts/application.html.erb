@@ -31,6 +31,9 @@
           <li class="nav-item">
             <%= link_to t('nav_bar.restored_objects') , restored_objects_path, class:'nav-link' %>
           </li>
+          <li class="nav-item">
+            <%= link_to t('nav_bar.collections') , collections_path, class:'nav-link' %>
+          </li>
           <% if !(user_signed_in?) %>
           <li class="nav-item">
             <%= link_to t('nav_bar.sign_in'), new_user_session_path, class:'nav-link' %>

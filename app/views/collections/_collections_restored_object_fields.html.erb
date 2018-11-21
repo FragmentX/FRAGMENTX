@@ -1,0 +1,10 @@
+<div class="nested-fields card mb-2">
+    <div class="card-body">
+        <%= f.label :title %><br/>
+        <%= f.select :restored_object_id, RestoredObject.all.collect {|u| [u.title, u.id]}, {}, {class: 'form-control'} %>
+        <%= f.hidden_field :collection_id, value: @collection.id %>
+        <br/>
+        <%= link_to_remove_association f, {class:'btn btn-danger', aria: {label:"Eliminar Objeto"}} do %>Eliminar Objeto<% end %>
+    </div>
+    <br/>
+</div>
