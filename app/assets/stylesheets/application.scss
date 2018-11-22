@@ -120,6 +120,9 @@ body {
   color: var(--main-dark-color);
   font-size: 0.8em;
   text-decoration: none;
+.btn-siz {
+  width: 40%;
+  height: 10%;
 }
 
 .card-custom-category {
@@ -130,6 +133,17 @@ body {
   height: 5em;
 }
 
+.card-top-image
+{
+  background-color: rgb(255, 255, 255);
+  height: 50%;
+  border-style: none;
+  border-radius: 15px 15px 0px 0px;
+  border-color: #3c4040;
+  border-width: thin;
+}
+
+
 .card-custom-style {
   border-radius: 5px !important;
   background: rgba(3, 40, 64, 0.8);
@@ -138,18 +152,12 @@ body {
   height: 5em !important;
 }
 
-.card-footer {
-  background: white;
-  border: none;
-  color: var(--main-focus-color);
+.card-img-top
+{
+  height: 50%;
 }
 
-.card-img-top {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
-.centred-objects, .center {
+.centred-objects {
   text-align: center;
 }
 
@@ -352,11 +360,13 @@ footer {
 
 
 .color {
+  box-shadow: 1px 1px 10px grey;
   margin: 0 0 1em 0;
-  padding: 1em;
-  border-radius: 15px;
+  border-style: none;
+  border-radius: 20px;
   color: rgba(255, 255, 255, 1);
   background-color: rgba(54, 1, 216, 1);
+  height: 250px;
 }
 
 #measure {

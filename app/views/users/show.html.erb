@@ -5,21 +5,45 @@
     <% user_objects = @user.restored_objects; frame = true; %>
     <% user_objects.each_with_index do |object, index| %>
       <% if ((getRandomPosition(index)) & frame) %>
-        <div class="masonry-item masonry-widht-100 color masonry-heigh-2">
-          <%= object.title %></br>
-          <%= object.description %></br>
-          <%= link_to object, class:'btn color_buttons_editor text-white ' do %>
-
-          <% end %>
+        <div class="masonry-item masonry-widht-100 color masonry-heigh-2 card">
+          <div class="card-top-image">
+            <img class="card-img-top" src="..." alt="Card image cap">
+          </div>
+          <div>
+            <h5><%= object.title %></h5>
+          </div>
+          <div>
+            <p><%= object.description %></p>
+          </div>
+          <div>
+            <%= link_to object, class:'btn btn-siz color_buttons_editor text-white' do %>
+              Go
+            <% end %>
+            <%= link_to object , data: {:confirm => 'Are you sure?'}, :method => :delete, class:'btn btn-siz color_buttons_editor text-white' do %>
+              Delete
+            <% end %>
+          </div>
         </div>
         <% frame = true %>
       <% else %>
         <div class="masonry-item masonry-widht-50 color masonry-heigh-10">
-          <%= object.title %></br>
-          <%= object.description %></br>
-          <%= link_to object, class:'btn color_buttons_editor text-white ' do %>
-
-          <% end %>
+          <div class="card-top-image">
+            <img class="card-img-top" src="..." alt="Card image cap">
+          </div>
+          <div>
+            <h5><%= object.title %></h5>
+          </div>
+          <div>
+            <p><%= object.description %></p>
+          </div>
+          <div>
+            <%= link_to object, class:'btn btn-siz color_buttons_editor text-white' do %>
+              Go
+            <% end %>
+            <%= link_to object , data: {:confirm => 'Are you sure?'}, method: :delete, class:'btn btn-siz color_buttons_editor text-white' do %>
+              Delete
+            <% end %>
+          </div>
         </div>
         <% frame = !frame %>
       <% end %>
