@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 2018_11_21_175303) do
     t.integer "restored_object_id"
     t.string "model_file_name"
     t.string "model_content_type"
-    t.integer "model_file_size"
+    t.bigint "model_file_size"
     t.datetime "model_updated_at"
     t.decimal "width"
     t.decimal "height"
@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(version: 2018_11_21_175303) do
     t.text "notes"
     t.string "avatar_file_name"
     t.string "avatar_content_type"
-    t.integer "avatar_file_size"
+    t.bigint "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.integer "object_type"
   end

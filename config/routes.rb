@@ -6,9 +6,8 @@ Rails.application.routes.draw do
   resources :categories
   resources :collections
 
-  match 'users/:id' => 'users#show', via: :get
-
   devise_for :users
+  get 'users/:id' => 'users#show', as: :user
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   Rails.application.routes.draw do
