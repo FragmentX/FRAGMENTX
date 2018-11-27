@@ -194,6 +194,10 @@ body {
   color: var(--main-hover-color);
   font-weight: bold;
 }
+.custom-footer
+{
+  text-align: center;
+}
 
 #editor {
   background: linear-gradient(to bottom right,#031634, #033649);
@@ -534,6 +538,10 @@ footer {
   float: right;
 }
 
+.right-button {
+  text-align: right;
+}
+
 .right-objects {
   text-align: right;
 }
@@ -746,4 +754,8 @@ input[type=range].slider:focus::-ms-fill-upper {
     overflow: hidden;
     text-align: center;
     img { width: 100% }
+}
+
+.user-header {
+  width: 100%;
 }

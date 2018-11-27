@@ -1,52 +1,42 @@
 <div class="container">
-  <h1>Hello</h1>
-  <h2><%= @user.email %></h2>
-  <div class="masonry">
-    <% user_objects = @user.restored_objects; frame = true; %>
-    <% user_objects.each_with_index do |object, index| %>
-      <% if ((getRandomPosition(index)) & frame) %>
-        <div class="masonry-item masonry-widht-100 color masonry-heigh-2 card">
-          <div class="card-top-image">
-            <img class="card-img-top" src="..." alt="Card image cap">
-          </div>
-          <div>
-            <h5><%= object.title %></h5>
-          </div>
-          <div>
-            <p><%= object.description %></p>
-          </div>
-          <div>
-            <%= link_to object, class:'btn btn-siz color_buttons_editor text-white' do %>
-              Go
-            <% end %>
-            <%= link_to object , data: {:confirm => 'Are you sure?'}, :method => :delete, class:'btn btn-siz color_buttons_editor text-white' do %>
-              Delete
-            <% end %>
-          </div>
+  <div class="user-header">
+    <h1>Hello</h1>
+    <div class="row">
+      <div class="col-8">
+        <h2><%= @user.email %></h2>
+      </div>
+      <div class="col-4 right-button">
+        <%= link_to t('restored_object.add_object'), new_restored_object_path, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+  <% user_objects = @user.restored_objects; frame = true; %>
+  <div class="card-columns">
+  <% user_objects.each_with_index do |obj, index| %>
+        <div class="card">
+          <%= link_to image_tag(obj.avatar.url(:thumb), class:'card-img-top'), obj %>
+            <div class="card-body">
+                <span class="badge badge-pill badge-info float-right"><%= obj.pieces.count %> <%= t('restored_object.pieces') %></span>
+                <% obj.categories.each do |cat| %>
+                  <%= link_to cat do %>
+                      <span class="badge badge-pill badge-secondary"><%= cat.name.capitalize %></span>
+                  <% end %>
+                <% end %>
+                <h2><%= link_to obj.title.capitalize, obj, data: { no_turbolink: true } %></h2>
+                <p><%= truncate(obj.description, length: 150, omission: "...").capitalize %></p>
+                <%= time_ago_in_words obj.created_at %><br>
+            </div>
+            <div class="card-footer">
+              <div class="custom-footer">
+                <%= link_to obj, class:'btn btn-siz color_buttons_editor text-white' do %>
+                  Go
+                <% end %>
+                <%= link_to obj , data: {:confirm => 'Are you sure?'}, method: :delete, class:'btn btn-siz color_buttons_editor text-white' do %>
+                  Delete
+                <% end %>
+              </div>
+            </div>
         </div>
-        <% frame = true %>
-      <% else %>
-        <div class="masonry-item masonry-widht-50 color masonry-heigh-10">
-          <div class="card-top-image">
-            <img class="card-img-top" src="..." alt="Card image cap">
-          </div>
-          <div>
-            <h5><%= object.title %></h5>
-          </div>
-          <div>
-            <p><%= object.description %></p>
-          </div>
-          <div>
-            <%= link_to object, class:'btn btn-siz color_buttons_editor text-white' do %>
-              Go
-            <% end %>
-            <%= link_to object , data: {:confirm => 'Are you sure?'}, method: :delete, class:'btn btn-siz color_buttons_editor text-white' do %>
-              Delete
-            <% end %>
-          </div>
-        </div>
-        <% frame = !frame %>
-      <% end %>
     <% end %>
   </div>
 </div>
