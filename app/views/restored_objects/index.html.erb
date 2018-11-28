@@ -1,5 +1,9 @@
 <div class="container">
-    <%= link_to t('restored_object.add_object'), new_restored_object_path, class: 'btn btn-primary right' %>
+    <% if policy(@objects).create? %>
+      <%= link_to t('restored_object.add_object'), new_restored_object_path, class: 'btn btn-primary right' %>
+    <% else %>
+      <%= link_to t('restored_object.add_object'), new_user_registration_path, class: 'btn btn-primary right' %>
+    <% end %>
     <h1><%= t('activerecord.models.restored_object.other') %></h1>
     <br/>
     <div class="card-columns">

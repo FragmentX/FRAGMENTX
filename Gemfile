@@ -20,6 +20,7 @@ gem 'cocoon'
 gem 'bcrypt', git: 'https://github.com/codahale/bcrypt-ruby.git', :require => 'bcrypt'
 gem 'devise'
 gem 'jquery-rails'
+gem 'pundit'
 
 gem 'aws-sdk'
 gem 'paperclip'

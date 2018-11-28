@@ -1,5 +1,9 @@
 <div class="container">
-  <%= link_to t('collections.add'), new_collection_path, class: 'btn btn-primary right' %>
+  <% if policy(@collections).create? %>
+    <%= link_to t('collections.add'), new_collection_path, class: 'btn btn-primary right' %>
+  <% else %>
+    <%= link_to t('collections.add'), new_user_registration_path, class: 'btn btn-primary right' %>
+  <% end %>
   <h1><%= t('nav_bar.collections') %></h1>
   <br/>
   <div class="card-columns">

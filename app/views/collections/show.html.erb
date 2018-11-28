@@ -1,6 +1,10 @@
 <div class="container">
-  <%= link_to t('shared.update'), edit_collection_path(@collection), class: 'btn btn-primary right' %>
-  <%= link_to t('shared.destroy'), collection_path(@collection), method: :delete, class: 'btn btn-danger right mr-2' %>
+  <% if policy(@collection).update? %>
+    <%= link_to t('shared.update'), edit_collection_path(@collection), class: 'btn btn-primary right' %>
+  <% end %>
+  <% if policy(@collection).destroy? %>
+    <%= link_to t('shared.destroy'), collection_path(@collection), method: :delete, class: 'btn btn-danger right mr-2' %>
+  <% end %>
   <h1><%= @collection.title %></h1>
   <p><%= @collection.description %></p>
   <br/>
