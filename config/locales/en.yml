@@ -74,6 +74,7 @@ en:
     zip_file: Zip file
     save: Save
     add_object: Add new object
+    edit: Edit object
     viewer:
       banner_info: Use right button mouse to pan, left button to orbit and scroll to zoom in and out.
       by: by

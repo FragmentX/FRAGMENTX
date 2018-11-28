@@ -74,6 +74,7 @@ es:
     zip_file: Archivo zip
     save: Guardar
     add_object: Añadir objeto nuevo
+    edit: Editar objeto
     viewer:
       banner_info: Usa el boton derecho del raton para arrastrar, el botón izquiero para orbitar y la rueda para realizar el zoom.
       by: Realizado por

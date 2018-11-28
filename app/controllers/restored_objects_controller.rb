@@ -42,6 +42,7 @@ class RestoredObjectsController < ApplicationController
   # GET /restored_objects/1/edit
   def edit
     #authorize @object
+    @formats =  [ :ply, :obj, :stl, :other ]
   end
 
   # POST /restored_objects
@@ -95,6 +96,7 @@ class RestoredObjectsController < ApplicationController
   # PATCH/PUT /restored_objects/1.json
   def update
     #authorize @object
+
     respond_to do |format|
       if @object.update(restored_object_params)
         format.html { redirect_to restored_object_path(@object) }
