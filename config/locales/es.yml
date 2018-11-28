@@ -64,6 +64,7 @@ es:
 
   collections:
     add: Crear una colección
+    edit: Editar colección
     restored_objects: Objetos
     add_restored_objects: Añadir objeto
     save: Guardar colección

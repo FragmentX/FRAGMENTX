@@ -64,6 +64,7 @@ en:
 
   collections:
     add: Add a new collection
+    edit: Edit collection
     restored_objects: Objects
     add_restored_objects: Add object
     save: Save collection
