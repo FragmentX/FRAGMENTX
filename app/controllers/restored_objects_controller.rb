@@ -10,13 +10,13 @@ class RestoredObjectsController < ApplicationController
   # GET /restored_objects.json
   def index
     @objects = RestoredObject.all.page params[:page]
+    authorize @objects
   end
 
   # GET /restored_objects/1
   # GET /restored_objects/1.json
   def show
-    #authorize @object
-    #@pieces = @object.pieces
+    authorize @object
     gon.pieces = []
     gon.matrices = []
     gon.missings = []
@@ -35,14 +35,14 @@ class RestoredObjectsController < ApplicationController
   # GET /restored_objects/new
   def new
     @object = RestoredObject.new
+    authorize @object
     @formats =  [ :ply, :obj, :stl, :other ]
-    #authorize @object
   end
 
   # GET /restored_objects/1/edit
   def edit
-    #authorize @object
     @formats =  [ :ply, :obj, :stl, :other ]
+    authorize @object
   end
 
   # POST /restored_objects
@@ -50,6 +50,7 @@ class RestoredObjectsController < ApplicationController
   def create
     @object = RestoredObject.new(restored_object_params)
     @object.user_id = current_user.id
+    authorize @object
     if params[:zip_file]
       params[:pieces_attributes] = nil
       puts "About to read the file"
@@ -73,7 +74,6 @@ class RestoredObjectsController < ApplicationController
       end
     end
 
-    #authorize @object
     respond_to do |format|
       if @object.save
         format.html { redirect_to @object }
@@ -95,8 +95,7 @@ class RestoredObjectsController < ApplicationController
   # PATCH/PUT /restored_objects/1
   # PATCH/PUT /restored_objects/1.json
   def update
-    #authorize @object
-
+    authorize @object
     respond_to do |format|
       if @object.update(restored_object_params)
         format.html { redirect_to restored_object_path(@object) }
@@ -114,7 +113,7 @@ class RestoredObjectsController < ApplicationController
   # DELETE /restored_objects/1
   # DELETE /restored_objects/1.json
   def destroy
-    #authorize @object
+    authorize @object
     @object.destroy
     redirect_to(restored_objects_path)
   end

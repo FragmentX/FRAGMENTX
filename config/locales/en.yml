@@ -30,7 +30,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-
   nav_bar:
     restored_objects: Restored objects
     collections: Collections
@@ -42,6 +41,7 @@ en:
   shared:
     update: Update
     destroy: Destroy
+    not_authorized: You are not authorized to perform this action.
 
   home:
     intro: Built for a <span class="diagonal-highlight">cross-platform</span> experience.<br/>

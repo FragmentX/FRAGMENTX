@@ -42,6 +42,7 @@ es:
   shared:
     update: Actualizar
     destroy: Eliminar
+    not_authorized: Parece que no estás autorizado/a para hacer eso.
 
   home:
     intro: Creada para una experiencia <span class="diagonal-highlight">multiplataforma</span>.<br/>
