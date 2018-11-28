@@ -1,22 +1,15 @@
 <div class="container">
   <div class="user-header">
+    <% if policy(RestoredObject).create? %>
+      <%= link_to t('restored_object.add_object'), new_restored_object_path, class: 'btn btn-primary right' %>
+    <% end %>
+    <% if current_user&.id == @user.id  %>
+      <%= link_to t('users.edit_settings'), edit_user_registration_path, class: 'btn btn-primary right mr-4' %>
+    <% end %>
     <h1>Hello</h1>
-    <div class="row">
-      <div class="col-8">
-        <h2><%= @user.email %></h2>
-      </div>
-      <div class="col-4 right-button">
-        <%= link_to t('restored_object.add_object'), new_restored_object_path, class: 'btn btn-primary user-btn' %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-8">
-      </div>
-      <div class="col-4 right-button">
-        <%= link_to t('users.edit_settings'), edit_user_registration_path, class: 'btn btn-primary user-btn' %>
-      </div>
-    </div>
+    <h2><%= @user.email %></h2>
   </div>
+  <br/>
   <% if !(@user.bio.blank?) %>
   <div class="card card-margin">
     <div class="row">
@@ -35,35 +28,33 @@
     </div>
   </div>
   <% end %>
-  <% user_objects = @user.restored_objects; frame = true; %>
   <div class="card-columns">
-  <% user_objects.each_with_index do |obj, index| %>
-        <div class="card">
-          <%= link_to image_tag(obj.avatar.url(:thumb), class:'card-img-top'), obj %>
-            <div class="card-body">
-                <span class="badge badge-pill badge-info float-right"><%= obj.pieces.count %> <%= t('restored_object.pieces') %></span>
-                <% obj.categories.each do |cat| %>
-                  <%= link_to cat do %>
-                      <span class="badge badge-pill badge-secondary"><%= cat.name.capitalize %></span>
-                  <% end %>
+    <% @user.restored_objects.each_with_index do |obj, index| %>
+      <div class="card">
+        <%= link_to image_tag(obj.avatar.url(:thumb), class:'card-img-top'), obj %>
+          <div class="card-body">
+              <span class="badge badge-pill badge-info float-right"><%= obj.pieces.count %> <%= t('restored_object.pieces') %></span>
+              <% obj.categories.each do |cat| %>
+                <%= link_to cat do %>
+                    <span class="badge badge-pill badge-secondary"><%= cat.name.capitalize %></span>
                 <% end %>
-                <h2><%= link_to obj.title.capitalize, obj, data: { no_turbolink: true } %></h2>
-                <p><%= truncate(obj.description, length: 150, omission: "...").capitalize %></p>
-                <%= time_ago_in_words obj.created_at %><br>
+              <% end %>
+              <h2><%= link_to obj.title.capitalize, obj, data: { no_turbolink: true } %></h2>
+              <p><%= truncate(obj.description, length: 150, omission: "...").capitalize %></p>
+              <%= time_ago_in_words obj.created_at %><br>
+          </div>
+          <% if isObjectFromUser(obj) %>
+            <div class="card-footer center">
+               <%= link_to edit_restored_object_path, class:'btn btn-primary mr-2' do %>
+                  <img src="/edit.svg" style="width: 2em;" />
+                <% end %>
+                <%= link_to obj , data: {:confirm => 'Are you sure?'}, method: :delete, class:'btn btn-primary' do %>
+                  <img src="/trash.svg" style="width: 2em;"/>
+                <% end %>
+                <br/><br/>
             </div>
-            <% if isObjectFromUser(obj) %>
-              <div class="card-footer">
-                <div class="custom-footer">
-                  <%= link_to edit_restored_object_path, class:'btn btn-siz color_buttons_editor text-white' do %>
-                    <img src="/edit.svg"/>
-                  <% end %>
-                  <%= link_to obj , data: {:confirm => 'Are you sure?'}, method: :delete, class:'btn btn-siz color_buttons_editor text-white' do %>
-                    <img src="/trash.svg"/>
-                  <% end %>
-                </div>
-              </div>
-            <% end %>
-        </div>
+          <% end %>
+      </div>
     <% end %>
   </div>
 </div>

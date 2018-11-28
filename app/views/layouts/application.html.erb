@@ -42,6 +42,9 @@
             <%= link_to t('nav_bar.sign_up'), new_user_registration_path, class:'nav-link' %>
           <% else %>
           <li class="nav-item">
+            <%= link_to 'Dashboard' , user_path(current_user.id), class:'nav-link' %>
+          </li>
+          <li class="nav-item">
             <%= link_to "/logout", {class: "nav-link"} do %><%= I18n.t 'nav_bar.sign_out' %><% end %>
           </li>
           <% end %>
