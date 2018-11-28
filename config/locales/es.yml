@@ -101,6 +101,7 @@ es:
 
   users:
     edit_settings: Edita tu perfil
+    bio: Biografía
 
   activerecord:
     models:

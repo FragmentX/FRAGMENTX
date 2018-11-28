@@ -20,12 +20,11 @@
   <% if !(@user.bio.blank?) %>
   <div class="card card-margin">
     <div class="card-header">
-      Featured
+      <%= t('users.bio') %>
     </div>
     <div class="card-body">
-      <h5 class="card-title"><%= @user.name %>:</h5>
-      <p class="card-text"><%= @user.bio %></p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <h5 class="card-title"><%= @user.name.capitalize %>:</h5>
+      <p class="card-text"><%= @user.bio.capitalize %></p>
     </div>
   </div>
   <% end %>
