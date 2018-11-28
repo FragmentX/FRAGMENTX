@@ -104,6 +104,15 @@ es:
         one: Objeto restaurado
         other: Objetos restaurados
     attributes:
+      collection:
+        title: Título
+        description: Descripción
+      piece:
+        name: Nombre
+        description: Descripción
+        matrix: Matriz de transformación
+        missing: Ausente
+        model: Modelo
       restored_object:
         title: Título
         author: Autor
@@ -120,7 +129,7 @@ es:
         owner: Propietario
         deposit: Depósito
         address: Dirección
-        inventory no: Número de inventario
+        inventory_no: Número de inventario
         priority: Prioridad de restauración
         state: Estado de la pieza
         protection: Proteción requerida

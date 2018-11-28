@@ -104,6 +104,15 @@ en:
         one: Restored Object
         other: Restored objects
     attributes:
+      collection:
+        title: Title
+        description: Description
+      piece:
+        name: Name
+        description: Description
+        matrix: Transformation Matrix
+        missing: Missing
+        model: Model
       restored_object:
         title: Title
         author: Author
@@ -120,7 +129,7 @@ en:
         owner: Owner
         deposit: Deposit
         address: Adress
-        inventory no: Inventory no
+        inventory_no: Inventory no
         priority: Restoration priority
         state: Piece state
         protection: Protection required
