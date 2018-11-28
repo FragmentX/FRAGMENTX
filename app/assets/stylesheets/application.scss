@@ -130,6 +130,25 @@ body {
   height: 5em;
 }
 
+.card-custom-image-right
+{
+  flex: 0 0 23%;
+  max-width: 23%;
+}
+
+.card-custom-image-radius
+{
+  border-radius: 0 5px 5px 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.card-custom-image-left
+{
+  flex: 0 0 77%;
+  max-width: 77%;
+}
+
 .card-custom-style {
   border-radius: 5px !important;
   background: rgba(3, 40, 64, 0.8);
@@ -448,6 +467,16 @@ footer {
 .padding-toolbar {
   padding-left: 1em !important;
   padding-right: 1em !important;
+}
+
+.padding-out
+{
+  padding-right: 0px !important;
+}
+
+.padding-out-custom-image
+{
+  padding-left: 0px !important;
 }
 
 .page-item a {

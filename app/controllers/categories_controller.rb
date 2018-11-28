@@ -5,10 +5,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @categories  = Category.all
-    @objects     = RestoredObject.all
     @category    = Category.find(params[:id])
-    @category_id = params[:id]
   end
 
   def getRandomObject

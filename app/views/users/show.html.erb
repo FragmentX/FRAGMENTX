@@ -19,12 +19,19 @@
   </div>
   <% if !(@user.bio.blank?) %>
   <div class="card card-margin">
-    <div class="card-header">
-      <%= t('users.bio') %>
-    </div>
-    <div class="card-body">
-      <h5 class="card-title"><%= @user.name.capitalize %>:</h5>
-      <p class="card-text"><%= @user.bio.capitalize %></p>
+    <div class="row">
+      <div class="col-md-9 padding-out">
+        <div class="card-header">
+          <%= t('users.bio') %>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title"><%= @user.name.capitalize %>:</h5>
+          <p class="card-text"><%= @user.bio.capitalize %></p>
+        </div>
+      </div>
+      <div class="col-md-3 padding-out padding-out-custom-image">
+        <%= image_tag @user.avatar.url(:thumb), class: 'card-custom-image-radius' %>
+      </div>
     </div>
   </div>
   <% end %>
