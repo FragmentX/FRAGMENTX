@@ -2,21 +2,24 @@ class CollectionsController < ApplicationController
 
   def index
     @collections  = Collection.all
+    authorize @collections
   end
 
   def show
     @collection  = Collection.find(params[:id])
+    authorize @collection
     @objects   = @collection.restored_objects.page params[:page]
   end
 
   def new
     @collection = Collection.new
+    authorize @collection
   end
 
   def create
     @collection = Collection.new(collection_params)
     @collection.user_id = current_user.id
-    # authorize @collection
+    authorize @collection
     respond_to do |format|
       if @collection.save
         format.html { redirect_to @collection }
@@ -35,13 +38,13 @@ class CollectionsController < ApplicationController
   end
 
   def edit
-    #authorize @collection
     @collection  = Collection.find(params[:id])
+    authorize @collection
   end
 
   def update
     @collection = Collection.find(params[:id])
-    # authorize @collection
+    authorize @collection
     respond_to do |format|
       if @collection.update(collection_params)
         format.html { redirect_to @collection }
@@ -61,7 +64,7 @@ class CollectionsController < ApplicationController
 
   def destroy
     @collection = Collection.find(params[:id])
-    #authorize @object
+    authorize @collection
     @collection.destroy
     redirect_to(collections_path)
   end
