@@ -35,6 +35,7 @@ es:
     restored_objects: Objetos restaurados
     collections: Colecciones
     home: Inicio
+    user: Usuario
     sign_in: Iniciar sesión
     sign_up: Regístrate
     sign_out: Cerrar sesión

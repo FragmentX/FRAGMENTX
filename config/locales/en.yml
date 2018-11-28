@@ -34,6 +34,7 @@ en:
     restored_objects: Restored objects
     collections: Collections
     home: Home
+    user: User
     sign_in: Sign in
     sign_up: Sign up
     sign_out: Sign out
