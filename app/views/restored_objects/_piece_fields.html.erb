@@ -15,7 +15,7 @@
         <%= f.file_field :model, :required => true, class:'form-control' %>
         <%= f.hidden_field :restored_object_id, value: @object.id %>
         <br/>
-        <%= link_to_remove_association f, {class:'btn btn-danger', aria: {label:"Eliminar Pieza"}} do %>Eliminar Pieza<% end %>
+        <%= link_to_remove_association f, {class:'btn btn-danger', aria: {label: t('restored_object.remove_piece')}} do %>Eliminar Pieza<% end %>
     </div>
     <br/>
 </div>

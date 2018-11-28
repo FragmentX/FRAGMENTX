@@ -65,12 +65,14 @@ en:
 
   collections:
     add: Add a new collection
+    edit: Edit collection
     restored_objects: Objects
     add_restored_objects: Add object
     save: Save collection
 
   restored_object:
     add_piece: Add piece
+    remove_piece: Remove piece
     pieces: Pieces
     zip_file: Zip file
     save: Save
@@ -109,6 +111,15 @@ en:
         one: Restored Object
         other: Restored objects
     attributes:
+      collection:
+        title: Title
+        description: Description
+      piece:
+        name: Name
+        description: Description
+        matrix: Transformation Matrix
+        missing: Missing
+        model: Model
       restored_object:
         title: Title
         author: Author
@@ -125,7 +136,7 @@ en:
         owner: Owner
         deposit: Deposit
         address: Adress
-        inventory no: Inventory no
+        inventory_no: Inventory no
         priority: Restoration priority
         state: Piece state
         protection: Protection required
