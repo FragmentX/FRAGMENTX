@@ -139,6 +139,9 @@ es:
       x_months:
         one: 1 mes
         other: '%{count} meses'
+      about_x_hours:
+        one: 1 hora
+        other: '%{count} horas'
 
   views:
     pagination:
@@ -147,6 +150,4 @@ es:
       next: Siguiente &rsaquo;
       previous: "&lsaquo; Anterior"
       truncate: "&hellip;"
-      about_x_hours:
-        one: 1 hora
-        other: '%{count} horas'
+

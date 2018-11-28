@@ -28,11 +28,11 @@
             </div>
             <div class="card-footer">
               <div class="custom-footer">
-                <%= link_to obj, class:'btn btn-siz color_buttons_editor text-white' do %>
-                  Go
+                <%= link_to edit_restored_object_path, class:'btn btn-siz color_buttons_editor text-white' do %>
+                  <img src="/logo-mini.svg"/>
                 <% end %>
                 <%= link_to obj , data: {:confirm => 'Are you sure?'}, method: :delete, class:'btn btn-siz color_buttons_editor text-white' do %>
-                  Delete
+                  <img src="/logo-mini.svg"/>
                 <% end %>
               </div>
             </div>
