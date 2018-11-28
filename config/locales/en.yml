@@ -34,6 +34,7 @@ en:
     restored_objects: Restored objects
     collections: Collections
     home: Home
+    user: User
     sign_in: Sign in
     sign_up: Sign up
     sign_out: Sign out
@@ -97,6 +98,10 @@ en:
       light: Light
       save_img: Save view as image
       loading_text: The object pieces are currently being loaded...
+
+  users:
+    edit_settings: Edit your profile
+    bio: Biography
 
   activerecord:
     models:

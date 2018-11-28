@@ -35,6 +35,7 @@ es:
     restored_objects: Objetos restaurados
     collections: Colecciones
     home: Inicio
+    user: Usuario
     sign_in: Iniciar sesión
     sign_up: Regístrate
     sign_out: Cerrar sesión
@@ -99,6 +100,10 @@ es:
       save_img: Guardar vista como imagen
       loading_text: Las piezas del objeto están siendo cargadas
 
+  users:
+    edit_settings: Edita tu perfil
+    bio: Biografía
+
   activerecord:
     models:
       restored_object:
@@ -139,6 +144,9 @@ es:
       x_months:
         one: 1 mes
         other: '%{count} meses'
+      about_x_hours:
+        one: 1 hora
+        other: '%{count} horas'
 
   views:
     pagination:
@@ -147,3 +155,4 @@ es:
       next: Siguiente &rsaquo;
       previous: "&lsaquo; Anterior"
       truncate: "&hellip;"
+

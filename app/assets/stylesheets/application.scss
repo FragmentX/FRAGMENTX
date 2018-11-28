@@ -130,6 +130,25 @@ body {
   height: 5em;
 }
 
+.card-custom-image-right
+{
+  flex: 0 0 23%;
+  max-width: 23%;
+}
+
+.card-custom-image-radius
+{
+  border-radius: 0 5px 5px 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.card-custom-image-left
+{
+  flex: 0 0 77%;
+  max-width: 77%;
+}
+
 .card-custom-style {
   border-radius: 5px !important;
   background: rgba(3, 40, 64, 0.8);
@@ -147,6 +166,12 @@ body {
 .card-img-top {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+}
+
+.card-margin
+{
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 .centred-objects, .center {
@@ -167,6 +192,16 @@ body {
 
 .card-text {
   height: 80%;
+}
+
+.color-header-user
+{
+ color: rgba(54,1,196,1) !important;
+}
+
+.custom-footer
+{
+  text-align: center;
 }
 
 .diagonal {
@@ -439,6 +474,16 @@ footer {
   padding-right: 1em !important;
 }
 
+.padding-out
+{
+  padding-right: 0px !important;
+}
+
+.padding-out-custom-image
+{
+  padding-left: 0px !important;
+}
+
 .page-item a {
   color: var(--main-focus-color);
 }
@@ -699,4 +744,9 @@ input[type=range].slider:focus::-ms-fill-upper {
     overflow: hidden;
     text-align: center;
     img { width: 100% }
+}
+
+.user-btn
+{
+  width: 70%;
 }

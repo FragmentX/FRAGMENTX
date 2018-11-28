@@ -21,6 +21,10 @@
           <%= f.password_field :password_confirmation, autocomplete: "off", class:'form-control' %>
         </div>
 
+        <div class="field mb-4">
+          <%= f.file_field :avatar, class: '' %>
+        </div>
+
         <div class="actions mb-4">
           <%= f.submit t('nav_bar.sign_up'), class: 'btn btn-primary' %>
         </div>

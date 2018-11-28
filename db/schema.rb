@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_21_175303) do
+ActiveRecord::Schema.define(version: 2018_11_28_185539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 2018_11_21_175303) do
     t.integer "restored_object_id"
     t.string "model_file_name"
     t.string "model_content_type"
-    t.integer "model_file_size"
+    t.bigint "model_file_size"
     t.datetime "model_updated_at"
     t.decimal "width"
     t.decimal "height"
@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(version: 2018_11_21_175303) do
     t.text "notes"
     t.string "avatar_file_name"
     t.string "avatar_content_type"
-    t.integer "avatar_file_size"
+    t.bigint "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.integer "object_type"
   end
@@ -160,6 +160,12 @@ ActiveRecord::Schema.define(version: 2018_11_21_175303) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.text "bio"
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
+    t.bigint "avatar_file_size"
+    t.datetime "avatar_updated_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
