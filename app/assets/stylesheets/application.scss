@@ -120,9 +120,6 @@ body {
   color: var(--main-dark-color);
   font-size: 0.8em;
   text-decoration: none;
-.btn-siz {
-  width: 40%;
-  height: 10%;
 }
 
 .card-custom-category {
@@ -133,17 +130,6 @@ body {
   height: 5em;
 }
 
-.card-top-image
-{
-  background-color: rgb(255, 255, 255);
-  height: 50%;
-  border-style: none;
-  border-radius: 15px 15px 0px 0px;
-  border-color: #3c4040;
-  border-width: thin;
-}
-
-
 .card-custom-style {
   border-radius: 5px !important;
   background: rgba(3, 40, 64, 0.8);
@@ -152,12 +138,18 @@ body {
   height: 5em !important;
 }
 
-.card-img-top
-{
-  height: 50%;
+.card-footer {
+  background: white;
+  border: none;
+  color: var(--main-focus-color);
 }
 
-.centred-objects {
+.card-img-top {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.centred-objects, .center {
   text-align: center;
 }
 
@@ -177,6 +169,11 @@ body {
   height: 80%;
 }
 
+.custom-footer
+{
+  text-align: center;
+}
+
 .diagonal {
   background: var(--main-focus-color);
   clip-path: polygon(
@@ -193,10 +190,6 @@ body {
 .diagonal-highlight {
   color: var(--main-hover-color);
   font-weight: bold;
-}
-.custom-footer
-{
-  text-align: center;
 }
 
 #editor {
@@ -328,49 +321,10 @@ footer {
   color: var(--main-focus-color);
 }
 
-.masonry {
-  column-count: 4;
-  column-gap: 1em;
-}
-
-.masonry-item {
-  display: inline-table;
-  text-align: center;
-}
-
-.masonry-heigh-10 {
-  height: 10vw;
-}
-
-.masonry-heigh-5 {
-  height: 5vw;
-}
-
-.masonry-heigh-2 {
-  height: 2vw;
-}
-
-.masonry-heigh-7 {
-  height: 7vw;
-}
-
-.masonry-widht-50 {
-  width: 49%;
-}
-
-.masonry-widht-100 {
-  width: 100%;
-}
-
-
-.color {
-  box-shadow: 1px 1px 10px grey;
-  margin: 0 0 1em 0;
-  border-style: none;
-  border-radius: 20px;
-  color: rgba(255, 255, 255, 1);
-  background-color: rgba(54, 1, 216, 1);
-  height: 250px;
+.main-section {
+  font-size: 1.5em;
+  padding-bottom: 4em;
+  padding-top: 4em;
 }
 
 #measure {
@@ -536,10 +490,6 @@ footer {
 
 .right {
   float: right;
-}
-
-.right-button {
-  text-align: right;
 }
 
 .right-objects {
@@ -754,9 +704,4 @@ input[type=range].slider:focus::-ms-fill-upper {
     overflow: hidden;
     text-align: center;
     img { width: 100% }
-}
-
-.user-header {
-  width: 100%;
-}
 }

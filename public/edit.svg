@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="15mm"
+   height="15mm"
+   viewBox="0 0 15 15"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.1 r15371"
+   sodipodi:docname="edit.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="7.9195959"
+     inkscape:cx="23.59826"
+     inkscape:cy="25.59618"
+     inkscape:document-units="mm"
+     inkscape:current-layer="switch4499"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-282)">
+    <g
+       id="g4523"
+       transform="matrix(0.26458333,0,0,0.26457895,0.01562502,131.73288)">
+      <switch
+         id="switch4499">
+        <foreignObject
+           height="1"
+           width="1"
+           y="0"
+           x="0"
+           requiredExtensions="http://ns.adobe.com/AdobeIllustrator/10.0/" />
+        <g
+           id="g6036"
+           transform="matrix(0.11351441,0,0,0.1135163,1.3715241,568.32565)">
+          <g
+             id="g6017">
+            <path
+               id="path6013"
+               d="m 218.5,215.1 -22.9,79.5 c -1.7,5.9 -0.1,12.3 4.2,16.7 3.2,3.3 7.6,5 12.1,5 1.5,0 3,-0.2 4.5,-0.6 l 80.3,-22.1 c 2.8,-0.8 5.4,-2.3 7.5,-4.4 L 449.7,143.7 c 10.8,-10.8 16.7,-25.1 16.7,-40.3 0,-15.2 -5.9,-29.5 -16.7,-40.3 l -0.8,-0.8 C 438.1,51.5 423.8,45.6 408.6,45.6 c -15.2,0 -29.5,5.9 -40.3,16.7 L 222.8,207.8 c -2.1,2 -3.6,4.5 -4.3,7.3 z m 31.4,13.6 142.5,-142.4 c 4.3,-4.3 10.1,-6.7 16.3,-6.7 6.1,0 11.9,2.4 16.3,6.7 l 0.8,0.8 c 4.3,4.3 6.7,10.1 6.7,16.3 0,6.2 -2.4,11.9 -6.7,16.3 L 283.4,262 236.7,274.9 Z"
+               inkscape:connector-curvature="0"
+               style="fill:#ffffff" />
+            <path
+               id="path6015"
+               d="m 102.5,466 h 255.7 c 31.4,0 56.8,-25.1 56.8,-56.5 V 286.6 c 0,-9.4 -7.6,-17 -17,-17 -9.4,0 -17,7.6 -17,17 v 122.9 c 0,12.7 -10.1,22.5 -22.8,22.5 H 102.5 C 89.8,432 80,422.1 80,409.5 V 153.8 C 80,141.1 89.9,131 102.5,131 h 122.8 c 9.4,0 17,-7.6 17,-17 0,-9.4 -7.6,-17 -17,-17 H 102.5 C 71.1,97 46,122.3 46,153.8 v 255.7 c 0,31.4 25.1,56.5 56.5,56.5 z"
+               inkscape:connector-curvature="0"
+               style="fill:#ffffff" />
+          </g>
+          <text
+             id="text6019"
+             font-weight="bold"
+             font-size="5px"
+             y="527"
+             x="0"
+             style="font-weight:bold;font-size:5px;font-family:'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif;fill:#000000">Created by Gagana</text>
+          <text
+             id="text6021"
+             font-weight="bold"
+             font-size="5px"
+             y="532"
+             x="0"
+             style="font-weight:bold;font-size:5px;font-family:'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif;fill:#000000">from the Noun Project</text>
+        </g>
+      </switch>
+    </g>
+  </g>
+</svg>
