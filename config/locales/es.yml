@@ -70,6 +70,7 @@ es:
 
   restored_object:
     add_piece: Añadir pieza
+    remove_piece: Eliminar pieza
     pieces: Piezas
     zip_file: Archivo zip
     save: Guardar
