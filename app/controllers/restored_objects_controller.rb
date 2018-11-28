@@ -41,6 +41,7 @@ class RestoredObjectsController < ApplicationController
 
   # GET /restored_objects/1/edit
   def edit
+    @formats =  [ :ply, :obj, :stl, :other ]
     authorize @object
   end
 
