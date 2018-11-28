@@ -17,6 +17,18 @@
       </div>
     </div>
   </div>
+  <% if !(@user.bio.blank?) %>
+  <div class="card card-margin">
+    <div class="card-header">
+      Featured
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"><%= @user.name %>:</h5>
+      <p class="card-text"><%= @user.bio %></p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+  </div>
+  <% end %>
   <% user_objects = @user.restored_objects; frame = true; %>
   <div class="card-columns">
   <% user_objects.each_with_index do |obj, index| %>
