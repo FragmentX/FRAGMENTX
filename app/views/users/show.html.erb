@@ -6,7 +6,14 @@
         <h2><%= @user.email %></h2>
       </div>
       <div class="col-4 right-button">
-        <%= link_to t('restored_object.add_object'), new_restored_object_path, class: 'btn btn-primary' %>
+        <%= link_to t('restored_object.add_object'), new_restored_object_path, class: 'btn btn-primary user-btn' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-8">
+      </div>
+      <div class="col-4 right-button">
+        <%= link_to t('users.edit_settings'), edit_user_registration_path, class: 'btn btn-primary user-btn' %>
       </div>
     </div>
   </div>
@@ -26,16 +33,18 @@
                 <p><%= truncate(obj.description, length: 150, omission: "...").capitalize %></p>
                 <%= time_ago_in_words obj.created_at %><br>
             </div>
-            <div class="card-footer">
-              <div class="custom-footer">
-                <%= link_to edit_restored_object_path, class:'btn btn-siz color_buttons_editor text-white' do %>
-                  <img src="/edit.svg"/>
-                <% end %>
-                <%= link_to obj , data: {:confirm => 'Are you sure?'}, method: :delete, class:'btn btn-siz color_buttons_editor text-white' do %>
-                  <img src="/trash.svg"/>
-                <% end %>
+            <% if isObjectFromUser(obj) %>
+              <div class="card-footer">
+                <div class="custom-footer">
+                  <%= link_to edit_restored_object_path, class:'btn btn-siz color_buttons_editor text-white' do %>
+                    <img src="/edit.svg"/>
+                  <% end %>
+                  <%= link_to obj , data: {:confirm => 'Are you sure?'}, method: :delete, class:'btn btn-siz color_buttons_editor text-white' do %>
+                    <img src="/trash.svg"/>
+                  <% end %>
+                </div>
               </div>
-            </div>
+            <% end %>
         </div>
     <% end %>
   </div>

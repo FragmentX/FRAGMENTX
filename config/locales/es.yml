@@ -99,6 +99,9 @@ es:
       save_img: Guardar vista como imagen
       loading_text: Las piezas del objeto están siendo cargadas
 
+  users:
+    edit_settings: Edita tu perfil
+
   activerecord:
     models:
       restored_object:

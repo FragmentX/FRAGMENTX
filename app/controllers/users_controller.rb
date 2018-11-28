@@ -4,10 +4,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def getRandomPosition(index)
-    return ((rand(0..10)) > 4)
+  def isObjectFromUser(obj)
+    return current_user == obj.user
   end
 
-  helper_method :getRandomPosition
+  helper_method :isObjectFromUser
 
 end
