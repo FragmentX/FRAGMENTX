@@ -98,7 +98,11 @@ var faltants  = [];
 var mesurePoints   = new THREE.Object3D();
 var mesurePointsList = [];
 
-var camera  = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+var perspectiveCamera  = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+var orthographicCamera = new THREE.OrthographicCamera( window.innerWidth / -25, window.innerWidth / 25, window.innerHeight / 25, window.innerHeight / -25, 0.1, 1000 );
+
+var camera = perspectiveCamera;
 
 var renderer = new THREE.WebGLRenderer({
   preserveDrawingBuffer: true,
@@ -412,6 +416,32 @@ function measures() {
     scene.remove(mesurePoints);
     resetMesures();
   }
+}
+
+function cameraToOrthographic() {
+
+  document.getElementById("orthoButton").src="/icons/orthographic_s.svg";
+  document.getElementById("persButton").src="/icons/perspective_u.svg";
+
+  orthographicCamera.position.z = camera.position.z;
+  orthographicCamera.position.y = camera.position.y;
+  orthographicCamera.position.x = camera.position.x;
+  orthographicCamera.lookAt(new THREE.Vector3(0, 0, 0));
+  camera = orthographicCamera;
+  controls = new THREE.OrbitControls(orthographicCamera, renderer.domElement);
+}
+
+function cameraToPerspective() {
+
+  document.getElementById("persButton").src="/icons/perspective_s.svg";
+  document.getElementById("orthoButton").src="/icons/orthographic_u.svg";
+
+  perspectiveCamera.position.z = camera.position.z;
+  perspectiveCamera.position.y = camera.position.y;
+  perspectiveCamera.position.x = camera.position.x;
+  perspectiveCamera.lookAt(new THREE.Vector3(0, 0, 0));
+  camera = perspectiveCamera;
+  controls = new THREE.OrbitControls(perspectiveCamera, renderer.domElement);
 }
 
 function resetMesures() {

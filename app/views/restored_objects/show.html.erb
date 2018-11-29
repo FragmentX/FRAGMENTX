@@ -182,6 +182,13 @@
         </div>
     </div>
     <div class="toolbar-section">
+    <p><%= t('restored_object.viewer.camera') %></p>
+      <div class="toolbar-section-row extras">
+        <button class="btn btn-primary toolbar-button" onclick="cameraToOrthographic()"><img id="orthoButton" class="svg-icon" src="/icons/orthographic_u.svg" /><br/><%= t('restored_object.viewer.orthographic') %></button>
+        <button class="btn btn-primary toolbar-button" onclick="cameraToPerspective()"><img id="persButton" class="svg-icon" src="/icons/perspective_s.svg" /><br/><%= t('restored_object.viewer.perspective') %></button>
+      </div>
+    </div>
+    <div class="toolbar-section">
         <p><%= t('restored_object.viewer.tools') %></p>
         <div class="toolbar-section-row extras">
             <button class="btn btn-primary toolbar-button" onclick="measures()"><img class="svg-icon" src="/icons/ruler.svg" /><br/><%= t('restored_object.viewer.measure') %></button>

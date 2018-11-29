@@ -101,6 +101,9 @@ es:
       light: iluminación
       save_img: Guardar vista como imagen
       loading_text: Las piezas del objeto están siendo cargadas
+      camera: Opciones de cámara
+      orthographic: Ortográfica
+      perspective: Perspectiva
 
   users:
     edit_settings: Edita tu perfil
