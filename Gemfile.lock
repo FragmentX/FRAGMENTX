@@ -689,7 +689,7 @@ GEM
     execjs (2.7.0)
     ffi (1.9.25)
     ffi (1.9.25-x86-mingw32)
-    geocoder (1.5.0)
+    geocoder (1.5.1)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     gon (6.2.1)
