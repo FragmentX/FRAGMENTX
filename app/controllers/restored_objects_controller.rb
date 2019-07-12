@@ -19,14 +19,12 @@ class RestoredObjectsController < ApplicationController
     authorize @object
     gon.pieces = []
     gon.matrices = []
+    gon.materials = []
+    gon.images = []
     gon.missings = []
-    if  @object.object_type != nil
-      gon.type = @object.object_type
-    else
-      gon.type = "ply"
-    end
     @object.pieces.each do |p|
-      gon.pieces << p.model.url
+      gon.pieces << p.model.service_url&.split("?")&.first if p.model.attached?
+      gon.materials << p.material.service_url&.split("?")&.first if p.material.attached?
       gon.matrices << p.matrix
       gon.missings << p.missing
     end
@@ -36,12 +34,13 @@ class RestoredObjectsController < ApplicationController
   def new
     @object = RestoredObject.new
     authorize @object
-    @formats =  [ :ply, :obj, :stl, :other ]
+    @object.user_id = current_user.id
+    @object.save
+    redirect_to restored_object_build_path(:basic_info, restored_object_id: @object.id)
   end
 
   # GET /restored_objects/1/edit
   def edit
-    @formats =  [ :ply, :obj, :stl, :other ]
     authorize @object
   end
 
@@ -58,19 +57,16 @@ class RestoredObjectsController < ApplicationController
         puts "Reading zip file"
         zipfile.glob('*{ply,stl,obj}') do |file|
             puts "Reading #{file.name}"
-            tempfile = Tempfile.new(File.basename(file.name))
-            tempfile.binmode
-            tempfile.write file.get_input_stream.read
+            # tempfile = Tempfile.new(File.basename(file.name))
+            # tempfile.binmode
+            # tempfile.write file.get_input_stream.read
 
             puts "Reading matrix"
             matrix = zipfile.glob("#{file.name.split('.').first}.txt").first.get_input_stream.read
             puts matrix
 
-            @object.pieces.build(model: tempfile, model_file_name: file.name,
-                                  name: file.name, matrix: matrix)
-
-            tempfile.close
-        end
+            piece = @object.pieces.create(name: file.name, matrix: matrix)
+          end
       end
     end
 
@@ -137,7 +133,7 @@ class RestoredObjectsController < ApplicationController
 
   def restored_object_params
     params.require(:restored_object).permit(:title, :description, :notes,
-      :classification, :author, :epoch, :avatar,
+      :classification, :author, :epoch, :avatar, :current_step,
       :width, :height, :depth, :units_id, :state_id, :protection_id,
       :technique, :decoration, :owner, :deposit,
       :address, :longitude, :latitude, :in_inventory,

@@ -23,7 +23,7 @@ class RestoredObjectPolicy
   end
 
   def update?
-    @user && @user == @object.user
+    @user && @user.id == @object.user_id
   end
 
   def edit?

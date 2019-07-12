@@ -72,7 +72,7 @@ class CollectionsController < ApplicationController
   private
 
   def collection_params
-    params.require(:collection).permit(:title, :description,
+    params.require(:collection).permit(:title, :description, :avatar,
       collections_restored_objects_attributes: [:id, :collection_id, :restored_object_id, :_destroy])
   end
 

@@ -45,7 +45,7 @@
     <div class="card-columns">
       <% @featured.each do |obj| %>
         <div class="card">
-          <%= image_tag(obj.avatar.url(:thumb), class:'card-img-top') %>
+          <%= image_tag(obj.featured_image, class:'card-img-top') %>
           <div class="card-body">
               <span class="badge badge-pill badge-info float-right"><%= obj.pieces.count %> <%= t('restored_object.pieces') %></span>
               <h2><%= link_to obj.title, obj, data: { no_turbolink: true } %></h2>
@@ -70,7 +70,7 @@ $container.append(renderer.domElement);
 
 camera.position.z = 170;
 
-var material = new THREE.MeshBasicMaterial({wireframe: true, wireframeLinewidth: 10});
+var material = new THREE.MeshBasicMaterial({wireframe: true, wireframeLinewidth: 2});
 
 
 var Ico = new THREE.Mesh(new THREE.IcosahedronGeometry(75,1), material);

@@ -22,7 +22,13 @@
           </div>
 
           <div class="field mb-4">
+            <%= f.label :avatar %><br />
             <%= f.file_field :avatar, class: '' %>
+          </div>
+
+          <div class="field mb-4">
+            <%= f.label :header %><br />
+            <%= f.file_field :header, class: '' %>
           </div>
 
           <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>

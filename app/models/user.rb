@@ -5,7 +5,23 @@ class User < ApplicationRecord
   has_many :restored_objects
   has_many :collections
 
-  has_attached_file :avatar, default_url: "/user.svg"
-  validates_attachment_content_type :avatar, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
+  has_one_attached :avatar
+  
+  has_one_attached :header
 
+  def header_image
+    if self.header.attached?
+      self.header.service_url
+    else
+      '/header.png'
+    end
+  end
+
+  def avatar_image
+    if self.avatar.attached?
+      self.avatar.service_url
+    else
+      '/user.svg'
+    end
+  end
 end

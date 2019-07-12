@@ -1,3 +1,6 @@
+<div class="profile-header">
+  <%= image_tag @collection.user.header_image, class: 'profile-header-img' %>
+</div>
 <div class="container">
   <% if policy(@collection).update? %>
     <%= link_to t('shared.update'), edit_collection_path(@collection), class: 'btn btn-primary right' %>
@@ -5,14 +8,16 @@
   <% if policy(@collection).destroy? %>
     <%= link_to t('shared.destroy'), collection_path(@collection), method: :delete, class: 'btn btn-danger right mr-2' %>
   <% end %>
-  <h1><%= @collection.title %></h1>
+  <%= image_tag @collection.user.avatar_image, class: 'avatar' %>
+  <h1 style="display: inline"><%= @collection.title %></h1>
+  <br/><br/><br/>
   <p><%= @collection.description %></p>
-  <br/>
+  <br/><br/><br/>
   <div class="card-columns">
       <% @objects.each do |obj| %>
         <%= link_to obj do %>
           <div class="card">
-            <%= image_tag(obj.avatar.url(:thumb), class:'card-img-top') %>
+            <%= link_to image_tag(obj.featured_image, class:'card-img-top'), obj %>
             <div class="card-body">
                 <span class="badge badge-pill badge-info float-right"><%= obj.pieces.count %> <%= t('restored_object.pieces') %></span>
                 <h2><%= link_to obj.title, obj, data: { no_turbolink: true } %></h2>
