@@ -48,8 +48,6 @@
             <li class="nav-item">
               <%= link_to t('nav_bar.sign_in'), new_user_session_path, class:'nav-link' %>
             </li>
-            <li class="nav-item">
-              <%= link_to t('nav_bar.sign_up'), new_user_registration_path, class:'nav-link' %>
             <% else %>
             <li class="nav-item">
               <%= link_to 'Dashboard' , user_path(current_user.id), class:'nav-link' %>
