@@ -1,8 +1,7 @@
 class Piece < ApplicationRecord
   belongs_to :restored_object
 
-  has_attached_file :model
-
-  #validates_attachment_content_type :model, :content_type => ['application/octet-stream']
-  validates_attachment_file_name :model, :matches => [/ply|obj|stl\Z/]
+  has_one_attached :model
+  has_one_attached :material
+  has_many_attached :images
 end

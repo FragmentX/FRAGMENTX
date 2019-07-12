@@ -1,29 +1,40 @@
-<div class="container">
-  <% if policy(@collections).create? %>
-    <%= link_to t('collections.add'), new_collection_path, class: 'btn btn-primary right' %>
-  <% else %>
-    <%= link_to t('collections.add'), new_user_registration_path, class: 'btn btn-primary right' %>
-  <% end %>
-  <h1><%= t('nav_bar.collections') %></h1>
-  <br/>
-  <div class="card-columns">
-    <% @collections.each do |collection| %>
-      <div class="card">
-        <div class="card-body">
-          <span class="badge badge-pill badge-info float-right"><%= collection.restored_objects.count %> <%= t('collections.restored_objects') %></span>
+<% @collections.each.with_index do |collection, i| %>
+  <%= link_to collection do %>
+    <div class="collection">
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
           <h2 class="card-title">
-            <%= link_to collection do %>
-              <%= collection.title %>
-            <% end %>
-          </h2>
-          <div class="card-text">
-            <p><%= collection.description %></p>
-          </div>
+          <%= collection.title %>
+          <span class="badge badge-pill badge-info">
+            <%= collection.restored_objects.count %> <%= t('collections.restored_objects') %>
+          </span>
+        </h2>
+          <p><%= collection.description.html_safe %></p>
+          <p class="owner"><%= link_to collection.user.name, collection.user %></p>
         </div>
-        <div class="card-footer">
-          <%= collection.user.email %>
+        <div class="col-xs-12 col-md-6 center">
+          <%= image_tag(collection.featured_image) %>
         </div>
       </div>
-    <% end %>
-  </div>
-</div>
+    </div>
+  <% end %>
+<% end %>
+
+<script>
+function generate() {
+
+  var colors = ['#fc5c7d', '#6a82fb', '#0f0c29', '#302b63', '#3c3b3f', '#605c3c', 
+                '#ff5e62', '#ff9966', '#06beb6', '#48b1bf', '#3a1c71', '#d76d77'];
+
+  var index = Math.round(Math.random() * colors.length/2);
+  return "linear-gradient(" + 90 + "deg, " + colors[index*2] + ", " + colors[index*2+1] + ")";
+  
+}
+
+var collections = document.getElementsByClassName("collection");
+for(var i = 0; i < collections.length; i++)
+{
+  collections.item(i).style.background = generate();  
+}
+
+</script>

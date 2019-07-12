@@ -1,37 +1,49 @@
+
+<div class="profile-header">
+  <%= image_tag @user.header_image, class: 'profile-header-img' %>
+</div>
 <div class="container">
-  <div class="user-header">
-    <% if policy(RestoredObject).create? %>
+  <% if policy(RestoredObject).create? %>
       <%= link_to t('restored_object.add_object'), new_restored_object_path, class: 'btn btn-primary right' %>
     <% end %>
     <% if current_user&.id == @user.id  %>
       <%= link_to t('users.edit_settings'), edit_user_registration_path, class: 'btn btn-primary right mr-4' %>
     <% end %>
-    <h1>Hello</h1>
-    <h2><%= @user.email %></h2>
+  <div class="user-header">
+    <h2 style="display: inline">
+      <%= image_tag @user.avatar_image, class: 'avatar' %>
+      <%= @user.name %>
+    </h2>
   </div>
   <br/>
   <% if !(@user.bio.blank?) %>
-  <div class="card card-margin">
-    <div class="row">
-      <div class="col-md-9 padding-out">
-        <div class="card-header">
-          <%= t('users.bio') %>
+    <div class="row container mb-4">
+      <p><%= @user.bio.html_safe %></p>
+    </div>
+  <% end %>
+</div>
+<section class="blue">
+  <div class="container">
+    <div class="card-columns">
+      <% @user.collections.each_with_index do |obj, index| %>
+        <div class="card">
+          <div class="card-body">
+              <span class="badge badge-pill badge-info float-right"><%= obj.restored_objects.count %> <%= t('restored_object.pieces') %></span>
+              <h2><%= link_to obj.title.capitalize, obj, data: { no_turbolink: true } %></h2>
+              <p><%= truncate(obj.description, length: 150, omission: "...").capitalize %></p>
+              <%= link_to obj.user.name, obj.user %><br/>
+              <%= time_ago_in_words obj.created_at %><br>
+          </div>
         </div>
-        <div class="card-body">
-          <h5 class="card-title"><%= @user.name.capitalize %>:</h5>
-          <p class="card-text"><%= @user.bio.capitalize %></p>
-        </div>
-      </div>
-      <div class="col-md-3 padding-out padding-out-custom-image">
-        <%= image_tag @user.avatar.url(:thumb), class: 'card-custom-image-radius' %>
-      </div>
+      <% end %>
     </div>
   </div>
-  <% end %>
+</section>
+<div class="container">
   <div class="card-columns">
     <% @user.restored_objects.each_with_index do |obj, index| %>
       <div class="card">
-        <%= link_to image_tag(obj.avatar.url(:thumb), class:'card-img-top'), obj %>
+        <%= link_to image_tag(obj.featured_image, class:'card-img-top'), obj %>
           <div class="card-body">
               <span class="badge badge-pill badge-info float-right"><%= obj.pieces.count %> <%= t('restored_object.pieces') %></span>
               <% obj.categories.each do |cat| %>
@@ -44,12 +56,12 @@
               <%= time_ago_in_words obj.created_at %><br>
           </div>
           <% if isObjectFromUser(obj) %>
-            <div class="card-footer center">
+            <div class="card-footer right">
                <%= link_to edit_restored_object_path, class:'btn btn-primary mr-2' do %>
-                  <img src="/edit.svg" style="width: 2em;" />
+                  <img src="/edit.svg" style="width: 1em;" />
                 <% end %>
-                <%= link_to obj , data: {:confirm => 'Are you sure?'}, method: :delete, class:'btn btn-primary' do %>
-                  <img src="/trash.svg" style="width: 2em;"/>
+                <%= link_to obj , data: {:confirm => 'Are you sure?'}, method: :delete, class:'btn btn-danger' do %>
+                  <img src="/trash.svg" style="width: 1em;"/>
                 <% end %>
                 <br/><br/>
             </div>

@@ -1,0 +1,61 @@
+<div class="container">
+  <%= form_for(@object, :url => wizard_path, :method => :put, :html => { multipart: true }) do |f| %>
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <%= f.label :title %><br/>
+        <%= f.text_field :title, class: 'form-control' %>
+        <br/>
+        <%= f.label :avatar %>
+        <%= f.file_field :avatar %><br/>
+        <br/>
+        <%= f.label :author %><br/>
+        <%= f.text_field :author, class: 'form-control' %>
+        <br/>
+        <%= f.label :epoch %><br/>
+        <%= f.text_field :epoch, class: 'form-control' %>
+        <br/>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <%= f.label :dimensions %><br/>
+        <div class="row">
+          <div class="col-sm-12 col-md-4">
+            <%= f.label :width %><br/>
+            <%= f.number_field :width, class: 'form-control' %>
+          </div>
+          <div class="col-sm-12 col-md-4">
+            <%= f.label :height %><br/>
+            <%= f.number_field :height, class: 'form-control' %>
+          </div>
+          <div class="col-sm-12 col-md-4">
+            <%= f.label :depth %><br/>
+            <%= f.number_field :depth, class: 'form-control' %>
+          </div>
+        </div>
+        <br/>
+        <%= f.select :units_id, Units.all.collect {|u| [u.name, u.id]}, {}, {class: 'form-control'} %>
+        <br/>
+        <%= f.label :categories %><br />
+        <div class="row">
+            <% Category.all.each do |category| %>
+            <div class="col-sm-12 col-md-6">
+                <%= check_box_tag "restored_object[category_ids][]", category.id, f.object.categories.include?(category) %>
+                <%= category.name %><br/>
+            </div>
+            <% end %>
+        </div>
+        <br/>
+        <%= f.label :materials %><br />
+        <div class="row">
+            <% Material.all.each do |material| %>
+            <div class="col-sm-12 col-md-6">
+                <%= check_box_tag "restored_object[material_ids][]", material.id, f.object.materials.include?(material) %>
+                <%= material.name %><br/>
+            </div>
+            <% end %>
+        </div>
+        <br/>
+      </div>
+    </div>
+    <%= f.submit 'Continuar', :class => 'btn btn-primary' %>
+  <% end %>
+</div>

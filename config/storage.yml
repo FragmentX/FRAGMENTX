@@ -1,0 +1,10 @@
+amazon:
+  service: S3
+  access_key_id: <%= ENV['EDUPROJECT_KEY'] %>
+  secret_access_key: <%= ENV['EDUPROJECT_SECRET'] %>
+  bucket: "fragmentx-dev"
+  region: "eu-west-1" # e.g. 'us-east-1'
+
+local:
+  service: Disk
+  root: <%= Rails.root.join("storage") %>

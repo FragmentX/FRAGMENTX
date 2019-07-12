@@ -2,7 +2,10 @@ Rails.application.routes.draw do
   get 'home/index'
   match '/logout', to: 'sessions#destroy', via: [:get, :post]
 
-  resources :restored_objects
+  resources :restored_objects do
+    resources :build, controller: 'restored_objects/build'
+  end
+
   resources :categories
   resources :collections
 

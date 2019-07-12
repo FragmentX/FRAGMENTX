@@ -32,15 +32,5 @@ Rails.application.configure do
 
   config.assets.quiet = true
 
-  config.paperclip_defaults = {
-        storage: :s3,
-        s3_credentials: {
-          bucket: 'eduproject',
-          access_key_id: ENV['EDUPROJECT_KEY'],
-          secret_access_key: ENV['EDUPROJECT_SECRET'],
-          s3_region: 'eu-west-1',
-          :s3_protocol => :https,
-          s3_host_name: 's3.eu-west-1.amazonaws.com'
-        }
-    }
+  config.active_storage.service = :amazon
 end

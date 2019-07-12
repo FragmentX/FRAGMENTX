@@ -25,6 +25,10 @@
   --main-hover-color: #ffe600;
 }
 
+.avatar {
+  height: 3em;
+}
+
 body {
   font-family: 'Montserrat', sans-serif;
 }
@@ -68,6 +72,18 @@ body {
   font-size: 1.2em;
 }
 
+.blue {
+  background: var(--main-focus-color);
+  color: white;
+  font-size: 1em;
+  padding: 3em 2em 3em 2em;
+
+  .bigger {
+    font-size: 1.2em !important;
+  }
+  margin-bottom: 4em;
+}
+
 .brand-title {
   font-size: 0.8em;
   text-align: center;
@@ -109,11 +125,9 @@ body {
 }
 
 .card {
-  border: none;
+  background: transparent;
+  border: 1px solid #f0f0f0;
   border-radius: 10px;
-  -webkit-box-shadow: 0px 0px 5px 0px rgba(133,133,133,0.39);
-  -moz-box-shadow: 0px 0px 5px 0px rgba(133,133,133,0.39);
-  box-shadow: 0px 0px 5px 0px rgba(133,133,133,0.39);
 }
 
 .card h1 a, .card h2 a, .card h1 a:hover, .card h2 a:hover {
@@ -190,6 +204,48 @@ body {
   background: rgba(3, 40, 64, 0.8);
 }
 
+.collection {
+  background: #83a4d4;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #b6fbff, #83a4d4);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #b6fbff, #83a4d4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+  padding: 3em;
+
+  * {
+    color: white;
+  }
+
+  a:hover {
+    color: white;
+    text-decoration: none;
+  }
+
+  h2 {
+    font-size: 4em;
+    font-weight: bold;
+
+    span {
+      font-size: 0.3em;
+    }
+  }
+
+  .badge-info {
+    background: white;
+    color: rgba(54,1,196,1);
+  }
+
+  .owner {
+    font-size: 1.5em;
+  }
+
+  img {
+    max-height: 400px;
+    max-width: 100%;
+  }
+}
+
+
 .card-text {
   height: 80%;
 }
@@ -215,6 +271,16 @@ body {
   color: black;
   font-size: 1.8em;
   padding: 8em 2em 8em 2em;
+}
+
+.diagonal-objects {
+  color: white;
+  font-size: 1em;
+  padding: 8em 2em 8em 2em;
+
+  .bigger {
+    font-size: 1.2em !important;
+  }
 }
 
 .diagonal-highlight {
@@ -526,6 +592,16 @@ footer {
 
 .pointer {
   cursor: pointer;
+}
+
+.profile-header {
+  margin-bottom: 2em;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.profile-header-img {
+  width: 100%;
 }
 
 .right {

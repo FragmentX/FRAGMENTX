@@ -22,9 +22,7 @@ gem 'devise'
 gem 'jquery-rails'
 gem 'pundit'
 
-gem 'aws-sdk'
-gem 'paperclip'
-
+gem "aws-sdk-s3", require: false
 gem 'devise-i18n'
 
 gem 'gon'
@@ -37,6 +35,8 @@ gem 'rubyzip'
 
 gem 'bootstrap4-kaminari-views'
 gem 'kaminari'
+
+gem 'wicked'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

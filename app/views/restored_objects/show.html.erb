@@ -202,7 +202,14 @@
 
   <script type="text/javascript" src="/js/three.min.js"></script>
   <script type="text/javascript" src="/js/OrbitControls.js"></script>
-
+  <script type="text/javascript" src="/js/LoaderSupport.js"></script>
+  <script type="text/javascript" src="/js/MTLLoader.js"></script>
+  <script type="text/javascript" src="/js/OBJLoader2.js"></script>
+  <script type="text/javascript" src="/js/EffectComposer.js"></script>
+  <script type="text/javascript" src="/js/CopyShader.js"></script>
+  <script type="text/javascript" src="/js/ShaderPass.js"></script>
+  <script type="text/javascript" src="/js/OutlinePass.js"></script>
+  <script type="text/javascript" src="/js/RenderPass.js"></script>
   <script>
 
   function hideToolbar() {
@@ -265,6 +272,8 @@
   var strDownloadMime  = "image/octet-stream";
   var mouse            = new THREE.Vector2();
 
+  var model_type       = 'obj'; //TODO
+
   var globalPlaneX = new THREE.Plane( new THREE.Vector3( -1,  0,  0 ),10000 );
   var globalPlaneY = new THREE.Plane( new THREE.Vector3(  0, -1,  0 ),10000 );
   var globalPlaneZ = new THREE.Plane( new THREE.Vector3(  0,  0, -1 ),10000 );
@@ -305,7 +314,7 @@
   var mesurePoints   = new THREE.Object3D();
   var mesurePointsList = [];
 
-  var camera  = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  var camera  = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
 
   var renderer = new THREE.WebGLRenderer({
     preserveDrawingBuffer: true,
@@ -346,6 +355,27 @@
 
   // raycaster
   raycaster = new THREE.Raycaster();
+
+  // outliner
+  var composer = new THREE.EffectComposer( renderer );
+  var renderPass = new THREE.RenderPass( scene, camera );
+  composer.addPass( renderPass );
+  var outlinePass = new THREE.OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
+  composer.addPass( outlinePass );
+
+  var onTexLoad = function ( texture ) {
+		outlinePass.patternTexture = texture;
+		texture.wrapS = THREE.RepeatWrapping;
+		texture.wrapT = THREE.RepeatWrapping;
+	};
+
+	var loader = new THREE.TextureLoader();
+
+	loader.load( '/tri_pattern.jpg', onTexLoad );
+
+  var outputPass = new THREE.ShaderPass( THREE.CopyShader );
+  outputPass.renderToScreen = true;
+  composer.addPass( outputPass );
 
   // Selection material
   selectionMaterial  = materialFactory(false, 0x40e0d0, THREE.DoubleSide, clippingPlanes, true, false, 1, false);
@@ -405,8 +435,10 @@
     camera.updateProjectionMatrix();
     camera.lookAt(scene.position);
     renderer.setSize(window.innerWidth, window.innerHeight);
+    composer.setSize( window.innerWidth, window.innerHeight );
     raycaster.setFromCamera(mouse, camera);
-    renderer.render(scene, camera);
+    //renderer.render(scene, camera);
+    composer.render();
   };
 
   var render = function() {
@@ -416,7 +448,8 @@
       object.rotation.y  += delta/4;
       objectF.rotation.y += delta/4;
     }
-    renderer.render(scene, camera);
+    //renderer.render(scene, camera);
+    composer.render();
   };
 
   render();
@@ -436,61 +469,180 @@
       setWorker(index);
     }
   }
+  
 
   function setWorker(index) {
     if (typeof(Worker) !== "undefined") {
-      if (gon.type == 'ply') {
+      if (model_type == 'ply') {
         w[index] = new Worker('/js/PLYparseModel.js');
-      } else if (gon.type == 'stl') {
+      } else if (model_type == 'stl') {
         w[index] = new Worker('/js/STLparseModel.js');
+      } else if (model_type == 'obj') {
+        w[index] = new Worker('/js/OBJparseModel.js');
       }
-      w[index].addEventListener("message", function (event) {
-        var abuffer = event.data.buffer;
-        var vertices = new Float32Array(abuffer);
-        var buffer = new THREE.BufferAttribute(vertices, 3);
-        var geo = new THREE.BufferGeometry();
-        geo.addAttribute('position',  buffer);
-        geo.computeVertexNormals();
-        var child = new THREE.Mesh(geo, unselectedMAterial);
-        child.scale.multiplyScalar( 0.01 );
-        child.rotation.y += Math.PI;
-        child.castShadow = true;
-        child.receiveShadow = true;
-        child.scale.multiplyScalar( 1000 );
-        var scaleMatrix = new THREE.Matrix4();
 
-        var matrix = new THREE.Matrix4();
-        scaleMatrix.fromArray(gon.matrices[index].trim().split(' ').filter(function(val) { return val.length != 0; })).transpose();
-        scaleMatrix.multiplyMatrices ( rotateM, scaleMatrix );
+      var loader = new THREE.OBJLoader2();
 
-        child.geometry.applyMatrix(scaleMatrix);
-        child.geometry.verticesNeedUpdate = true;
+      if (model_type == 'obj') {
+        var callbackOnLoad = function ( event ) {
+          loader.workerSupport.setTerminateRequested( true );
 
-        if( gon.missings[index] ) {
-          pieces.push(child);
-          object.add(child);
-        } else {
-          faltants.push(child);
-          objectF.add(child);
-        }
+          var local = new THREE.Object3D();
+          local.name = 'pivot' + gon.pieces[index];
+          local.position.set( -125, 50, 0 );
+          var scale = 0.5;
+          local.scale.set( scale, scale, scale );
+          if( !gon.missings[index] ) {
+            pieces.push(local);
+            object.add(local);
+          } else {
+            faltants.push(local);
+            objectF.add(local);
+          }
+          local.add( event.detail.loaderRootNode );
 
-        var boundingBox = new THREE.Box3();
-        bbObjects.push(child);
-        console.log("Fallo aqui 92");
-        var helperboundingBox = new THREE.BoxHelper( child, 0xffff00 );
-        console.log("Fallo aqui 93");
-        boundingBox.setFromObject( helperboundingBox );
-        bBoxes.push(boundingBox);
-        loaded--;
-        if (loaded == 0) {
-          $('#loader').hide();
-        }
-      }, false);
-      w[index].postMessage(gon.pieces[index]);
+          local.traverse( function( node ) {
+            if ( node instanceof THREE.Mesh ) {
+                var geo = new THREE.Geometry().fromBufferGeometry( node.geometry);
+                geo.mergeVertices();
+                geo.computeFaceNormals();
+                geo.computeVertexNormals(); 
+                node.geometry = geo;
+            }
+          } );
+          
+          loaded--;
+          if (loaded == 0) {
+            $('#loader').hide();
+          }
+          var offset = offset || 1.25;
 
+          const boundingBox = new THREE.Box3();
+
+          // get bounding box of object - this will be used to setup controls and camera
+          boundingBox.setFromObject( object );
+
+          const center = boundingBox.getCenter();
+
+          const size = boundingBox.getSize();
+
+          // get the max side of the bounding box (fits to width OR height as needed )
+          const maxDim = Math.max( size.x, size.y, size.z );
+          const fov = camera.fov * ( Math.PI / 180 );
+          let cameraZ = Math.abs( maxDim / 4 * Math.tan( fov * 2 ) );
+
+          cameraZ *= offset; // zoom out a little so that objects don't fill the screen
+
+          camera.position.z = cameraZ;
+
+          const minZ = boundingBox.min.z;
+          //const cameraToFarEdge = ( minZ < 0 ) ? -minZ + cameraZ : cameraZ - minZ;
+
+          //camera.far = cameraToFarEdge * 300;
+          camera.updateProjectionMatrix();
+
+          if ( controls ) {
+
+            // set camera to rotate around center of loaded object
+            controls.target = center;
+
+            // prevent camera from zooming out far enough to create far plane cutoff
+            //controls.maxDistance = cameraToFarEdge * 2;
+
+            controls.saveState();
+          } else {
+            camera.lookAt( center );
+          }
+        };
+
+        var onLoadMtl = function ( materials ) {
+          loader.setModelName( gon.pieces[index] );
+          loader.setMaterials( materials );
+          loader.terminateWorkerOnLoad = false;
+          loader.load(gon.pieces[index], callbackOnLoad, null, null, null, true );
+        };
+        loader.loadMtl(gon.materials[index], null, onLoadMtl );
+      } else {
+        w[index].addEventListener("message", function (event) {          
+          var abuffer = event.data.buffer;
+          var vertices = new Float32Array(abuffer);
+          var buffer = new THREE.BufferAttribute(vertices, 3);
+          var geo = new THREE.BufferGeometry();
+          geo.addAttribute('position',  buffer);
+          geo.computeVertexNormals();
+          var child = new THREE.Mesh(geo, unselectedMAterial);
+          child.scale.multiplyScalar( 0.01 );
+          child.rotation.y += Math.PI;
+          child.castShadow = true;
+          child.receiveShadow = true;
+          child.scale.multiplyScalar( 1000 );
+          var scaleMatrix = new THREE.Matrix4();
+
+          var matrix = new THREE.Matrix4();
+          if (gon.matrices[index].trim().length != 0)
+            scaleMatrix.fromArray(gon.matrices[index].trim().split(' ').filter(function(val) { return val.length != 0; })).transpose();
+          scaleMatrix.multiplyMatrices ( rotateM, scaleMatrix );
+
+          child.geometry.applyMatrix(scaleMatrix);
+          child.geometry.verticesNeedUpdate = true;
+
+          if( !gon.missings[index] ) {
+            pieces.push(child);
+            object.add(child);
+          } else {
+            faltants.push(child);
+            objectF.add(child);
+          }
+          loaded--;
+          if (loaded == 0) {
+            $('#loader').hide();
+
+            var offset = offset || 1.25;
+
+            const boundingBox = new THREE.Box3();
+
+            // get bounding box of object - this will be used to setup controls and camera
+            boundingBox.setFromObject( object );
+
+            const center = boundingBox.getCenter();
+
+            const size = boundingBox.getSize();
+
+            // get the max side of the bounding box (fits to width OR height as needed )
+            const maxDim = Math.max( size.x, size.y, size.z );
+            const fov = camera.fov * ( Math.PI / 180 );
+            let cameraZ = Math.abs( maxDim / 4 * Math.tan( fov * 2 ) );
+
+            cameraZ *= offset; // zoom out a little so that objects don't fill the screen
+
+            camera.position.z = cameraZ;
+
+            const minZ = boundingBox.min.z;
+            const cameraToFarEdge = ( minZ < 0 ) ? -minZ + cameraZ : cameraZ - minZ;
+
+            camera.far = cameraToFarEdge * 3;
+            camera.updateProjectionMatrix();
+
+            if ( controls ) {
+
+              // set camera to rotate around center of loaded object
+              controls.target = center;
+
+              // prevent camera from zooming out far enough to create far plane cutoff
+              controls.maxDistance = cameraToFarEdge * 2;
+
+              controls.saveState();
+
+            } else {
+              camera.lookAt( center );
+            }
+          }
+        }, false);
+        w[index].postMessage(gon.pieces[index]);
+      }
     } else {
       console.log("Sorry, your browser does not support Web Workers...");
-    }
+    }     
   }
 
   renderer.domElement.addEventListener('mousedown', function(event) {
@@ -505,8 +657,8 @@
       var intersects, selected;
       event.preventDefault();
       raycaster.setFromCamera(mouse, camera);
-      intersects = raycaster.intersectObjects(pieces.concat(faltants));
-      if(!wireframeMode) {
+      intersects = raycaster.intersectObjects(pieces.concat(faltants), true);
+      /*if(!wireframeMode) {
         if(selection !== null) {
           selection.material = unselectedMAterial;
         }
@@ -514,9 +666,9 @@
         if(selection !== null) {
           selection.material = wireframeMaterial;
         }
-      }
+      }*/
       if (intersects.length > 0) {
-        resetMaterial();
+        //resetMaterial();
         if (measure) {
           if (event.button == 0) {
             var sphereOne = new THREE.Mesh( geometryMesure, materialOne );
@@ -538,11 +690,12 @@
           }
         } else {
           selected = intersects[0].object;
-          if(!wireframeMode) {
+          outlinePass.selectedObjects = selected;
+          /*if(!wireframeMode) {
             selected.material = selectionMaterial;
           } else {
             selected.material = wireframeMaterialSelected;
-          }
+          }*/
           selection = selected;
         }
       } else {
@@ -659,7 +812,7 @@
   function addTorch() {
     if(!torchMode) {
     renderer.shadowMap.enabled = true;
-    spotLight = new THREE.SpotLight( 0xffffff, 1 );
+    spotLight = new THREE.SpotLight( 0xffffff, 0.5 );
     spotLight.position.set( 15, 40, 35 );
     spotLight.angle = Math.PI / 4;
     spotLight.penumbra = 0.05;
@@ -669,7 +822,7 @@
     spotLight.shadow.mapSize.width = 1024;
     spotLight.shadow.mapSize.height = 1024;
     spotLight.shadow.camera.near = 10;
-    spotLight.shadow.camera.far = 200;
+    spotLight.shadow.camera.far = 2000;
     scene.add( spotLight );
     } else{
       renderer.shadowMap.enabled = false;
@@ -704,7 +857,6 @@
       } else {
         selection.material = selectionMaterial;
       }
-      console.log(counter);
     }
   }
 
@@ -720,7 +872,7 @@
   function materialFactory(basic, colorF, sideF, clippingPlanesF, clipShadowsF, transparentF, opacityF, wireframeF) {
     var materialServed;
     if (basic) {
-      materialServed = new THREE.MeshBasicMaterial( {
+      materialServed = new THREE.MeshLambertMaterial( {
         color: colorF,
         side: sideF,
         clippingPlanes: clippingPlanesF,
