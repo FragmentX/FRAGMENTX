@@ -8,7 +8,7 @@ end
 gem 'rack-cors', :require => 'rack/cors'
 gem 'rails', '~> 5.2.1'
 gem 'pg', '~> 1.1'
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 4.0'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
