@@ -79,7 +79,7 @@ GEM
       rails (>= 3.1)
     builder (3.2.3)
     byebug (11.0.1)
-    capybara (3.25.0)
+    capybara (3.26.0)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
@@ -274,7 +274,7 @@ DEPENDENCIES
   bootstrap
   bootstrap4-kaminari-views
   byebug
-  capybara (~> 3.11)
+  capybara (~> 3.26)
   cocoon
   coffee-rails (~> 5.0)
   devise
