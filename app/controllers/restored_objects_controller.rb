@@ -9,7 +9,7 @@ class RestoredObjectsController < ApplicationController
   # GET /restored_objects
   # GET /restored_objects.json
   def index
-    @objects = RestoredObject.all.page params[:page]
+    @objects = RestoredObject.all.where(current_step: 'active').page params[:page]
     authorize @objects
   end
 
