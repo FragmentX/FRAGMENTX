@@ -78,8 +78,8 @@ Ico.rotation.z = 0.5;
 scene.add(Ico);
 
 function update(){
-   Ico.rotation.x+=0.002;
-   Ico.rotation.y+=0.002;
+  Ico.rotation.x+=0.002;
+  Ico.rotation.y+=0.002;
 }
 
 function render() {
@@ -87,6 +87,7 @@ function render() {
   renderer.render(scene, camera);
   update();
 }
-
-render();
+document.addEventListener("turbolinks:load", function() {
+  render();
+});
 </script>
