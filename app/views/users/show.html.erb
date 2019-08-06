@@ -6,9 +6,9 @@
   <% if policy(RestoredObject).create? %>
       <%= link_to t('restored_object.add_object'), new_restored_object_path, class: 'btn btn-primary right' %>
     <% end %>
-    <% if current_user&.id == @user.id  %>
-      <%= link_to t('users.edit_settings'), edit_user_registration_path, class: 'btn btn-primary right mr-4' %>
-    <% end %>
+    <!--% if current_user&.id == @user.id  %-->
+      <!--%= link_to t('users.edit_settings'), edit_user_registration_path, class: 'btn btn-primary right mr-4' %-->
+    <!--% end %-->
   <div class="user-header">
     <h2 style="display: inline">
       <%= image_tag @user.avatar_image, class: 'avatar' %>
@@ -41,7 +41,7 @@
 </section>
 <div class="container">
   <div class="card-columns">
-    <% @user.restored_objects.each_with_index do |obj, index| %>
+    <% @user.restored_objects.where(current_step:'active').each_with_index do |obj, index| %>
       <div class="card">
         <%= link_to image_tag(obj.featured_image, class:'card-img-top'), obj %>
           <div class="card-body">
