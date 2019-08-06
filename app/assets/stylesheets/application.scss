@@ -515,6 +515,16 @@ footer {
   max-height: 35px;
 }
 
+.no-decoration {
+  color: black;
+  text-decoration: none !important;
+}
+
+.no-decoration:hover {
+  color: black;
+  text-decoration: none !important;
+}
+
 .no-padding {
   padding-bottom: 0;
 }

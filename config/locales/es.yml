@@ -59,7 +59,10 @@ es:
     inspect_info: Puedes usar las herramientas de medición para comprender mejor las dimensiones y la geometría del objeto.
     featured: Objetos destacados
     featured_info: Echa un vistazo a algunos de los objetos de la galería.
-
+    featured_museum: Museo destacado
+    featured_museum_info: Descubre las últimas piezas aportadas por este y otros museos en la galería.
+    featured_museum_collections: Echa un vistazo a las colecciones más recientes de este museo.
+    
   categories:
     link_button: Mostrar el objeto
     description: Visualizador 3D de muestras de museos recompuestas

@@ -58,6 +58,9 @@ en:
     inspect_info: You can use the measurement tools to learn more about an object's shape and real dimensions.
     featured: Featured objects
     featured_info: Take a look at some of the objects from the gallery.
+    featured_museum: Featured museum
+    featured_museum_info: Discover the latest pieces uploaded by this and other museums at the gallery.
+    featured_museum_collections: Take a look at the latest collections curated by this museum.
 
   categories:
     link_button: Show the object
