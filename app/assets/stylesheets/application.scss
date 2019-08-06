@@ -413,6 +413,22 @@ footer {
   width: 60%;
 }
 
+.logos {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 10vh;
+
+  div {
+    flex: 1;
+  }
+
+  img {
+    height: 10vh;
+    width: auto;
+  }
+}
+
 .main {
   color: var(--main-focus-color);
 }
