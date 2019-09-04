@@ -16,4 +16,4 @@ before_script:
   - rails db:migrate
 
 rvm:
- - 2.3.3
+ - 2.4.0
