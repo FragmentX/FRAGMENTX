@@ -3,4 +3,8 @@ exclude_patterns:
 - "public/js/PLYLoader.js"
 - "public/js/STLLoader.js"
 - "public/js/three.min.js"
+- "public/js/OBJLoader.js"
+- "public/js/OBJLoader2.js"
+- "public/js/LoaderSupport.js"
+- "public/js/OutlinePass.js"
 - "db"
