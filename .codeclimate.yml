@@ -7,4 +7,6 @@ exclude_patterns:
 - "public/js/OBJLoader2.js"
 - "public/js/LoaderSupport.js"
 - "public/js/OutlinePass.js"
+- "public/js/MTLLoader.js"
+- "public/js/EffectComposer.js"
 - "db"
