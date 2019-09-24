@@ -43,14 +43,10 @@ def saveStatGetRequest
   file.close
 end
 
-
-#file = File.open("test.json", "w")
-#file.puts responses.body
-#file.close
-
 puts JSON.parse(getStatsInformationFromLocalhost)[1]['author']
 
 puts JSON.parse(getStatsInformationFromLocalhost)[0]['total']
+
 
 #number_of_contributors = JSON.parse(responses.body)[0]['total']
 
