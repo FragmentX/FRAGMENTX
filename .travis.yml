@@ -11,5 +11,8 @@ before_install:
 env:
   - DB=postgresql
 
+script:
+  - rails test
+
 rvm:
  - 2.5.0
