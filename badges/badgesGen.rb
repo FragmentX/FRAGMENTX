@@ -86,7 +86,7 @@ contributors_badge = crateBadge "contributors", (number_of_contributors.to_s), "
 
 contributors_badge = crateReadmeSticker contributors_badge
 
-updated_readme_file = readREADMEFile.sub /\[\/\/\]: # \(badges\)(.|\n)*\[\/\/\]: # \(badges\)/, "[//]: # (badges) \n" + contributors_badge + "\n\n[//]: # (badges) \n"
+updated_readme_file = readREADMEFile.sub /\[\/\/\]: # \(badges\)(.|\n)*\[\/\/\]: # \(badges\)/, "[//]: # (badges)\n" + contributors_badge + "\n\n[//]: # (badges)"
 
 writeREADMEFile updated_readme_file
 puts updated_readme_file
