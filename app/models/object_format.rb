@@ -1,2 +1,0 @@
-class ObjectFormat < ApplicationRecord
-end
