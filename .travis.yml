@@ -12,6 +12,7 @@ env:
   - DB=postgresql
 
 script:
+  - rails db:drop db:create db:migrate RAILS_ENV=test
   - rails test
 
 rvm:
