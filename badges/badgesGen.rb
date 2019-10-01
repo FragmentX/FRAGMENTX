@@ -2,15 +2,15 @@ require 'httparty'
 require 'json'
 
 localhost_format = false
+verbose_mode     = false
+write_post_stats = false
 
 ARGV.each do |command|
   case command
-  when "-p"
-    puts "p comm"
   when "-v" # Verbose mode
-    puts "f comm"
+    verbose_mode = true
   when "-w" # Store POST request in localhost
-    puts "w comm"
+    write_post_stats = true
   when "-l" # Localhost mode
     localhost_format = true
   end
@@ -18,10 +18,12 @@ end
 
 class BadgeGenerator
 
-  @verbose_mode = false
+  @verbose_mode     = false
+  @localhost_format = false
 
-  def initialize verbose_mode_tmp
-    @verbose_mode = verbose_mode_tmp
+  def initialize verbose_mode_tmp, localhost_format_tmp
+    @verbose_mode     = verbose_mode_tmp
+    @localhost_format = localhost_format_tmp
   end
 
   def getGeneralInformation
@@ -67,21 +69,21 @@ class BadgeGenerator
     file.close
   end
 
-  def getNumberofcontributors localhost_format = false
-    if localhost_format
+  def getNumberofcontributors
+    if @localhost_format
       return JSON.parse(getStatsInformationFromLocalhost)[0]['total']
     else
       return JSON.parse(getStatsInformation)[0]['total']
     end
   end
 
-  def getContributorsBadge localhost_format = false
-    number_of_contributors = getNumberofcontributors localhost_format
+  def getContributorsBadge
+    number_of_contributors = getNumberofcontributors
     return crateBadge "contributors", (number_of_contributors.to_s), "blue"
   end
 
-  def createContributorsSticker localhost_format = false
-    contributors_badge_raw = getContributorsBadge localhost_format
+  def createContributorsSticker
+    contributors_badge_raw = getContributorsBadge
     return crateReadmeSticker contributors_badge_raw
   end
 
@@ -96,8 +98,8 @@ class BadgeGenerator
     return "[![security](" + stickerURL + ")]("+ stickerLink +")"
   end
 
-  def createFixedStickerList localhost_format = false
-    stickerList = createContributorsSticker localhost_format
+  def createFixedStickerList
+    stickerList = createContributorsSticker
     return stickerList
   end
 
@@ -105,17 +107,17 @@ class BadgeGenerator
 
   end
 
-  def createStickersList localhost_format = false
-    return createFixedStickerList localhost_format
+  def createStickersList
+    return createFixedStickerList
   end
 
-  def createUpdateStickerText localhost_format = false
-    sticker_list =  createStickersList localhost_format
+  def createUpdateStickerText
+    sticker_list =  createStickersList
     return readREADMEFile.sub /\[\/\/\]: # \(badges\)(.|\n)*\[\/\/\]: # \(badges\)/, "[//]: # (badges)\n" + sticker_list + "\n\n[//]: # (badges)"
   end
 
-  def updateReadme localhost_format = false
-    updated_readme_file = createUpdateStickerText localhost_format
+  def updateReadme
+    updated_readme_file = createUpdateStickerText
     writeREADMEFile updated_readme_file
     if @verbose_mode
       puts updated_readme_file
@@ -123,9 +125,14 @@ class BadgeGenerator
   end
 end
 
-generator = BadgeGenerator. new false
+generator = BadgeGenerator. new false, localhost_format
 
-generator.updateReadme localhost_format
+generator.updateReadme
+
+if write_post_stats
+  generator.getStatsInformationFromLocalhost
+  generator.saveGenInfoGetRequest
+end
 
 #puts JSON.parse(getStatsInformationFromLocalhost)[1]['author']
 
