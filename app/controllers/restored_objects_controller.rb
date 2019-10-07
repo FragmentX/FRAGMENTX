@@ -52,24 +52,13 @@ class RestoredObjectsController < ApplicationController
     authorize @object
     if params[:zip_file]
       params[:pieces_attributes] = nil
-      puts "About to read the file"
       Zip::File.open(params[:zip_file].path) do |zipfile|
-        puts "Reading zip file"
         zipfile.glob('*{ply,stl,obj}') do |file|
-            puts "Reading #{file.name}"
-            # tempfile = Tempfile.new(File.basename(file.name))
-            # tempfile.binmode
-            # tempfile.write file.get_input_stream.read
-
-            puts "Reading matrix"
             matrix = zipfile.glob("#{file.name.split('.').first}.txt").first.get_input_stream.read
-            puts matrix
-
             piece = @object.pieces.create(name: file.name, matrix: matrix)
           end
       end
     end
-
     respond_to do |format|
       if @object.save
         format.html { redirect_to @object }
