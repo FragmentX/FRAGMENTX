@@ -31,7 +31,7 @@ gem 'bootstrap'
 
 gem 'geocoder'
 
-gem 'rubyzip'
+gem 'rubyzip', '>= 1.3.0'
 
 gem 'bootstrap4-kaminari-views'
 gem 'kaminari'
