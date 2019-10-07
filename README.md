@@ -6,11 +6,10 @@
 
 
 
-[//]: #  (badges)
-
+[//]: # (badges)
 [![security](https://img.shields.io/badge/contributors-4-blue)](https://img.shields.io/badge/contributors-4-blue)
 
-[//]: #  (badges)
+[//]: # (badges)
 
 > [FragmentX web](http://scanviewer.herokuapp.com/)
 >
