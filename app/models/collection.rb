@@ -15,4 +15,8 @@ class Collection < ApplicationRecord
       '/object.svg'
     end
   end
+
+  validates :title, presence: true
+  validates :title, length: { minimum: 2 }
+  validates :description, length: { maximum: 500 }
 end

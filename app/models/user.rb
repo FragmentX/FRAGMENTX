@@ -6,7 +6,7 @@ class User < ApplicationRecord
   has_many :collections
 
   has_one_attached :avatar
-  
+
   has_one_attached :header
 
   def header_image
@@ -24,4 +24,12 @@ class User < ApplicationRecord
       '/user.svg'
     end
   end
+
+  validates :name, presence: true
+  validates :name, length: { minimum: 2 }
+  validates :bio, length: { maximum: 500 }
+  validates :password, presence: true
+  validates :password, length: { in: 6..20 }
+  validates :email, presence: true
+
 end
