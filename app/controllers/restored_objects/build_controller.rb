@@ -1,7 +1,7 @@
 class RestoredObjects::BuildController < ApplicationController
   include Wicked::Wizard
 
-  steps :basic_info, :classify, :upload, :details
+  steps :basic_info, :classify, :upload, :pieces, :details
 
   def show
     @object = RestoredObject.find(params[:restored_object_id])
