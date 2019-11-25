@@ -289,7 +289,7 @@ body {
 }
 
 #editor {
-  background: linear-gradient(to bottom right,#031634, #033649);
+  background: black;
   overflow: hidden;
 }
 
@@ -389,6 +389,12 @@ footer {
   height: 1.5vw;
   margin-bottom: 2%;
   width: auto;
+}
+
+.instructions {
+  display: block;
+  margin: 0 auto;
+  max-width: 50%;
 }
 
 .loader {
@@ -787,6 +793,10 @@ input[type=range].slider:focus::-ms-fill-upper {
 }
 
 @media only screen and (max-width: 819px) {
+
+  .instructions {
+    max-width: 100%;
+  }
 
   #logo {
     width: 90%;

@@ -1,6 +1,21 @@
 <div class="container">
   <%= form_for(@object, :url => wizard_path, :method => :put, :html => { multipart: true }) do |f| %>
     <h2><%= 'Modelo' %></h2>
+    <div class="alert alert-info">
+    <h2>Cómo subir un modelo 3D</h2>
+    <p>
+      Actualmente la plataforma permite subir modelos 3D en <b>formato OBJ</b>. 
+      Para ello, la forma más cómoda es subir un fichero ZIP con los ficheros de las mallas y las 
+      texturas del objeto. 
+    </p>
+    <p>
+      El fichero ZIP <b>debe contener por cada pieza</b> un fichero .obj, un fichero .mtl y 
+      un fichero de imagen (jpg, jpeg, png, bmp, etc.) <b>con el mismo nombre</b>. 
+      A continuación puedes ver un ejemplo del contenido del fichero ZIP para un objeto compuesto 
+      por el cuerpo de una botella y dos implantes (piezas reconstruidas o faltantes en el objeto original):
+    </p>
+    <img src="/zip_example.png" class="instructions"/>
+  </div>
     <div class="row">
       <div class="col-xs-12 col-sm-3"></div>
       <div class="col-xs-12 col-sm-6">
