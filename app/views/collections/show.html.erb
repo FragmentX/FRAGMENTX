@@ -10,7 +10,9 @@
   <% end %>
   <%= image_tag @collection.user.avatar_image, class: 'avatar' %>
   <h1 style="display: inline"><%= @collection.title %></h1>
-  <br/><br/><br/>
+  <br/><br/>
+  <p><%= link_to @collection.user.name, @collection.user %></p>
+  <br/><br/>
   <p><%= @collection.description %></p>
   <br/><br/><br/>
   <div class="card-columns">

@@ -9,19 +9,33 @@ class User < ApplicationRecord
   
   has_one_attached :header
 
+  validate :correct_attachments_mime_types
+
   def header_image
-    if self.header.attached?
-      self.header.service_url
+    if header.attached?
+      header.service_url
     else
       '/header.png'
     end
   end
 
   def avatar_image
-    if self.avatar.attached?
-      self.avatar.service_url
+    if avatar.attached?
+      avatar.service_url
     else
       '/user.svg'
+    end
+  end
+
+  private
+
+  def correct_attachments_mime_types
+    if header.attached? && !header.content_type.in?(%w(image/png image/bmp image/jpg image/jpeg image/tiff))
+      errors.add(:header, "Must be an image file.")
+    end
+
+    if avatar.attached? && !avatar.content_type.in?(%w(image/png image/bmp image/jpg image/jpeg image/tiff))
+      errors.add(:header, "Must be an image file.")
     end
   end
 end

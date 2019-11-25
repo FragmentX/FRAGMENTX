@@ -13,36 +13,38 @@ class RestoredObjects::BuildController < ApplicationController
     @object = RestoredObject.find(params[:restored_object_id])
     params[:restored_object][:current_step] = step.to_s
     params[:restored_object][:current_step] = 'active' if step == steps.last
+
     @object.update_attributes(build_params)
     if params[:zip_file]
       params[:pieces_attributes] = nil
-      puts "About to read the file"
-      Zip::File.open(params[:zip_file].path) do |zipfile|
-        puts "Reading zip file"
-        zipfile.glob('*{ply,stl,obj}') do |file|
-            puts "Reading #{file.name}"
-            puts "Reading matrix"
-            matrix_file = zipfile.glob("#{file.name.downcase.split('.').first}.txt").first
-            if matrix_file
-              matrix = matrix_file.get_input_stream.read
-            else
-              matrix = ""
-            end
-            
-            piece = @object.pieces.build(name: file.name, matrix: matrix)
-            piece.model.attach(io: StringIO.new(file.get_input_stream.read), filename: file.name)
-            puts "SEARCHING FOR #{file.name.split('.').first}.mtl"
-            material_file = zipfile.glob("#{file.name.split('.').first}.mtl").first
-            temp_material_text = StringIO.new(material_file.get_input_stream.read).string
-            image_files = zipfile.entries.keep_if { |file| /\.(png|jpg|jpeg|bmp)$/i =~ file.name.downcase }
-
-            image_files.each do |image|
-              piece.images.attach(io: StringIO.new(image.get_input_stream.read), filename: image.name)
+      if params[:zip_file].content_type != 'application/zip'
+        flash[:danger] = "Attached file must be a zip"
+        redirect_to request.referrer
+        return
+      else
+        Zip::File.open(params[:zip_file].path) do |zipfile|
+          zipfile.glob('*{ply,stl,obj}') do |file|
+              matrix_file = zipfile.glob("#{file.name.downcase.split('.').first}.txt").first
+              if matrix_file
+                matrix = matrix_file.get_input_stream.read
+              else
+                matrix = ""
+              end
               
-              temp_material_text.gsub!(image.name, piece.images.last.service_url.split("?")&.first)
-            end
+              piece = @object.pieces.build(name: file.name, matrix: matrix)
+              piece.model.attach(io: StringIO.new(file.get_input_stream.read), filename: file.name)
+              material_file = zipfile.glob("#{file.name.split('.').first}.mtl").first
+              temp_material_text = StringIO.new(material_file.get_input_stream.read).string
+              image_files = zipfile.entries.keep_if { |file| /\.(png|jpg|jpeg|bmp)$/i =~ file.name.downcase }
 
-            piece.material.attach(io: StringIO.new(temp_material_text), filename: material_file.name)
+              image_files.each do |image|
+                piece.images.attach(io: StringIO.new(image.get_input_stream.read), filename: image.name)
+                
+                temp_material_text.gsub!(image.name, piece.images.last.service_url.split("?")&.first)
+              end
+
+              piece.material.attach(io: StringIO.new(temp_material_text), filename: material_file.name)
+          end
         end
       end
     end
