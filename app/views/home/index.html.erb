@@ -18,47 +18,49 @@
   </div>
 </section>
 
-<%= link_to @featured_museum, class: "no-decoration" do %>
-<section id="featured" >
-  <div class="container">
-    <h2 class="fancy-title"><%= t('home.featured_museum') %></h2>
-    <p><%= t('home.featured_museum_info') %></p>
-    <br/>
-    <div class="user-header">
-      <h2 style="display: inline">
-        <%= image_tag @featured_museum.avatar_image, class: 'avatar' %>
-        <%= @featured_museum.name %>
-      </h2>
-    </div>
-    <br/>
-    
-    <% if !(@featured_museum.bio.blank?) %>
-      <div class="row container mb-4">
-        <p><%= @featured_museum.bio.html_safe %></p>
+<% if @featured_museum %>
+  <%= link_to @featured_museum, class: "no-decoration" do %>
+  <section id="featured" >
+    <div class="container">
+      <h2 class="fancy-title"><%= t('home.featured_museum') %></h2>
+      <p><%= t('home.featured_museum_info') %></p>
+      <br/>
+      <div class="user-header">
+        <h2 style="display: inline">
+          <%= image_tag(@featured_museum.avatar_image, class: 'avatar') if @featured_museum.avatar_image %>
+          <%= @featured_museum.name %>
+        </h2>
       </div>
-    <% end %>
-    <br/>
-  </div>
-</section>
-<% end %>
-<section class="blue">
-  <div class="container">
-    <p><%= t('home.featured_museum_collections') %></p><br/>
-    <div class="card-columns">
-      <% @featured_museum.collections.each_with_index do |obj, index| %>
-        <div class="card">
-          <div class="card-body">
-              <span class="badge badge-pill badge-info float-right"><%= obj.restored_objects.count %> <%= t('restored_object.pieces') %></span>
-              <h2><%= link_to obj.title.capitalize, obj, data: { no_turbolink: true } %></h2>
-              <p><%= truncate(obj.description, length: 150, omission: "...").capitalize %></p>
-              <%= link_to obj.user.name, obj.user %><br/>
-              <%= time_ago_in_words obj.created_at %><br>
-          </div>
+      <br/>
+      
+      <% if !(@featured_museum.bio.blank?) %>
+        <div class="row container mb-4">
+          <p><%= @featured_museum.bio.html_safe %></p>
         </div>
       <% end %>
+      <br/>
     </div>
-  </div>
-</section>
+  </section>
+  <% end %>
+  <section class="blue">
+    <div class="container">
+      <p><%= t('home.featured_museum_collections') %></p><br/>
+      <div class="card-columns">
+        <% @featured_museum.collections.each_with_index do |obj, index| %>
+          <div class="card">
+            <div class="card-body">
+                <span class="badge badge-pill badge-info float-right"><%= obj.restored_objects.count %> <%= t('restored_object.pieces') %></span>
+                <h2><%= link_to obj.title.capitalize, obj, data: { no_turbolink: true } %></h2>
+                <p><%= truncate(obj.description, length: 150, omission: "...").capitalize %></p>
+                <%= link_to obj.user.name, obj.user %><br/>
+                <%= time_ago_in_words obj.created_at %><br>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+<% end %>
 
 <section id="features">
   <div class="container row" style="margin: 0 auto">
