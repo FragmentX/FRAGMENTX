@@ -22,23 +22,25 @@
     </div>
   <% end %>
 </div>
-<section class="blue">
-  <div class="container">
-    <div class="card-columns">
-      <% @user.collections.each_with_index do |obj, index| %>
-        <div class="card">
-          <div class="card-body">
-              <span class="badge badge-pill badge-info float-right"><%= obj.restored_objects.count %> <%= t('restored_object.pieces') %></span>
-              <h2><%= link_to obj.title.capitalize, obj, data: { no_turbolink: true } %></h2>
-              <p><%= truncate(obj.description, length: 150, omission: "...").capitalize %></p>
-              <%= link_to obj.user.name, obj.user %><br/>
-              <%= time_ago_in_words obj.created_at %><br>
+<% if @user.collections.count > 0 %>
+  <section class="blue">
+    <div class="container">
+      <div class="card-columns">
+        <% @user.collections.each_with_index do |obj, index| %>
+          <div class="card">
+            <div class="card-body">
+                <span class="badge badge-pill badge-info float-right"><%= obj.restored_objects.count %> <%= t('restored_object.pieces') %></span>
+                <h2><%= link_to obj.title.capitalize, obj, data: { no_turbolink: true } %></h2>
+                <p><%= truncate(obj.description, length: 150, omission: "...").capitalize %></p>
+                <%= link_to obj.user.name, obj.user %><br/>
+                <%= time_ago_in_words obj.created_at %><br>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+<% end %>
 <div class="container">
   <div class="card-columns">
     <% @user.restored_objects.where(current_step:'active').each_with_index do |obj, index| %>
