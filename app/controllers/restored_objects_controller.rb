@@ -61,6 +61,14 @@ class RestoredObjectsController < ApplicationController
             # tempfile.binmode
             # tempfile.write file.get_input_stream.read
 
+            if @object.object_type == nil
+              case file.name.split('.').last.downcase
+              when 'ply' then @object.object_type = 'ply'
+              when 'stl' then @object.object_type = 'stl'
+              when 'obj' then @object.object_type = 'obj'
+              end
+            end
+
             puts "Reading matrix"
             matrix = zipfile.glob("#{file.name.split('.').first}.txt").first.get_input_stream.read
             puts matrix

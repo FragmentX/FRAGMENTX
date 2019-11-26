@@ -16,18 +16,19 @@
             <div class="card">
                 <div class="card-body">
                     <%= f.label :dimensions %><br/>
+                    <p><%= t('restored_object.viewer.measure_details') %></p>
                     <div class="row">
                         <div class="col-sm-12 col-md-4">
                             <%= f.label :width %><br/>
-                            <%= f.number_field :width, class: 'form-control' %>
+                            <%= f.number_field :width, required: true, class: 'form-control' %>
                         </div>
                         <div class="col-sm-12 col-md-4">
                             <%= f.label :height %><br/>
-                            <%= f.number_field :height, class: 'form-control' %>
+                            <%= f.number_field :height, required: true, class: 'form-control' %>
                         </div>
                         <div class="col-sm-12 col-md-4">
                             <%= f.label :depth %><br/>
-                            <%= f.number_field :depth, class: 'form-control' %>
+                            <%= f.number_field :depth, required: true, class: 'form-control' %>
                         </div>
                     </div>
                     <br/>
@@ -72,9 +73,6 @@
             <%= f.label :protection %><br/>
             <%= f.select :protection_id, Protection.all.collect {|p| [p.name, p.id]}, {}, class: 'form-control' %>
             <br/>
-            <%= f.label :formats %><br />
-            <%= f.select :object_type, @formats, {}, class: 'form-control' %>
-            <br/>
             <%= f.label :categories %><br />
             <div class="row">
                 <% Category.all.each do |category| %>
@@ -106,36 +104,39 @@
             </div>
         </div>
     </div>
+    <br/>
      <div class="form-group">
         <%= f.label :avatar %>
         <div class="col-sm-6">
             <%= f.file_field :avatar %>
         </div>
     </div>
-    <div id="pieces field">
+    <br/>
+    <div id="pieces field" class="mt-4">
         <h2><%= t('restored_object.pieces')%></h2>
+        <div class="alert alert-info">
+            <p><%= t('restored_object.viewer.matrix_details') %></p>
+        </div>
         <div class="card-columns">
         <%= f.fields_for :pieces do |h| %>
             <div class="card">
               <div class="field card-body">
                 <h3><%= h.object.name %></h3>
-                <p>
-                <%= h.object.description %>
-                </p>
+                <%= h.label :description %><br/>
+                <%= h.text_area :description, class: 'form-control' %>
+                <br/>
+                <%= h.check_box :missing %>
+                <%= h.label :missing %>
+                <br/>
                 <%= h.label :matrix %>
                 <%= h.text_area :matrix, class: 'form-control' %>
                 <br/>
-                <%= h.check_box :_destroy %>
-                <%= h.label :_destroy %>
               </div>
               <div class="card-footer">
-                <%= h.object.model.original_filename %>
+                <%= h.object.model.blob.filename %>
               </div>
             </div>
         <% end %>
-        </div>
-        <div class="links">
-            <%= link_to_add_association f, :pieces do %> <%= t('restored_object.add_piece') %> <% end %>
         </div>
     </div>
     <br/>

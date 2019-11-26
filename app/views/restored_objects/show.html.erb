@@ -58,7 +58,7 @@
               </div>
           </div>
       </div>
-      <% if @object.deteriorations %>
+      <% if @object.deteriorations.count > 0 %>
           <%= f.label :deteriorations %>
           <div class="info-field">
               <% @object.deteriorations.each do |deterioration| %>
@@ -66,30 +66,44 @@
               <% end %>
           </div>
       <% end %>
-      <div class="info-field">
-        <%= f.label :description %>
-        <p><%= @object.description %></p>
-      </div>
-      <div class="info-field">
-        <%= f.label :epoch %>
-        <p><%= @object.epoch %></p>
-      </div>
+      <% if !@object.description.blank? %>
+        <div class="info-field">
+          <%= f.label :description %>
+          <p><%= @object.description %></p>
+        </div>
+      <% end %>
+      <% if !@object.epoch.blank? %>
+        <div class="info-field">
+          <%= f.label :epoch %>
+          <p><%= @object.epoch %></p>
+        </div>
+      
+      <% end %>
+      <% if !@object.classification.blank? %>
       <div class="info-field">
         <%= f.label :classification %>
         <p><%= @object.classification %></p>
       </div>
+      <% end %>
+      <% if !@object.technique.blank? %>
       <div class="info-field">
         <%= f.label :technique %>
-        <p><%= @object.classification %></p>
+        <p><%= @object.technique %></p>
       </div>
+      <% end %>
+      <% if !@object.decoration.blank? %>
       <div class="info-field">
         <%= f.label :decoration %>
-        <p><%= @object.classification %></p>
+        <p><%= @object.decoration %></p>
       </div>
+      <% end %>
+      <% if !@object.owner.blank? %>
       <div class="info-field">
         <%= f.label :owner %>
         <p><%= @object.owner %></p>
       </div>
+      <% end %>
+      <% if !@object.deposit.blank? || !@object.address.blank? || !@object.location.blank? %>
       <div class="info-field">
         <%= f.label :deposit %>
         <p><%= @object.deposit %></p>
@@ -101,10 +115,13 @@
         <% end %>
         <br/>
       </div>
-      <div class="info-field">
-        <%= f.label :notes %>
-        <p><%= @object.notes %></p>
-      </div>
+      <% end %>
+      <% if !@object.notes.blank? %>
+        <div class="info-field">
+          <%= f.label :notes %>
+          <p><%= @object.notes %></p>
+        </div>
+      <% end %>
     </div>
   </section>
 <% end %>

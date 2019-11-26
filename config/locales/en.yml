@@ -105,6 +105,7 @@ en:
       save_img: Save view as image
       loading_text: The object pieces are currently being loaded...
       measure_details: These measures are required for the measuring tool.
+      matrix_details: If the pieces models are centered on the coordinates origin then the 4x4 transformation matrix of this piece relative to the object center is required. If you're not sure, just leave this field blank.
 
   users:
     edit_settings: Edit your profile
