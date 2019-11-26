@@ -6,6 +6,8 @@ class Collection < ApplicationRecord
 
   belongs_to :user
 
+  validate :needs_objects
+
   has_one_attached :avatar
 
   def featured_image
@@ -13,6 +15,14 @@ class Collection < ApplicationRecord
       self.avatar.service_url
     else
       '/object.svg'
+    end
+  end
+
+  private
+
+  def needs_objects
+    if collections_restored_objects.count == 0
+      errors.add(:restored_objects, I18n.t('collections.needs_objects_error'))
     end
   end
 end

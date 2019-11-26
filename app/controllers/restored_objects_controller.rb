@@ -78,7 +78,6 @@ class RestoredObjectsController < ApplicationController
                  status: :created, location: @object
         end
       else
-        puts @object.errors.first
         format.html { render :new }
         format.json do
           render json: @object.errors,

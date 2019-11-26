@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-12 col-md-6">
         <%= f.label :title %><br/>
-        <%= f.text_field :title, class: 'form-control' %>
+        <%= f.text_field :title, required: true, class: 'form-control' %>
         <br/>
         <%= f.label :avatar %>
         <%= f.file_field :avatar %><br/>
@@ -17,6 +17,7 @@
       </div>
       <div class="col-sm-12 col-md-6">
         <%= f.label :dimensions %><br/>
+        <p><%= t('restored_object.viewer.measure_details') %></p>
         <div class="row">
           <div class="col-sm-12 col-md-4">
             <%= f.label :width %><br/>

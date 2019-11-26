@@ -8,17 +8,17 @@
 
         <div class="field mb-4">
           <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class:'form-control' %>
+          <%= f.email_field :email, autofocus: true, required: true, autocomplete: "email", class:'form-control' %>
         </div>
 
         <div class="field mb-4">
           <%= f.label :password %>
-          <%= f.password_field :password, autocomplete: "off", class:'form-control' %>
+          <%= f.password_field :password, required: true, autocomplete: "off", class:'form-control' %>
         </div>
 
         <div class="field mb-4">
           <%= f.label :password_confirmation %><br />
-          <%= f.password_field :password_confirmation, autocomplete: "off", class:'form-control' %>
+          <%= f.password_field :password_confirmation, required: true, autocomplete: "off", class:'form-control' %>
         </div>
 
         <div class="field mb-4">

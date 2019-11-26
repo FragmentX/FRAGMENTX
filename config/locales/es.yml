@@ -73,6 +73,7 @@ es:
     restored_objects: Objetos
     add_restored_objects: Añadir objeto
     save: Guardar colección
+    needs_objects_error: Al menos debe incluir un objeto.
 
   restored_object:
     add_piece: Añadir pieza
@@ -104,6 +105,7 @@ es:
       light: iluminación
       save_img: Guardar vista como imagen
       loading_text: Las piezas del objeto están siendo cargadas
+      measure_details: Estas dimensiones son importantes para la herramienta de medición.
 
   users:
     edit_settings: Edita tu perfil

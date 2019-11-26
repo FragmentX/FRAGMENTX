@@ -1,4 +1,8 @@
 <div class="container mt-4">
+  <% if policy(Collection).create? %>
+    <%= link_to t('collections.add'), new_collection_path, class: 'btn btn-primary right' %>
+  <% end %>
+  <br/>
   <% @collections.each.with_index do |collection, i| %>
     <%= link_to collection do %>
       <div class="collection mt-2">

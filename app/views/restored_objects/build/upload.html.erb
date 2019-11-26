@@ -21,7 +21,7 @@
       <div class="col-xs-12 col-sm-6">
         <%= label_tag t('restored_object.zip_file') %>
         <%= f.hidden_field :title %>
-        <%= file_field_tag :zip_file, class:'form-control' %>
+        <%= file_field_tag :zip_file, required: true, class:'form-control' %>
         <br/>
         <%= link_to "Volver", previous_wizard_path, :class => 'btn' %>
         <%= f.submit 'Continuar', :class => 'btn btn-primary' %>

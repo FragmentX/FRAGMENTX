@@ -72,6 +72,7 @@ en:
     restored_objects: Objects
     add_restored_objects: Add object
     save: Save collection
+    needs_objects_error: A collection must include at least one object.
 
   restored_object:
     add_piece: Add piece
@@ -103,6 +104,7 @@ en:
       light: Light
       save_img: Save view as image
       loading_text: The object pieces are currently being loaded...
+      measure_details: These measures are required for the measuring tool.
 
   users:
     edit_settings: Edit your profile

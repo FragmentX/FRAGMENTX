@@ -16,11 +16,21 @@
 
     <%= form_for(@collection, :html => { multipart: true }) do |f| %>
 
+        <% if @collection.errors.any? %>
+            <div class="alert alert-danger">
+                <ul>
+                <% @collection.errors.full_messages.each do |msg| %>
+                    <li><%= msg %>
+                <% end %>
+                </ul>
+            </div>
+        <% end %>
+
         <%= f.label :title %><br/>
-        <%= f.text_field :title, class: 'form-control' %>
+        <%= f.text_field :title, required: true, class: 'form-control' %>
         <br/>
         <%= f.label :description %><br/>
-        <%= f.text_area :description, class: 'form-control' %>
+        <%= f.text_area :description, required: true, class: 'form-control' %>
         <br/>
         <%= f.label :avatar %>
         <%= f.file_field :avatar %><br/>
