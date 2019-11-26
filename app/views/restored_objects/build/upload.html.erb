@@ -1,5 +1,15 @@
 <div class="container">
   <%= form_for(@object, :url => wizard_path, :method => :put, :html => { multipart: true }) do |f| %>
+    <% if @object.errors.any? %>
+        <div class="alert alert-danger">
+            <ul>
+            <% @object.errors.full_messages.each do |msg| %>
+                <li><%= msg %>
+            <% end %>
+            </ul>
+        </div>
+    <% end %>
+    
     <h2><%= 'Modelo' %></h2>
     <div class="alert alert-info">
       <h2>Cómo subir un modelo 3D</h2>

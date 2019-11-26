@@ -1,37 +1,47 @@
 <div class="container">
   <%= form_for(@object, :url => wizard_path, :method => :put, :html => { multipart: true }) do |f| %>
-  <div id="pieces field">
-    <h2><%= t('restored_object.pieces')%></h2>
-
-    <div class="alert alert-info">
-      <h2>Añade más detalles</h2>
-      <p>
-        Cada una de las piezas del objeto puede tener su propio nombre y descripción si así lo deseas.
-      </p>
-      <p>
-        Recuerda activar la casilla "ausente" para todas aquellas piezas que no se encuentran 
-        en el objeto original o han sido reconstruidas.
-      </p>
-    </div>
-
-    <div class="card-columns">
-      <%= f.fields_for :pieces do |h| %>
-        <div class="card">
-          <div class="field card-body">
-            <%= h.label :description %><br/>
-            <%= h.text_area :description, class: 'form-control' %>
-            <br/>
-            <%= h.check_box :missing %>
-            <%= h.label :missing %>
-          </div>
-          <div class="card-footer">
-          <%= h.object.model.blob.filename %>
-          </div>
+    <% if @object.errors.any? %>
+        <div class="alert alert-danger">
+            <ul>
+            <% @object.errors.full_messages.each do |msg| %>
+                <li><%= msg %>
+            <% end %>
+            </ul>
         </div>
-      <% end %>
+    <% end %>
+    
+    <div id="pieces field">
+      <h2><%= t('restored_object.pieces')%></h2>
+
+      <div class="alert alert-info">
+        <h2>Añade más detalles</h2>
+        <p>
+          Cada una de las piezas del objeto puede tener su propio nombre y descripción si así lo deseas.
+        </p>
+        <p>
+          Recuerda activar la casilla "ausente" para todas aquellas piezas que no se encuentran 
+          en el objeto original o han sido reconstruidas.
+        </p>
+      </div>
+
+      <div class="card-columns">
+        <%= f.fields_for :pieces do |h| %>
+          <div class="card">
+            <div class="field card-body">
+              <%= h.label :description %><br/>
+              <%= h.text_area :description, class: 'form-control' %>
+              <br/>
+              <%= h.check_box :missing %>
+              <%= h.label :missing %>
+            </div>
+            <div class="card-footer">
+            <%= h.object.model.blob.filename %>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
-  </div>
-  <%= link_to "Volver", previous_wizard_path, :class => 'btn' %>
-  <%= f.submit 'Continuar', :class => 'btn btn-primary' %>
+    <%= link_to "Volver", previous_wizard_path, :class => 'btn' %>
+    <%= f.submit 'Continuar', :class => 'btn btn-primary' %>
   <% end %>
 </div>
