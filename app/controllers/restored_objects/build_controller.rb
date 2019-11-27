@@ -18,7 +18,7 @@ class RestoredObjects::BuildController < ApplicationController
     if params[:zip_file]
       params[:pieces_attributes] = nil
       if params[:zip_file].content_type != 'application/zip'
-        flash[:danger] = "Attached file must be a zip"
+        flash[:danger] = I18n.t('restored_object.viewer.zip')
         redirect_to request.referrer
         return
       else

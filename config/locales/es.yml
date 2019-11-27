@@ -107,6 +107,7 @@ es:
       loading_text: Las piezas del objeto están siendo cargadas
       measure_details: Estas dimensiones son importantes para la herramienta de medición.
       matrix_details: En caso de que los modelos de las piezas estén centrados en el origen de coordenadas es necesario introducir la matriz de transformación 4x4 de la pieza respecto al centro del objeto. Si no estás seguro/a, deja este campo en blanco. 
+      zip: Attached file must be a zip
 
   users:
     edit_settings: Edita tu perfil
@@ -150,7 +151,7 @@ es:
         formats: Formato de las piezas
         categories: Categorias
         materials: Materiales
-        deteriorations: Deterioración
+        deteriorations: Deterioro
         avatar: Imagen representativa
 
   datetime:
