@@ -187,15 +187,15 @@
         <p><%= t('restored_object.viewer.cut_obj') %></p>
         <div class="toolbar-section-row">
             <button onclick="setClip(0)" class="btn btn-primary toolbar-button clip-button">X</button>
-            <input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipX">
+            <input type="range" min="-1.2" max="1.2" step="0.01" value="0" class="slider" id="clipX">
         </div>
         <div class="toolbar-section-row">
             <button onclick="setClip(1)" class="btn btn-primary toolbar-button clip-button">Y</button>
-            <input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipY">
+            <input type="range" min="-1.2" max="1.2" step="0.01" value="0" class="slider" id="clipY">
         </div>
         <div class="toolbar-section-row">
             <button onclick="setClip(2)" class="btn btn-primary toolbar-button clip-button">Z</button>
-            <input type="range" min="-10" max="10" step="0.1" value="0" class="slider" id="clipZ">
+            <input type="range" min="-1.2" max="1.2" step="0.01" value="0" class="slider" id="clipZ">
         </div>
     </div>
     <div class="toolbar-section">
@@ -276,7 +276,6 @@
     }, 500);
   }
 
-
   //var arrow          = null;
   var nearbyPiecesMode = false;
   var selection        = null;
@@ -299,6 +298,9 @@
 
   var clipping = [false, false, false];
 
+  let objectSize = [0, 0, 0];
+  let objectMaxSide = 0;
+
   var inputs = $('input[type=range]');
 
   $('#clipX').on('input', function() { clip(0) });
@@ -306,7 +308,7 @@
   $('#clipZ').on('input', function() { clip(2) });
 
   function clip(coord) {
-    if (clipping[coord]) clippingPlanes[coord].constant = inputs[coord].value;
+    if (clipping[coord]) clippingPlanes[coord].constant = inputs[coord].value * objectSize[coord];
   }
 
   function unclip(coord) {
@@ -456,6 +458,7 @@
     raycaster.setFromCamera(mouse, camera);
     //renderer.render(scene, camera);
     composer.render();
+    controls.update();
   };
 
   var render = function() {
@@ -506,7 +509,7 @@
 
           var local = new THREE.Object3D();
           local.name = 'pivot' + gon.pieces[index];
-          local.position.set( -125, 50, 0 );
+          local.position.set( 0, 0, 0 );
           var scale = 0.5;
           local.scale.set( scale, scale, scale );
           if( !gon.missings[index] ) {
@@ -527,49 +530,57 @@
                 node.geometry = geo;
             }
           } );
-          
+
           loaded--;
           if (loaded == 0) {
             $('#loader').hide();
+
+            var offset = offset || 1.25;
+
+            const boundingBox = new THREE.Box3();
+
+            // get bounding box of object - this will be used to setup controls and camera
+            boundingBox.setFromObject( object );
+
+            const center = boundingBox.getCenter();
+
+            const size = boundingBox.getSize();
+
+            objectSize[0] = size.x;
+            objectSize[1] = size.y;
+            objectSize[2] = size.z;
+
+            // get the max side of the bounding box (fits to width OR height as needed )
+            const maxDim = Math.max( size.x, size.y, size.z );
+            const fov = camera.fov * ( Math.PI / 180 );
+            let cameraZ = Math.abs( maxDim / Math.tan( fov * 2 ) );
+
+            cameraZ *= offset; // zoom out a little so that objects don't fill the screen
+
+            camera.position.z = cameraZ;
+
+            const minZ = boundingBox.min.z;
+            //const cameraToFarEdge = ( minZ < 0 ) ? -minZ + cameraZ : cameraZ - minZ;
+
+            //camera.far = cameraToFarEdge * 300;
+            camera.updateProjectionMatrix();
+
+            if ( controls ) {
+
+              // set camera to rotate around center of loaded object
+              controls.target = center;
+
+              // prevent camera from zooming out far enough to create far plane cutoff
+              //controls.maxDistance = cameraToFarEdge * 2;
+
+              controls.saveState();
+            } else {
+              camera.lookAt( center );
+            }
+
+            controls.reset();
           }
-          var offset = offset || 1.25;
-
-          const boundingBox = new THREE.Box3();
-
-          // get bounding box of object - this will be used to setup controls and camera
-          boundingBox.setFromObject( object );
-
-          const center = boundingBox.getCenter();
-
-          const size = boundingBox.getSize();
-
-          // get the max side of the bounding box (fits to width OR height as needed )
-          const maxDim = Math.max( size.x, size.y, size.z );
-          const fov = camera.fov * ( Math.PI / 180 );
-          let cameraZ = Math.abs( maxDim / 4 * Math.tan( fov * 2 ) );
-
-          cameraZ *= offset; // zoom out a little so that objects don't fill the screen
-
-          camera.position.z = cameraZ;
-
-          const minZ = boundingBox.min.z;
-          //const cameraToFarEdge = ( minZ < 0 ) ? -minZ + cameraZ : cameraZ - minZ;
-
-          //camera.far = cameraToFarEdge * 300;
-          camera.updateProjectionMatrix();
-
-          if ( controls ) {
-
-            // set camera to rotate around center of loaded object
-            controls.target = center;
-
-            // prevent camera from zooming out far enough to create far plane cutoff
-            //controls.maxDistance = cameraToFarEdge * 2;
-
-            controls.saveState();
-          } else {
-            camera.lookAt( center );
-          }
+          
         };
 
         var onLoadMtl = function ( materials ) {
@@ -762,24 +773,78 @@
   }
 
   function upCamera() {
-    camera.position.z = 30;
+    var offset = offset || 1.25;
+
+    const boundingBox = new THREE.Box3();
+
+    // get bounding box of object - this will be used to setup controls and camera
+    boundingBox.setFromObject( object );
+
+    const center = boundingBox.getCenter();
+
+    const size = boundingBox.getSize();
+
+    // get the max side of the bounding box (fits to width OR height as needed )
+    const maxDim = Math.max( size.x, size.y, size.z );
+    const fov = camera.fov * ( Math.PI / 180 );
+    let cameraZ = Math.abs( maxDim / Math.tan( fov * 2 ) );
+
+    cameraZ *= offset; // zoom out a little so that objects don't fill the screen
+    camera.position.z = cameraZ;
     camera.position.y = 0;
     camera.position.x = 0;
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    controls.update();
+    //camera.lookAt(new THREE.Vector3(0, 0, 0));
   }
 
   function downCamera() {
+    var offset = offset || 1.25;
+
+    const boundingBox = new THREE.Box3();
+
+    // get bounding box of object - this will be used to setup controls and camera
+    boundingBox.setFromObject( object );
+
+    const center = boundingBox.getCenter();
+
+    const size = boundingBox.getSize();
+
+    // get the max side of the bounding box (fits to width OR height as needed )
+    const maxDim = Math.max( size.x, size.y, size.z );
+    const fov = camera.fov * ( Math.PI / 180 );
+    let cameraZ = Math.abs( maxDim / Math.tan( fov * 2 ) );
+
+    cameraZ *= offset; // zoom out a little so that objects don't fill the screen
     camera.position.z = 0;
-    camera.position.y = 30;
+    camera.position.y = cameraZ;
     camera.position.x = 0;
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    controls.update();
+    //camera.lookAt(new THREE.Vector3(0, 0, 0));
   }
 
   function leftCamera() {
+    var offset = offset || 1.25;
+
+    const boundingBox = new THREE.Box3();
+
+    // get bounding box of object - this will be used to setup controls and camera
+    boundingBox.setFromObject( object );
+
+    const center = boundingBox.getCenter();
+
+    const size = boundingBox.getSize();
+
+    // get the max side of the bounding box (fits to width OR height as needed )
+    const maxDim = Math.max( size.x, size.y, size.z );
+    const fov = camera.fov * ( Math.PI / 180 );
+    let cameraZ = Math.abs( maxDim / Math.tan( fov * 2 ) );
+
+    cameraZ *= offset; // zoom out a little so that objects don't fill the screen
     camera.position.z = 0;
     camera.position.y = 0;
-    camera.position.x = 30;
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    camera.position.x = cameraZ;
+    controls.update();
+    //camera.lookAt(new THREE.Vector3(0, 0, 0));
   }
 
   function measures() {
