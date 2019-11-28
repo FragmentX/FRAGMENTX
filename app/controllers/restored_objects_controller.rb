@@ -22,6 +22,12 @@ class RestoredObjectsController < ApplicationController
     gon.materials = []
     gon.images = []
     gon.missings = []
+
+    gon.width = @object.width
+    gon.height = @object.height
+    gon.depth = @object.depth
+    gon.units = @object.units.name
+
     @object.pieces.each do |p|
       gon.pieces << p.model.service_url&.split("?")&.first if p.model.attached?
       gon.materials << p.material.service_url&.split("?")&.first if p.material.attached?

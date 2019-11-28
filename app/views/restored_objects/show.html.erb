@@ -135,8 +135,7 @@
   </div>
 </div>
 <div id="measure">
-    <div class="container">
-    <div class="row">
+    <div class="row mr-4">
         <div class="col-sm measure-column">
           <p class="measure-paragraph"><%= t('restored_object.viewer.points') %></p>
           <p id="measurePo" class="measure-font">0</p>
@@ -151,7 +150,6 @@
         <div class="col-sm measure-column">
           <button onclick="resetMesures()" class="btn btn-primary measure-button"><img class="measure-image" src="/icons/removeAll.svg" /><br/><%= t('restored_object.viewer.rem_all') %></button>
         </div>
-    </div>
     </div>
 </div>
 <section id="toolbar">
@@ -355,7 +353,7 @@
 
   var sphereWorld = new THREE.Mesh( geometryWorld, materialWorld );
 
-  var geometryMesure = new THREE.SphereGeometry( 0.2, 32, 32 );
+  var geometryMesure; 
 
   var scene = new THREE.Scene();
   scene.add(object);
@@ -555,6 +553,8 @@
             const fov = camera.fov * ( Math.PI / 180 );
             let cameraZ = Math.abs( maxDim / Math.tan( fov * 2 ) );
 
+            geometryMesure = new THREE.SphereGeometry( 0.01 * maxDim, 32, 32 );
+
             cameraZ *= offset; // zoom out a little so that objects don't fill the screen
 
             camera.position.z = cameraZ;
@@ -703,7 +703,7 @@
             sphereOne.position.set( intersects[ 0 ].point.x , intersects[ 0 ].point.y, intersects[ 0 ].point.z );
             mesurePointsList.push(sphereOne);
             mesurePoints.add(sphereOne);
-            document.getElementById("measureNo").innerHTML = countMesure();
+            document.getElementById("measureNo").innerHTML = countMesure() + gon.units;;
             document.getElementById("measurePo").innerHTML = mesurePointsList.length;
             scene.add(mesurePoints);
           } else {
@@ -714,7 +714,7 @@
             }
             mesurePoints.remove(intersects[0].object);
             document.getElementById("measurePo").innerHTML = mesurePointsList.length;
-            document.getElementById("measureNo").innerHTML = countMesure();
+            document.getElementById("measureNo").innerHTML = countMesure() + gon.units;
           }
         } else {
           selected = intersects[0].object;
@@ -878,8 +878,11 @@
       var positionPointAnterior  = mesurePointsList[i].getWorldPosition();
       var positionPointNow = mesurePointsList[i+1].getWorldPosition();
       var distanceX = positionPointAnterior.x - positionPointNow.x;
+      distanceX = distanceX * gon.width / objectSize[0];
       var distanceY = positionPointAnterior.y - positionPointNow.y;
+      distanceY = distanceY * gon.height / objectSize[1];
       var distanceZ = positionPointAnterior.z - positionPointNow.z;
+      distanceZ = distanceZ * gon.depth / objectSize[2];
       var distance  = Math.sqrt(distanceX*distanceX+distanceY*distanceY+distanceZ*distanceZ);
       result += distance;
     }
