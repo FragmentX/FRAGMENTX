@@ -43,6 +43,7 @@ en:
     update: Update
     destroy: Destroy
     not_authorized: You are not authorized to perform this action.
+    not_approved: Your account is pending to be approved. You will not be able to create objects nor collections.
 
   home:
     intro: Built for a <span class="diagonal-highlight">cross-platform</span> experience.<br/>

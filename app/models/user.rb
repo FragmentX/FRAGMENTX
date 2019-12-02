@@ -11,6 +11,8 @@ class User < ApplicationRecord
 
   validate :correct_attachments_mime_types
 
+  after_create :send_mail_to_admin
+
   def header_image
     if header.attached?
       header.service_url
@@ -37,5 +39,9 @@ class User < ApplicationRecord
     if avatar.attached? && !avatar.content_type.in?(%w(image/png image/bmp image/jpg image/jpeg image/tiff))
       errors.add(:header, "Must be an image file.")
     end
+  end
+
+  def send_mail_to_admin
+    AdminMailer.new_registration(email).deliver
   end
 end

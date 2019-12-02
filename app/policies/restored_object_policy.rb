@@ -15,7 +15,7 @@ class RestoredObjectPolicy
   end
 
   def create?
-    @user
+    @user && @user.approved
   end
 
   def new?
@@ -23,7 +23,7 @@ class RestoredObjectPolicy
   end
 
   def update?
-    @user && @user.id == @object.user_id
+    @user && @user.id == @object.user_id && @user.approved
   end
 
   def edit?

@@ -44,6 +44,7 @@ es:
     update: Actualizar
     destroy: Eliminar
     not_authorized: Parece que no estás autorizado/a para hacer eso.
+    not_approved: Tu cuenta todavía no ha sido activada. Actualmente no tienes permisos para crear objetos ni colecciones.
 
   home:
     intro: Creada para una experiencia <span class="diagonal-highlight">multiplataforma</span>.<br/>

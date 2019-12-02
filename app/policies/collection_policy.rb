@@ -15,7 +15,7 @@ class CollectionPolicy
   end
 
   def create?
-    @user
+    @user && @user.approved
   end
 
   def new?
@@ -23,7 +23,7 @@ class CollectionPolicy
   end
 
   def update?
-    @user && @user == @collection.user
+    @user && @user == @collection.user && @user.approved
   end
 
   def edit?

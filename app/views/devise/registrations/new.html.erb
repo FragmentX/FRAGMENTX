@@ -1,7 +1,19 @@
 <div class='container'>
   <div class='card'>
     <div class='card-body'>
+    
       <h2><%= t("nav_bar.sign_up") %></h2>
+
+      <div class="alert alert-info">
+        <p>
+          Actualmente la plataforma está disponible para toda institución que ha contratado los servicios de FragmentX. 
+        </p>
+        <p>
+          A través de este formulario puedes enviar una solicitud para registrar una institución en la plataforma. 
+          Sin embargo, los perfiles han de ser confirmados manualmente por nuestro equipo.
+          Desde FragmentX nos pondremos en contacto contigo para enviarte todos los detalles de nuestro servicio.
+        </p>
+      </div>
 
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
         <%= devise_error_messages! %>

@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :check_approved
 
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
@@ -22,6 +23,12 @@ class ApplicationController < ActionController::Base
   def user_not_authorized
     flash[:alert] = I18n.t('shared.not_authorized')
     redirect_to(request.referrer || root_path)
+  end
+
+  def check_approved
+    if current_user && !current_user.approved
+      flash[:alert] = I18n.t('shared.not_approved')
+    end
   end
 
 end
