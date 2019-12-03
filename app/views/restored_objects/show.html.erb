@@ -163,9 +163,9 @@
         <button onclick="goodParts()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/pieces.svg" /><br/><%= t('restored_object.viewer.present') %></button>
         <button onclick="faltantParts()" class="btn btn-primary toolbar-button"><img class="svg-icon" src="/icons/missing.svg" /><br/><%= t('restored_object.viewer.missing') %></button>
         </div>
-        <div class="toolbar-section-row">
+        <!--div class="toolbar-section-row">
             <button onclick="nearbyPieces()" class="btn btn-primary toolbar-button big"><img class="inline-icon" src="/icons/pic.svg" /> <%= t('restored_object.viewer.nearby_pieces') %></button>
-        </div>
+        </div-->
         <p><%= t('restored_object.viewer.model_rot') %></p>
         <div class="toolbar-section-row">
         <button id="pauseButton" onclick="changeRotationMode()" class="btn btn-primary toolbar-button big">
@@ -375,8 +375,10 @@
 
   // outliner
   var composer = new THREE.EffectComposer( renderer );
+
   var renderPass = new THREE.RenderPass( scene, camera );
   composer.addPass( renderPass );
+  
   var outlinePass = new THREE.OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
   composer.addPass( outlinePass );
 
@@ -395,7 +397,7 @@
   composer.addPass( outputPass );
 
   // Selection material
-  selectionMaterial  = materialFactory(false, 0x40e0d0, THREE.DoubleSide, clippingPlanes, true, false, 1, false);
+  //selectionMaterial  = materialFactory(false, 0x40e0d0, THREE.DoubleSide, clippingPlanes, true, false, 1, false);
 
   // Normal material
   unselectedMAterial = materialFactory(false, 0xcdb380, THREE.DoubleSide, clippingPlanes, true, false, 1, false);
@@ -718,7 +720,7 @@
           }
         } else {
           selected = intersects[0].object;
-          outlinePass.selectedObjects = selected;
+          outlinePass.selectedObjects = [selected];
           /*if(!wireframeMode) {
             selected.material = selectionMaterial;
           } else {
@@ -728,6 +730,7 @@
         }
       } else {
         selection = null;
+        outlinePass.selectedObjects = [];
         if(torchMode & (event.button == 1)) {
           intersects = raycaster.intersectObjects([sphereWorld]);
           scene.remove(sphere);
@@ -940,7 +943,7 @@
       if( wireframeMode ) {
         selection.material = wireframeMaterialSelected;
       } else {
-        selection.material = selectionMaterial;
+        //selection.material = selectionMaterial;
       }
     }
   }
