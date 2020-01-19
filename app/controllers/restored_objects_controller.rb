@@ -9,7 +9,7 @@ class RestoredObjectsController < ApplicationController
   # GET /restored_objects
   # GET /restored_objects.json
   def index
-    @objects = RestoredObject.all.where(current_step: 'active').page params[:page]
+    @objects = RestoredObject.all.where(current_step: 'active').order(created_at: :desc).page params[:page]
     authorize @objects
   end
 
@@ -17,6 +17,8 @@ class RestoredObjectsController < ApplicationController
   # GET /restored_objects/1.json
   def show
     authorize @object
+    @object.add_visit
+    
     gon.pieces = []
     gon.matrices = []
     gon.materials = []

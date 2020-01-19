@@ -75,20 +75,20 @@
             <%= f.text_field :inventory_no, class:'form-control' %>
             <br/>
             <%= f.label :priority %><br/>
-            <%= f.select :priority_id, Priority.all.collect {|p| [p.name, p.id]}, {}, class: 'form-control' %>
+            <%= f.select :priority_id, Priority.all.collect {|p| [p.i18n_name, p.id]}, {}, class: 'form-control' %>
             <br/>
             <%= f.label :state %><br/>
-            <%= f.select :state_id, State.all.collect {|s| [s.name, s.id]}, {}, class: 'form-control' %>
+            <%= f.select :state_id, State.all.collect {|s| [s.i18n_name, s.id]}, {}, class: 'form-control' %>
             <br/>
             <%= f.label :protection %><br/>
-            <%= f.select :protection_id, Protection.all.collect {|p| [p.name, p.id]}, {}, class: 'form-control' %>
+            <%= f.select :protection_id, Protection.all.collect {|p| [p.i18n_name, p.id]}, {}, class: 'form-control' %>
             <br/>
             <%= f.label :categories %><br />
             <div class="row">
                 <% Category.all.each do |category| %>
                 <div class="col-sm-12 col-md-6">
                     <%= check_box_tag "restored_object[category_ids][]", category.id, f.object.categories.include?(category) %>
-                    <%= category.name %><br/>
+                    <%= category.i18n_name %><br/>
                 </div>
                 <% end %>
             </div>
@@ -98,7 +98,7 @@
                 <% Material.all.each do |material| %>
                 <div class="col-sm-12 col-md-6">
                     <%= check_box_tag "restored_object[material_ids][]", material.id, f.object.materials.include?(material) %>
-                    <%= material.name %><br/>
+                    <%= material.i18n_name %><br/>
                 </div>
                 <% end %>
             </div>
@@ -108,7 +108,7 @@
                 <% Deterioration.all.each do |deterioration| %>
                 <div class="col-sm-12 col-md-6">
                     <%= check_box_tag "restored_object[deterioration_ids][]", deterioration.id, f.object.deteriorations.include?(deterioration) %>
-                    <%= deterioration.name %><br/>
+                    <%= deterioration.i18n_name %><br/>
                 </div>
                 <% end %>
             </div>

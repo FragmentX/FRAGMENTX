@@ -38,7 +38,7 @@
                 <h2><%= link_to obj.title.capitalize, obj, data: { no_turbolink: true } %></h2>
                 <p><%= truncate(obj.description, length: 150, omission: "...").capitalize %></p>
                 <%= link_to obj.user.name, obj.user %><br/>
-                <%= time_ago_in_words obj.created_at %><br>
+                <%= time_ago_in_words obj.created_at %> | <%= obj.visits %> <%= t('shared.visits') %><br>
             </div>
           </div>
         <% end %>
@@ -60,11 +60,11 @@
               <% end %>
               <h2><%= link_to obj.title.capitalize, obj, data: { no_turbolink: true } %></h2>
               <p><%= truncate(obj.description, length: 150, omission: "...").capitalize %></p>
-              <%= time_ago_in_words obj.created_at %><br>
+              <%= time_ago_in_words obj.created_at %> | <%= obj.visits %> <%= t('shared.visits') %><br>
           </div>
           <% if isObjectFromUser(obj) %>
             <div class="card-footer right">
-               <%= link_to edit_restored_object_path, class:'btn btn-primary mr-2' do %>
+               <%= link_to edit_restored_object_path(obj), class:'btn btn-primary mr-2' do %>
                   <img src="/edit.svg" style="width: 1em;" />
                 <% end %>
                 <%= link_to obj , data: {:confirm => 'Are you sure?'}, method: :delete, class:'btn btn-danger' do %>

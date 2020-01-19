@@ -11,6 +11,8 @@ class User < ApplicationRecord
 
   validate :correct_attachments_mime_types
 
+  validates :username, format: { with: /\A[a-zA-Z0-9]+\Z/ }
+
   after_create :send_mail_to_admin
 
   def header_image

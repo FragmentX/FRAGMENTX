@@ -32,7 +32,7 @@
 es:
 
   nav_bar:
-    restored_objects: Objetos restaurados
+    restored_objects: Galería
     collections: Colecciones
     home: Inicio
     user: Usuario
@@ -45,6 +45,7 @@ es:
     destroy: Eliminar
     not_authorized: Parece que no estás autorizado/a para hacer eso.
     not_approved: Tu cuenta todavía no ha sido activada. Actualmente no tienes permisos para crear objetos ni colecciones.
+    visits: visitas
 
   home:
     intro: Creada para una experiencia <span class="diagonal-highlight">multiplataforma</span>.<br/>
@@ -63,6 +64,12 @@ es:
     featured_museum: Museo destacado
     featured_museum_info: Descubre las últimas piezas aportadas por este y otros museos en la galería.
     featured_museum_collections: Echa un vistazo a las colecciones más recientes de este museo.
+
+  admin:
+    approve: Aprobar
+    deny: Denegar
+    candidates: Perfiles de museos pendientes de ser aprobados.
+    no_candidates: Parece que no hay más solicitudes de museos.
     
   categories:
     link_button: Mostrar el objeto
@@ -73,20 +80,39 @@ es:
     edit: Editar colección
     restored_objects: Objetos
     add_restored_objects: Añadir objeto
+    remove: Eliminar objeto
     save: Guardar colección
     needs_objects_error: Al menos debe incluir un objeto.
+    p1: "Una colección es un conjunto de objetos con algunos rasgos en común. 
+            Pueden pertenecer a una misma época, a un mismo autor, tener la misma función, etc."
+    p2: "Puedes añadir tantos objetos como desees a la colección haciendo 
+            click en el enlace 'Añadir objeto' y seleccionando el objeto que desees. 
+            Opcionalmente, puedes asignar una <b>imagen de previsualización</b> a tu colección. 
+            Esta imagen se mostrará en la galería y en tu perfil."
 
   restored_object:
     add_piece: Añadir pieza
     remove_piece: Eliminar pieza
     pieces: Piezas
+    pieces_title: "Añade más detalles"
+    pieces_p1: "Cada una de las piezas del objeto puede tener su propio nombre y descripción si así lo deseas."
+    pieces_p2: "Recuerda activar la casilla 'ausente' para todas aquellas piezas que no se encuentran 
+    en el objeto original o han sido reconstruidas."
     zip_file: Archivo zip
     save: Guardar
     add_object: Añadir objeto nuevo
     edit: Editar objeto
+    upload_title: "Cómo subir un modelo 3D"
+    upload_p1: "Actualmente la plataforma permite subir modelos 3D en <b>formato OBJ</b>. 
+        Para ello, la forma más cómoda es subir un fichero ZIP con los ficheros de las mallas y las 
+        texturas del objeto."
+    upload_p2: "El fichero ZIP <b>debe contener por cada pieza</b> un fichero .obj, un fichero .mtl y 
+        un fichero de imagen (jpg, jpeg, png, bmp, etc.) <b>con el mismo nombre</b>. 
+        A continuación puedes ver un ejemplo del contenido del fichero ZIP para un objeto compuesto 
+        por el cuerpo de una botella y dos implantes (piezas reconstruidas o faltantes en el objeto original):"
     viewer:
       banner_info: Usa el boton derecho del raton para arrastrar, el botón izquiero para orbitar y la rueda para realizar el zoom.
-      by: Realizado por
+      by: "Autor: "
       not_inventory: No se encuentra en el inventorio
       back_to_gallery: Regresar a la galería
       points: Puntos
@@ -111,16 +137,41 @@ es:
       zip: Attached file must be a zip
 
   users:
+    approved: Acaba de aprovarse el perfil de %{user}.
+    denied: Acaba de denegarse la creación del perfil de %{user}.
+    warn: Introduce tu contraseña actual para realizar cualquier cambio en tu perfil.
+    cancel: Eliminar tu cuenta
+    delete: Elimina tu cuenta
+    delete_p: Al eliminar tu cuenta todos los datos asociados a ella desaparecerán y no podrán ser recuperados. 
     edit_settings: Edita tu perfil
+    forgot_pass: "¿Has olvidado tu contraseña?"
+    change_pass: Modifica tu contraseña
+    change_pass_p: Deja estos campos en blanco si no quieres cambiarla.
     bio: Biografía
+    min_pass: Mínimo %{len} carácteres.
+    sign_up_p1: Actualmente la plataforma está disponible para toda institución que ha contratado los servicios de FragmentX.
+    sign_up_p2: A través de este formulario puedes enviar una solicitud para registrar una institución en la plataforma. Sin embargo, los perfiles han de ser confirmados manualmente por nuestro equipo. Desde FragmentX nos pondremos en contacto contigo para enviarte todos los detalles de nuestro servicio.
+
 
   activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              too_short: "La contraseña es demasiado corta"
+            username:
+              invalid: "El nombre de usuario solo puede contener letras y números"
     models:
       restored_object:
         one: Objeto restaurado
         other: Objetos restaurados
+      collection:
+        one: Colección
+        other: Colecciones
     attributes:
       collection:
+        avatar: Imagen destacada
         title: Título
         description: Descripción
       piece:
@@ -154,6 +205,12 @@ es:
         materials: Materiales
         deteriorations: Deterioro
         avatar: Imagen representativa
+      user:
+        avatar: Imagen de perfil
+        header: Imagen de cabecera
+        name: Nombre
+        sign_up_date: Fecha de registro
+        username: Nombre de usuario
 
   datetime:
     distance_in_words:

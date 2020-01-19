@@ -31,7 +31,7 @@
 
 en:
   nav_bar:
-    restored_objects: Restored objects
+    restored_objects: Gallery
     collections: Collections
     home: Home
     user: User
@@ -44,6 +44,7 @@ en:
     destroy: Destroy
     not_authorized: You are not authorized to perform this action.
     not_approved: Your account is pending to be approved. You will not be able to create objects nor collections.
+    visits: visits
 
   home:
     intro: Built for a <span class="diagonal-highlight">cross-platform</span> experience.<br/>
@@ -63,6 +64,12 @@ en:
     featured_museum_info: Discover the latest pieces uploaded by this and other museums at the gallery.
     featured_museum_collections: Take a look at the latest collections curated by this museum.
 
+  admin:
+    approve: Approve
+    deny: Deny
+    candidates: Museum profiles waiting for approval
+    no_candidates: It looks like there is no more pending applications from Museums.
+
   categories:
     link_button: Show the object
     description: 3D viewer of recomposed museum samples
@@ -72,20 +79,38 @@ en:
     edit: Edit collection
     restored_objects: Objects
     add_restored_objects: Add object
+    remove: Remove object
     save: Save collection
     needs_objects_error: A collection must include at least one object.
+    p1: "A collection is a set of objects with some features in common. 
+            They can belong to the same historical period, to the same author, have the same function, etc."
+    p2: "You can add as many items as you want to the collection by doing 
+            click on the link 'Add object' and select the object you want. 
+            Optionally, you can assign a <b>preview image</b> to your collection. 
+            This image will be displayed in the gallery and in your profile."
 
   restored_object:
     add_piece: Add piece
     remove_piece: Remove piece
     pieces: Pieces
+    pieces_title: "Add more details"
+    pieces_p1: "Each piece of the object can have its own name and description if you wish."
+    pieces_p2: "Remember to check the 'missing' box for all those pieces that are not found in the original object or have been reconstructed."
     zip_file: Zip file
     save: Save
     add_object: Add new object
     edit: Edit object
+    upload_title: "How to upload a 3D model"
+    upload_p1: "Currently the platform allows to upload 3D models in <b>OBJ format</b>. 
+        For this reason, the easiest way to do it is uploading a ZIP file with the files of the meshes and 
+        textures of the object."
+    upload_p2: "The ZIP file <b>must contain for each piece</b> an .obj file, an .mtl file and 
+        an image file (jpg, jpeg, png, bmp, etc.) <b> with the same name</b>. 
+        Below you can see an example of the content of the ZIP file for an object made of the body of a bottle 
+        and two implants (reconstructed or missing parts in the original object):"
     viewer:
       banner_info: Use right button mouse to pan, left button to orbit and scroll to zoom in and out.
-      by: by
+      by: "Author: "
       not_inventory: Not in inventory
       back_to_gallery: Back to gallery
       points: Points
@@ -110,16 +135,40 @@ en:
       zip: The attached file must be a zip.
 
   users:
+    approved: You have just approve the creation of %{user}'s profile.
+    denied: You have just denied the creation of %{user}'s profile.
+    warn: Enter your current password to make any changes to your profile.
+    cancel: Cancel your account
+    delete: Delete your account
+    delete_p: When you delete your account all data linked to it will be permanently erased and will be no longer available.
     edit_settings: Edit your profile
+    forgot_pass: Forgot your password?
+    change_pass: Change your password
+    change_pass_p: Leave these fields blank if you don't want to update your password.
     bio: Biography
+    min_pass: Must have at least %{len} characters.
+    sign_up_p1: The platform is currently available to any institution that has contracted FragmentX's services.
+    sign_up_p2: Through this form you can send a request to register an institution in the platform. However, the profiles must be confirmed manually by our team. From FragmentX we will contact you to send you all the details of our service.
 
   activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              too_short: "The password is too short"
+            username:
+              invalid: "Username must only contain letters and numbers"
     models:
       restored_object:
         one: Restored Object
         other: Restored objects
+      collection:
+        one: Collection
+        other: Collections
     attributes:
       collection:
+        avatar: Featured Picture
         title: Title
         description: Description
       piece:
@@ -153,6 +202,12 @@ en:
         materials: Materials
         deteriorations: Deteriorations
         avatar: Avatar
+      user:
+        avatar: Profile picture
+        header: Header picture
+        name: Name
+        sign_up_date: Sign up date
+        username: Username
 
   datetime:
     distance_in_words:

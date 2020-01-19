@@ -50,7 +50,7 @@
             <% Category.all.each do |category| %>
             <div class="col-sm-12 col-md-6">
                 <%= check_box_tag "restored_object[category_ids][]", category.id, f.object.categories.include?(category) %>
-                <%= category.name %><br/>
+                <%= category.i18n_name %><br/>
             </div>
             <% end %>
         </div>
@@ -60,7 +60,7 @@
             <% Material.all.each do |material| %>
             <div class="col-sm-12 col-md-6">
                 <%= check_box_tag "restored_object[material_ids][]", material.id, f.object.materials.include?(material) %>
-                <%= material.name %><br/>
+                <%= material.i18n_name %><br/>
             </div>
             <% end %>
         </div>

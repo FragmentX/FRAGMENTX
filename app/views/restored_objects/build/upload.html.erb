@@ -12,18 +12,9 @@
     
     <h2><%= 'Modelo' %></h2>
     <div class="alert alert-info">
-      <h2>Cómo subir un modelo 3D</h2>
-      <p>
-        Actualmente la plataforma permite subir modelos 3D en <b>formato OBJ</b>. 
-        Para ello, la forma más cómoda es subir un fichero ZIP con los ficheros de las mallas y las 
-        texturas del objeto. 
-      </p>
-      <p>
-        El fichero ZIP <b>debe contener por cada pieza</b> un fichero .obj, un fichero .mtl y 
-        un fichero de imagen (jpg, jpeg, png, bmp, etc.) <b>con el mismo nombre</b>. 
-        A continuación puedes ver un ejemplo del contenido del fichero ZIP para un objeto compuesto 
-        por el cuerpo de una botella y dos implantes (piezas reconstruidas o faltantes en el objeto original):
-      </p>
+      <h2><%= t('restored_object.upload_title') %></h2>
+      <p><%= t('restored_object.upload_p1').html_safe %></p>
+      <p><%= t('restored_object.upload_p2').html_safe %></p>
       <img src="/zip_example.png" class="instructions"/>
     </div>
     <div class="row">

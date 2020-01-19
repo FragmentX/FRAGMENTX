@@ -13,16 +13,16 @@
       <i class="fas fa-times right" onclick="hideInfo()"></i>
       <p>
         <% @object.categories.each do |category| %>
-          <span class="badge badge-pill badge-light"><%= category.name %></span>
+          <span class="badge badge-pill badge-light"><%= category.i18n_name %></span>
         <% end %>
       </p>
       <h1><%= @object.title %></h1>
-      <% if @object.author %>
+      <% if !@object.author.blank? %>
         <h2><%= t('restored_object.viewer.by') %> <%= @object.author %></h2>
       <% end %>
       <h3>
         <% @object.materials.each do |material| %>
-          <span class="badge badge-pill badge-light"><%= material.name %></span>
+          <span class="badge badge-pill badge-light"><%= material.i18n_name %></span>
         <% end %>
       </h3>
       <small>
@@ -39,18 +39,18 @@
               <div class="info-field">
                   <% if @object.state %>
                       <%= f.label :state %><br/>
-                      <%= @object.state.name%>
+                      <%= @object.state.i18n_name%>
                   <% end %>
               </div>
               <div class="info-field">
                   <%= f.label :priority %><br/>
-                  <%= @object.priority.name %>
+                  <%= @object.priority.i18n_name %>
               </div>
           </div>
           <div class="col-sm-6">
               <div class="info-field">
                   <%= f.label :protection %><br/>
-                  <%= @object.protection.name %><br/>
+                  <%= @object.protection.i18n_name %><br/>
               </div>
               <div class="info-field">
                   <%= f.label :dimensions %>
@@ -62,7 +62,7 @@
           <%= f.label :deteriorations %>
           <div class="info-field">
               <% @object.deteriorations.each do |deterioration| %>
-                  <%= deterioration.name %><br/>
+                  <%= deterioration.i18n_name %><br/>
               <% end %>
           </div>
       <% end %>
@@ -201,7 +201,7 @@
         <div class="toolbar-section-row extras">
             <button class="btn btn-primary toolbar-button" onclick="measures()"><img class="svg-icon" src="/icons/ruler.svg" /><br/><%= t('restored_object.viewer.measure') %></button>
             <button class="btn btn-primary toolbar-button" onclick="wireframeSet()"><img class="svg-icon" src="/icons/wireframe.svg" /><br/><%= t('restored_object.viewer.wireframe') %></button>
-            <button class="btn btn-primary toolbar-button" onclick="addTorch()"><img class="svg-icon" src="/icons/light.svg" /><br/><%= t('restored_object.viewer.light') %></button>
+            <button class="btn btn-primary toolbar-button" onclick="changeLight()"><img class="svg-icon" src="/icons/light.svg" /><br/><%= t('restored_object.viewer.light') %></button>
         </div>
         <div class="toolbar-section-row">
             <button onclick="saveAsImage()" class="btn btn-primary toolbar-button big"><img class="inline-icon" src="/icons/pic.svg" /> <%= t('restored_object.viewer.save_img') %></button>
@@ -214,17 +214,6 @@
   </div>
 </section>
 <div id="editor"></div>
-
-  <script type="text/javascript" src="/js/three.min.js"></script>
-  <script type="text/javascript" src="/js/OrbitControls.js"></script>
-  <script type="text/javascript" src="/js/LoaderSupport.js"></script>
-  <script type="text/javascript" src="/js/MTLLoader.js"></script>
-  <script type="text/javascript" src="/js/OBJLoader2.js"></script>
-  <script type="text/javascript" src="/js/EffectComposer.js"></script>
-  <script type="text/javascript" src="/js/CopyShader.js"></script>
-  <script type="text/javascript" src="/js/ShaderPass.js"></script>
-  <script type="text/javascript" src="/js/OutlinePass.js"></script>
-  <script type="text/javascript" src="/js/RenderPass.js"></script>
   <script>
 
   function hideToolbar() {
@@ -278,7 +267,7 @@
   var nearbyPiecesMode = false;
   var selection        = null;
   var wireframeMode    = false;
-  var torchMode        = false;
+  //var torchMode        = false;
   var rotationMode     = false;
   var measure          = false;
   var spotLight        = null;
@@ -291,6 +280,9 @@
   var globalPlaneX = new THREE.Plane( new THREE.Vector3( -1,  0,  0 ),10000 );
   var globalPlaneY = new THREE.Plane( new THREE.Vector3(  0, -1,  0 ),10000 );
   var globalPlaneZ = new THREE.Plane( new THREE.Vector3(  0,  0, -1 ),10000 );
+
+  var lightMode = 0;
+  var nLightModes = 4;
 
   var clippingPlanes = [ globalPlaneX, globalPlaneY, globalPlaneZ ], Empty = Object.freeze( [] );
 
@@ -731,13 +723,13 @@
       } else {
         selection = null;
         outlinePass.selectedObjects = [];
-        if(torchMode & (event.button == 1)) {
+        /*if(torchMode & (event.button == 1)) {
           intersects = raycaster.intersectObjects([sphereWorld]);
           scene.remove(sphere);
           sphere.position.set( intersects[ 0 ].point.x , intersects[ 0 ].point.y, intersects[ 0 ].point.z );
           scene.add(sphere);
           spotLight.position.set( intersects[ 0 ].point.x, intersects[ 0 ].point.y, intersects[ 0 ].point.z );
-        }
+        }*/
       }
     }
   });
@@ -897,28 +889,91 @@
     return Math.round(number * factor) / factor;
   }
 
-  function addTorch() {
+  function changeLight() {
+    lightMode = (lightMode + 1) % nLightModes;
+    scene.remove( spotLight );
+
+    switch (lightMode) {
+      case 0:
+        spotLight = new THREE.SpotLight( 0xf6cd8b, 0.5 );
+        spotLight.position.set( -1000, 1000, 1000 );
+        spotLight.angle = Math.PI / 4;
+        spotLight.distance = 20000;
+        spotLight.castShadow = true;
+        spotLight.intensity = 1;
+        spotLight.shadow.mapSize.width = 1024;
+        spotLight.shadow.mapSize.height = 1024;
+        spotLight.shadow.camera.near = 0.1;
+        spotLight.shadow.camera.far = 20000;
+        scene.add( spotLight );
+        break;
+        break;
+      case 1:
+        spotLight = new THREE.SpotLight( 0xf6cd8b, 0.5 );
+        spotLight.position.set( 1000, 1000, 0 );
+        spotLight.angle = Math.PI / 4;
+        spotLight.distance = 20000;
+        spotLight.castShadow = true;
+        spotLight.intensity = 1;
+        spotLight.shadow.mapSize.width = 1024;
+        spotLight.shadow.mapSize.height = 1024;
+        spotLight.shadow.camera.near = 0.1;
+        spotLight.shadow.camera.far = 20000;
+        scene.add( spotLight );
+        break;
+        break;
+      case 2:
+        spotLight = new THREE.SpotLight( 0xffffff, 0.5 );
+        spotLight.position.set( 1000, 1000, 1000 );
+        spotLight.angle = Math.PI / 4;
+        spotLight.distance = 20000;
+        spotLight.castShadow = true;
+        spotLight.intensity = 1;
+        spotLight.shadow.mapSize.width = 1024;
+        spotLight.shadow.mapSize.height = 1024;
+        spotLight.shadow.camera.near = 0.1;
+        spotLight.shadow.camera.far = 20000;
+        scene.add( spotLight );
+        break;
+      default:
+        spotLight = new THREE.SpotLight( 0xffffff, 0.5 );
+        spotLight.position.set( -1000, 1000, 0 );
+        spotLight.angle = Math.PI / 4;
+        spotLight.distance = 20000;
+        spotLight.castShadow = true;
+        spotLight.intensity = 1;
+        spotLight.shadow.mapSize.width = 1024;
+        spotLight.shadow.mapSize.height = 1024;
+        spotLight.shadow.camera.near = 0.1;
+        spotLight.shadow.camera.far = 20000;
+        scene.add( spotLight );
+        break;
+        break;
+    }
+  }
+
+  /*function addTorch() {
     if(!torchMode) {
-    renderer.shadowMap.enabled = true;
-    spotLight = new THREE.SpotLight( 0xffffff, 0.5 );
-    spotLight.position.set( 15, 40, 35 );
-    spotLight.angle = Math.PI / 4;
-    spotLight.penumbra = 0.05;
-    spotLight.decay = 2;
-    spotLight.distance = 200;
-    spotLight.castShadow = true;
-    spotLight.shadow.mapSize.width = 1024;
-    spotLight.shadow.mapSize.height = 1024;
-    spotLight.shadow.camera.near = 10;
-    spotLight.shadow.camera.far = 2000;
-    scene.add( spotLight );
+      renderer.shadowMap.enabled = true;
+      spotLight = new THREE.SpotLight( 0xffffff, 0.5 );
+      spotLight.position.set( 15, 40, 35 );
+      spotLight.angle = Math.PI / 4;
+      spotLight.penumbra = 0.05;
+      spotLight.decay = 2;
+      spotLight.distance = 200;
+      spotLight.castShadow = true;
+      spotLight.shadow.mapSize.width = 1024;
+      spotLight.shadow.mapSize.height = 1024;
+      spotLight.shadow.camera.near = 10;
+      spotLight.shadow.camera.far = 2000;
+      scene.add( spotLight );
     } else{
       renderer.shadowMap.enabled = false;
       scene.remove( spotLight );
       scene.remove( sphere );
     }
     torchMode = !torchMode;
-  }
+  }*/
 
   function nearbyPieces() {
     if (selection !== null) {

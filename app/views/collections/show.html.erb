@@ -12,9 +12,9 @@
   <h1 style="display: inline"><%= @collection.title %></h1>
   <br/><br/>
   <p><%= link_to @collection.user.name, @collection.user %></p>
-  <br/><br/>
+  <br/>
   <p><%= @collection.description %></p>
-  <br/><br/><br/>
+  <br/>
   <div class="card-columns">
       <% @objects.each do |obj| %>
         <%= link_to obj do %>

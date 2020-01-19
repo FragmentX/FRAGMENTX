@@ -77,4 +77,9 @@ class RestoredObject < ApplicationRecord
       '/object.svg'
     end
   end
+
+  def add_visit
+    self.visits += 1
+    self.save
+  end
 end

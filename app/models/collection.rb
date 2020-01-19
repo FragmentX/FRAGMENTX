@@ -18,10 +18,15 @@ class Collection < ApplicationRecord
     end
   end
 
+  def add_visit
+    self.visits += 1
+    self.save
+  end
+
   private
 
   def needs_objects
-    if collections_restored_objects.count == 0
+    if collections_restored_objects.size == 0
       errors.add(:restored_objects, I18n.t('collections.needs_objects_error'))
     end
   end

@@ -1,0 +1,54 @@
+<div class="profile-header">
+  <%= image_tag current_user.header_image, class: 'profile-header-img' %>
+</div>
+<div class="container">
+    <h1>Admin panel</h1>
+    <br/>
+    <div class="card-group">
+        <div class="card col-xs-12 col-md-4" >
+            <div class="card-body">
+                <h4 class="card-title"><%= t 'activerecord.models.user.other' %></h4>
+                <h5 class="display-4 text-info"><%= User.all.count %></h5>
+            </div>
+        </div>
+        <div class="card col-xs-12 col-md-4" >
+            <div class="card-body">
+                <h4 class="card-title"><%= t 'activerecord.models.restored_object.other' %></h4>
+                <h5 class="display-4 text-info"><%= RestoredObject.where(current_step: :active).count %></h5>
+            </div>
+        </div>
+        <div class="card col-xs-12 col-md-4" >
+            <div class="card-body">
+                <h4 class="card-title"><%= t 'activerecord.models.collection.other' %></h4>
+                <h5 class="display-4 text-info"><%= Collection.all.count %></h5>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <h2 class="mb-4"><%= t('admin.candidates') %></h2>
+    
+    <% if @candidates.count > 0 %>
+        <table class="table">
+        <tr>
+            <th><%= t('activerecord.attributes.user.name') %></th>
+            <th><%= t('activerecord.attributes.user.username') %></th>
+            <th>Email</th>
+            <th><%= t('activerecord.attributes.user.sign_up_date') %></th>
+            <th></th>
+        </tr>
+        <% @candidates.each do |u| %>
+            <tr>
+                <td><%= link_to u.name, u %></td>
+                <td><%= link_to u.username, u %></td>
+                <td><%= link_to u.email, u %></td>
+                <td><%= time_ago_in_words u.created_at %></td>
+                <td><%= link_to t('admin.approve'), approve_user_path(u), method: :update %> | <%= link_to t('admin.deny'), deny_user_path(u), method: :update  %></td>
+            </tr>
+        <% end %>
+        </table>
+    <% else %>
+        <p><%= t('admin.no_candidates') %></p>
+    <% end %>
+</div>

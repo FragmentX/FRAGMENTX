@@ -2,16 +2,8 @@
     <h1><%= t('collections.add') %></h1>
 
     <div class="alert alert-info">
-        <p>
-            Una colección es un conjunto de objetos con algunos rasgos en común. 
-            Pueden pertenecer a una misma época, a un mismo autor, tener la misma función, etc.
-        </p>
-        <p>
-            Puedes añadir tantos objetos como desees a la colección haciendo 
-            click en el enlace "Añadir objeto" y seleccionando el objeto que desees. 
-            Opcionalmente, puedes asignar una <b>imagen de previsualización</b> a tu colección. 
-            Esta imagen se mostrará en la galería y en tu perfil.
-        </p>
+        <p><%= t('collections.p1').html_safe %></p>
+        <p><%= t('collections.p2').html_safe %></p>
     </div>
 
     <%= form_for(@collection, :html => { multipart: true }) do |f| %>

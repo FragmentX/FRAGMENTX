@@ -8,6 +8,8 @@ class CollectionsController < ApplicationController
   def show
     @collection  = Collection.find(params[:id])
     authorize @collection
+    @collection.add_visit
+
     @objects   = @collection.restored_objects.page params[:page]
   end
 
@@ -19,6 +21,9 @@ class CollectionsController < ApplicationController
   def create
     @collection = Collection.new(collection_params)
     @collection.user_id = current_user.id
+
+    print collection_params
+      
 
     authorize @collection
     respond_to do |format|

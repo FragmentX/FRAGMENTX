@@ -42,24 +42,26 @@
     </div>
   </section>
   <% end %>
-  <section class="blue">
-    <div class="container">
-      <p><%= t('home.featured_museum_collections') %></p><br/>
-      <div class="card-columns">
-        <% @featured_museum.collections.each_with_index do |obj, index| %>
-          <div class="card">
-            <div class="card-body">
-                <span class="badge badge-pill badge-info float-right"><%= obj.restored_objects.count %> <%= t('restored_object.pieces') %></span>
-                <h2><%= link_to obj.title.capitalize, obj, data: { no_turbolink: true } %></h2>
-                <p><%= truncate(obj.description, length: 150, omission: "...").capitalize %></p>
-                <%= link_to obj.user.name, obj.user %><br/>
-                <%= time_ago_in_words obj.created_at %><br>
+  <% if @featured_museum.collections.count > 0 %>
+    <section class="blue">
+      <div class="container">
+        <p><%= t('home.featured_museum_collections') %></p><br/>
+        <div class="card-columns">
+          <% @featured_museum.collections.each_with_index do |obj, index| %>
+            <div class="card">
+              <div class="card-body">
+                  <span class="badge badge-pill badge-info float-right"><%= obj.restored_objects.count %> <%= t('restored_object.pieces') %></span>
+                  <h2><%= link_to obj.title.capitalize, obj, data: { no_turbolink: true } %></h2>
+                  <p><%= truncate(obj.description, length: 150, omission: "...").capitalize %></p>
+                  <%= link_to obj.user.name, obj.user %><br/>
+                  <%= time_ago_in_words obj.created_at %> | <%= obj.visits %> <%= t('shared.visits') %><br>
+              </div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  <% end %>
 <% end %>
 
 <section id="features">
@@ -93,7 +95,8 @@
           <div class="card-body">
               <span class="badge badge-pill badge-info float-right"><%= obj.pieces.count %> <%= t('restored_object.pieces') %></span>
               <h2><%= link_to obj.title, obj, data: { no_turbolink: true } %></h2>
-              <p><%= truncate(obj.description, length: 150, omission: "...") %>
+              <p><%= truncate(obj.description, length: 150, omission: "...").capitalize %></p>
+              <%= link_to obj.user.name, obj.user %><br/>
           </div>
         </div>
       <% end %>

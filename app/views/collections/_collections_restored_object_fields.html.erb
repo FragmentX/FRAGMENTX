@@ -1,10 +1,10 @@
 <div class="nested-fields card mb-2">
     <div class="card-body">
         <%= f.label t('activerecord.models.restored_object.one') %><br/>
-        <%= f.select :restored_object_id, RestoredObject.all.collect {|u| [u.title, u.id]}, {}, {class: 'form-control'} %>
+        <%= f.select :restored_object_id, current_user.restored_objects.where(current_step: 'active').collect {|u| [u.title, u.id]}, {}, {class: 'form-control'} %>
         <%= f.hidden_field :collection_id, value: @collection.id %>
         <br/>
-        <%= link_to_remove_association f, {class:'btn btn-danger', aria: {label:"Eliminar Objeto"}} do %>Eliminar Objeto<% end %>
+        <%= link_to_remove_association f, {class:'btn btn-danger', aria: {label: t("collections.remove")}} do t("collections.remove") end %>
     </div>
     <br/>
 </div>

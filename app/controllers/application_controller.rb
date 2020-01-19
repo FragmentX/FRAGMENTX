@@ -10,13 +10,14 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
+    ActiveStorage::Current.host = request.base_url
   end
 
   protected
     def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:name, :email, :password)}
+      devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:name, :username, :email, :password)}
 
-      devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:name, :email, :avatar, :header, :password, :current_password, :bio, :user)}
+      devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:name, :email, :avatar, :header, :password, :current_password, :bio, :user, :username)}
     end
 
   private
