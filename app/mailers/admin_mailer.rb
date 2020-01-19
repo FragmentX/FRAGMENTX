@@ -1,10 +1,10 @@
 class AdminMailer < ApplicationMailer
-    default from: 'contacto@fragmentx.org'
+    default from: 'info@fragmentx.org'
 
     layout 'mailer'
 
     def new_registration(email)
         @email = email
-        mail(to: 'contacto@fragmentx.org', subject: 'New user registration')
+        mail(to: 'info@fragmentx.org', subject: 'New user registration')
     end
 end
