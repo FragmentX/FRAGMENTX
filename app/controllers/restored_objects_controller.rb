@@ -20,6 +20,7 @@ class RestoredObjectsController < ApplicationController
     @object.add_visit
     
     gon.pieces = []
+    gon.pieces_details = []
     gon.matrices = []
     gon.materials = []
     gon.images = []
@@ -32,6 +33,7 @@ class RestoredObjectsController < ApplicationController
 
     @object.pieces.each do |p|
       gon.pieces << p.model.service_url&.split("?")&.first if p.model.attached?
+      gon.pieces_details << p.description
       gon.materials << p.material.service_url&.split("?")&.first if p.material.attached?
       gon.matrices << p.matrix
       gon.missings << p.missing

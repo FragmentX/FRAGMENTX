@@ -34,6 +34,8 @@
       </small>
     </div>
     <div class="toolbar-container padding-toolbar">
+      <div id="current-piece-info" class="mb-4">
+      </div>
       <div class="row">
           <div class="col-sm-6">
               <div class="info-field">
@@ -316,6 +318,7 @@
 
   var object  = new THREE.Object3D();
   var pieces  = [];
+  var pieces_ref = [];
 
   var objectF   = new THREE.Object3D();
   var faltants  = [];
@@ -511,6 +514,10 @@
             faltants.push(local);
             objectF.add(local);
           }
+
+          let ref = index;
+          pieces_ref.push(ref);
+
           local.add( event.detail.loaderRootNode );
 
           local.traverse( function( node ) {
@@ -615,6 +622,10 @@
             faltants.push(child);
             objectF.add(child);
           }
+
+          let ref = index;
+          pieces_ref.push(ref);
+          
           loaded--;
           if (loaded == 0) {
             $('#loader').hide();
@@ -719,10 +730,20 @@
             selected.material = wireframeMaterialSelected;
           }*/
           selection = selected;
+
+          for(let index = 0; index < pieces.length; index++) {
+            if (pieces[index].children[0].children[0] == selected) {
+              console.log(index)
+              console.log(pieces_ref)
+              console.log(pieces_ref.indexOf(index))
+              document.getElementById('current-piece-info').innerHTML = gon.pieces_details[pieces_ref.indexOf(index)];
+            }
+          }
         }
       } else {
         selection = null;
         outlinePass.selectedObjects = [];
+        document.getElementById('current-piece-info').innerHTML = '';
         /*if(torchMode & (event.button == 1)) {
           intersects = raycaster.intersectObjects([sphereWorld]);
           scene.remove(sphere);

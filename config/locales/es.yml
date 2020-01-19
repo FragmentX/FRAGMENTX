@@ -162,6 +162,7 @@ es:
               too_short: "La contraseña es demasiado corta"
             username:
               invalid: "El nombre de usuario solo puede contener letras y números"
+              taken: "Ese nombre de usuario ya está en uso."
     models:
       restored_object:
         one: Objeto restaurado

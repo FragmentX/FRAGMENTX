@@ -159,6 +159,7 @@ en:
               too_short: "The password is too short"
             username:
               invalid: "Username must only contain letters and numbers"
+              taken: "That username is already taken."
     models:
       restored_object:
         one: Restored Object
